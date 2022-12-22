@@ -1,0 +1,4 @@
+/vendor/
+/storage/secret-key/
+.env
+.phpunit.result.cache

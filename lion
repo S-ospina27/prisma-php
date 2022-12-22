@@ -1,0 +1,107 @@
+<?php
+
+define('LION_START', microtime(true));
+
+/**
+ * ------------------------------------------------------------------------------
+ * Register The Auto Loader
+ * ------------------------------------------------------------------------------
+ * Composer provides a convenient, automatically generated class loader for
+ * this application
+ * ------------------------------------------------------------------------------
+ **/
+
+require_once("vendor/autoload.php");
+
+/**
+ * ------------------------------------------------------------------------------
+ * Register environment variable loader automatically
+ * ------------------------------------------------------------------------------
+ * .dotenv provides an easy way to access environment variables with $_ENV
+ * ------------------------------------------------------------------------------
+ **/
+
+(Dotenv\Dotenv::createImmutable(__DIR__))->load();
+
+/**
+ * ------------------------------------------------------------------------------
+ * initialization of predefined constants and functions
+ * ------------------------------------------------------------------------------
+ **/
+
+include_once(__DIR__ . "\\storage\\framework\\helpers.php");
+
+/**
+ * ------------------------------------------------------------------------------
+ * Import route for RSA
+ * ------------------------------------------------------------------------------
+ * Load default route for RSA
+ * ------------------------------------------------------------------------------
+ **/
+
+if (env->RSA_URL_PATH != '') {
+    LionSecurity\RSA::$url_path = path(env->RSA_URL_PATH);
+}
+
+/**
+ * ------------------------------------------------------------------------------
+ * Start database service
+ * ------------------------------------------------------------------------------
+ * Upload data to establish a connection
+ * ------------------------------------------------------------------------------
+ **/
+
+LionSQL\Drivers\MySQLDriver::init([
+    'type' => env->DB_TYPE,
+    'host' => env->DB_HOST,
+    'port' => env->DB_PORT,
+    'dbname' => env->DB_NAME,
+    'user' => env->DB_USER,
+    'password' => env->DB_PASSWORD
+]);
+
+/**
+ * ------------------------------------------------------------------------------
+ * Console Routes
+ * ------------------------------------------------------------------------------
+ * This is where you can record your commands for your application
+ * ------------------------------------------------------------------------------
+ **/
+
+$web_commands = include_once(path('\\routes\\console.php'));
+
+$commands = [
+    // -- list -- //
+    \App\Console\Framework\ServerCommand::class,
+    \App\Console\Framework\RunTestCommand::class,
+    // -- db -- //
+    \App\Console\Framework\DB\CapsuleCommand::class,
+    \App\Console\Framework\DB\SeedCommand::class,
+    \App\Console\Framework\DB\FactoryCommand::class,
+    \App\Console\Framework\DB\AllCapsulesCommand::class,
+    // -- key -- //
+    \App\Console\Framework\Key\RSACommand::class,
+    // -- New -- //
+    \App\Console\Framework\New\CapsuleCommand::class,
+    \App\Console\Framework\New\CommandsCommand::class,
+    \App\Console\Framework\New\ControllerCommand::class,
+    \App\Console\Framework\New\MiddlewareCommand::class,
+    \App\Console\Framework\New\ModelCommand::class,
+    \App\Console\Framework\New\RulesCommand::class,
+    \App\Console\Framework\New\TestCommand::class,
+    \App\Console\Framework\New\TraitCommand::class,
+    // -- Route -- //
+    \App\Console\Framework\Route\RouteListCommand::class,
+    // -- Token -- //
+    \App\Console\Framework\Token\GenerateJWTCommand::class,
+    // -- web console commands -- //
+    ...$web_commands
+];
+
+$application = new Symfony\Component\Console\Application('Lion-Framework ' . env->APP_VERSION);
+
+foreach ($commands as $key => $command) {
+    $application->add(new $command());
+}
+
+$application->run();
