@@ -21,9 +21,9 @@ class UsersController {
 
 		$responseCreate = $this->usersModel->createUsersDB(
 			Users::formFields()
-				->setIdstatus(1)
-				->setUsersPassword($rsa_encode->users_password)
-		);
+            ->setIdstatus(1)
+            ->setUsersPassword($rsa_encode->users_password)
+        );
 
 		if ($responseCreate->status === 'database-error') {
 			return response->error('Ha ocurrido un error al crear el usuario');
@@ -37,14 +37,15 @@ class UsersController {
 	}
 
 	public function updateUser() {
-	 $responseUpdate= $this->usersModel->updateUserDB(
-			Users::formFields()
-		);
+        $responseUpdate= $this->usersModel->updateUserDB(
+            Users::formFields()
+        );
 
-		if ($responseUpdate->status==='database-error') {
-			return response->error('Ha ocurrido un error al actualizar el usuario');
-		}
-		return response->success('Usuario actualizado correctamente ');
-	}
+        if ($responseUpdate->status==='database-error') {
+            return response->error('Ha ocurrido un error al actualizar el usuario');
+        }
+
+        return response->success('Usuario actualizado correctamente ');
+    }
 
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Service_ordersModel;
+use App\Models\ServiceOrdersModel;
 use Carbon\Carbon;
 use Database\Class\ServiceOrders;
 use LionFiles\Manage;
@@ -12,10 +12,10 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 
 class ServiceOrdersController {
 
-	private Service_ordersModel $orders;
+	private ServiceOrdersModel $orders;
 
 	public function __construct() {
-		$this->orders =  new Service_ordersModel();
+		$this->orders =  new ServiceOrdersModel();
 	}
 
 	public function createOrders() {
@@ -25,14 +25,14 @@ class ServiceOrdersController {
 				->setIdserviceStates(1)
 		);
 
-		if($createOrders->status==='database-error') {
+		if($createOrders->status === 'database-error') {
 			return response->error('ocurrio un error al crear la orden');
 		}
 
 		return response->success('se genero la orden correctamente');
 	}
 
-	public function updateOrders(){
+	public function updateOrders() {
 		$serviceOrders=ServiceOrders::formFields();
 
 		if($serviceOrders->getIdserviceStates() === 7){
@@ -57,7 +57,7 @@ class ServiceOrdersController {
 	}
 
 	public function exportServiceOrders() {
-		$export = $this->orders->exportServiceOrdersDB((object)[
+		$export = $this->orders->exportServiceOrdersDB((object) [
 			'date_start'=>request->date_start,
 			'date_end'=>Carbon::parse(request->date_end)->addDay()->format('Y-m-d')
 		]);
