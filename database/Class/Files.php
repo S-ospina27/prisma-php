@@ -8,7 +8,9 @@ class Files implements \JsonSerializable {
 	private ?string $files_name = null;
 	private ?string $files_creation_date = null;
 
-	public function __construct() {}
+	public function __construct() {
+
+	}
 
 	public function jsonSerialize(): mixed {
 		return get_object_vars($this);

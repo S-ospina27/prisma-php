@@ -7,7 +7,9 @@ class Roles implements \JsonSerializable {
 	private ?int $idroles = null;
 	private ?string $roles_name = null;
 
-	public function __construct() {}
+	public function __construct() {
+
+	}
 
 	public function jsonSerialize(): mixed {
 		return get_object_vars($this);

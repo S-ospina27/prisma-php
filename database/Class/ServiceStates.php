@@ -7,7 +7,9 @@ class ServiceStates implements \JsonSerializable {
 	private ?int $idservice_states = null;
 	private ?string $service_type = null;
 
-	public function __construct() {}
+	public function __construct() {
+
+	}
 
 	public function jsonSerialize(): mixed {
 		return get_object_vars($this);

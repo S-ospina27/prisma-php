@@ -6,7 +6,7 @@ class ReadServiceOrders implements \JsonSerializable {
 
 	private ?string $service_type = null;
 	private ?string $fullname = null;
-	private ?int $idprovider_users = null;
+	private ?int $idusers = null;
 	private ?int $idproducts = null;
 	private ?string $service_orders_creation_date = null;
 	private ?string $service_orders_date_delivery = null;
@@ -20,7 +20,9 @@ class ReadServiceOrders implements \JsonSerializable {
 	private ?int $service_orders_total_price = null;
 	private ?int $service_orders_pending_amount = null;
 
-	public function __construct() {}
+	public function __construct() {
+
+	}
 
 	public function jsonSerialize(): mixed {
 		return get_object_vars($this);
@@ -37,8 +39,8 @@ class ReadServiceOrders implements \JsonSerializable {
 			isset(request->fullname) ? request->fullname : null
 		);
 
-		$readserviceorders->setIdproviderUsers(
-			isset(request->idprovider_users) ? request->idprovider_users : null
+		$readserviceorders->setIdusers(
+			isset(request->idusers) ? request->idusers : null
 		);
 
 		$readserviceorders->setIdproducts(
@@ -110,12 +112,12 @@ class ReadServiceOrders implements \JsonSerializable {
 		return $this;
 	}
 
-	public function getIdproviderUsers(): ?int {
-		return $this->idprovider_users;
+	public function getIdusers(): ?int {
+		return $this->idusers;
 	}
 
-	public function setIdproviderUsers(?int $idprovider_users): ReadServiceOrders {
-		$this->idprovider_users = $idprovider_users;
+	public function setIdusers(?int $idusers): ReadServiceOrders {
+		$this->idusers = $idusers;
 		return $this;
 	}
 

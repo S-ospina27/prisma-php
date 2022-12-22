@@ -13,7 +13,9 @@ class Products implements \JsonSerializable {
 	private ?int $idusers = null;
 	private ?int $idstatus = null;
 
-	public function __construct() {}
+	public function __construct() {
+
+	}
 
 	public function jsonSerialize(): mixed {
 		return get_object_vars($this);

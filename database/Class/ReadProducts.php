@@ -13,7 +13,9 @@ class ReadProducts implements \JsonSerializable {
 	private ?string $users_name = null;
 	private ?string $status_type = null;
 
-	public function __construct() {}
+	public function __construct() {
+
+	}
 
 	public function jsonSerialize(): mixed {
 		return get_object_vars($this);

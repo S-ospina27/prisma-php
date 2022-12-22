@@ -8,7 +8,9 @@ class Cities implements \JsonSerializable {
 	private ?string $cities_name = null;
 	private ?int $iddepartments = null;
 
-	public function __construct() {}
+	public function __construct() {
+
+	}
 
 	public function jsonSerialize(): mixed {
 		return get_object_vars($this);

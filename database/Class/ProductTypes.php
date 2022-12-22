@@ -7,7 +7,9 @@ class ProductTypes implements \JsonSerializable {
 	private ?int $idproduct_types = null;
 	private ?string $product_types_name = null;
 
-	public function __construct() {}
+	public function __construct() {
+
+	}
 
 	public function jsonSerialize(): mixed {
 		return get_object_vars($this);

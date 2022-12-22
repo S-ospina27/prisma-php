@@ -7,7 +7,7 @@ class ServiceRequest implements \JsonSerializable {
 	private ?int $idservice_request = null;
 	private ?int $idusers_dealers = null;
 	private ?int $idcities = null;
-	private ?int $idproduct_types = null;
+	private ?int $idproducts = null;
 	private ?int $idusers_technical = null;
 	private ?int $idservice_states = null;
 	private ?string $service_request_creation_date = null;
@@ -22,7 +22,9 @@ class ServiceRequest implements \JsonSerializable {
 	private ?string $service_request_date_visit = null;
 	private ?string $service_request_date_close = null;
 
-	public function __construct() {}
+	public function __construct() {
+
+	}
 
 	public function jsonSerialize(): mixed {
 		return get_object_vars($this);
@@ -43,8 +45,8 @@ class ServiceRequest implements \JsonSerializable {
 			isset(request->idcities) ? request->idcities : null
 		);
 
-		$servicerequest->setIdproductTypes(
-			isset(request->idproduct_types) ? request->idproduct_types : null
+		$servicerequest->setIdproducts(
+			isset(request->idproducts) ? request->idproducts : null
 		);
 
 		$servicerequest->setIdusersTechnical(
@@ -129,12 +131,12 @@ class ServiceRequest implements \JsonSerializable {
 		return $this;
 	}
 
-	public function getIdproductTypes(): ?int {
-		return $this->idproduct_types;
+	public function getIdproducts(): ?int {
+		return $this->idproducts;
 	}
 
-	public function setIdproductTypes(?int $idproduct_types): ServiceRequest {
-		$this->idproduct_types = $idproduct_types;
+	public function setIdproducts(?int $idproducts): ServiceRequest {
+		$this->idproducts = $idproducts;
 		return $this;
 	}
 

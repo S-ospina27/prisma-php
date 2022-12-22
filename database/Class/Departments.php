@@ -7,7 +7,9 @@ class Departments implements \JsonSerializable {
 	private ?int $iddepartments = null;
 	private ?string $departments_name = null;
 
-	public function __construct() {}
+	public function __construct() {
+
+	}
 
 	public function jsonSerialize(): mixed {
 		return get_object_vars($this);

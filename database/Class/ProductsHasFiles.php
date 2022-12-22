@@ -7,7 +7,9 @@ class ProductsHasFiles implements \JsonSerializable {
 	private ?int $idproducts = null;
 	private ?int $idfiles = null;
 
-	public function __construct() {}
+	public function __construct() {
+
+	}
 
 	public function jsonSerialize(): mixed {
 		return get_object_vars($this);

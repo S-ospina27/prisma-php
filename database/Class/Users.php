@@ -19,7 +19,9 @@ class Users implements \JsonSerializable {
 	private ?int $users_contact_phone = null;
 	private ?int $idstatus = null;
 
-	public function __construct() {}
+	public function __construct() {
+
+	}
 
 	public function jsonSerialize(): mixed {
 		return get_object_vars($this);
