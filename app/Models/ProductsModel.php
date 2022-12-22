@@ -12,7 +12,7 @@ class ProductsModel {
 	}
 
 	public function createProductsDB(Products $products){
-		return DB::call('createProducts', [
+		return DB::call('create_products', [
 			$products->getProductsReference(),
 			$products->getIdproductTypes(),
 			$products->getProductsImage(),
@@ -24,7 +24,7 @@ class ProductsModel {
 	}
 
 	public function updateProductsDB(Products $products){
-		return DB::call('updateProducts', [
+		return DB::call('update_products', [
 			$products->getProductsReference(),
 			$products->getIdproductTypes(),
 			$products->getProductsImage(),
