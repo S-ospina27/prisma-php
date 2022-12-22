@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Products;
 
 use App\Models\Products\ProductsModel;
 use Database\Class\Products;
-use Database\Class\ProductTypes;
 use LionFiles\Manage;
 
 class ProductsController {
@@ -62,30 +61,6 @@ class ProductsController {
 
     public function readProducts() {
         return $this->productModel->readProductsDB();
-    }
-
-    public function create_product_type() {
-        $create_typeproducts= $this->productModel->create_product_typeDB(ProductTypes::formFields());
-
-        if ($create_typeproducts->status === 'database-error') {
-            return response->error("a ocurrido un error al crear el tipo de producto");
-        }
-
-        return response->success(" tipo de producto creado correctamente");
-    }
-
-    public function update_product_type() {
-        $update_typeproducts = $this->productModel->update_product_typeDB(ProductTypes::formFields());
-
-        if ($update_typeproducts->status === 'database-error') {
-            return response->error("a ocurrido un error al actualizar el tipo de producto");
-        }
-
-        return response->success(" tipo de producto actualizado correctamente");
-    }
-
-    public function read_product_type() {
-        return $this->productModel->read_product_typeDB();
     }
 
 }

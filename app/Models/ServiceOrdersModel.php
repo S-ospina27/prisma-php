@@ -12,7 +12,7 @@ class ServiceOrdersModel {
 	}
 
 	public function createOrdersDB(ServiceOrders $serviceOrders) {
-		return DB::call('create_services_orders',[
+		return DB::call('create_services_orders', [
 			$serviceOrders->getIdproducts(),
 			$serviceOrders->getIdserviceStates(),
 			$serviceOrders->getIdusers(),
@@ -30,7 +30,7 @@ class ServiceOrdersModel {
 	}
 
 	public function updateOrdersDB(ServiceOrders $serviceOrders) {
-		return DB::call('update_services_orders',[
+		return DB::call('update_services_orders', [
 			$serviceOrders->getIdproducts(),
 			$serviceOrders->getIdserviceStates(),
             $serviceOrders->getIdusers(),

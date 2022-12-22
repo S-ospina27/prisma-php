@@ -3,7 +3,6 @@
 namespace App\Models\Products;
 
 use Database\Class\Products;
-use Database\Class\ProductTypes;
 use LionSql\Drivers\MySQLDriver as DB;
 
 class ProductsModel {
@@ -40,25 +39,6 @@ class ProductsModel {
 
 	public function	readProductsDB() {
 		return DB::table('read_products')->select()->getAll();
-	}
-
-    // ----------------------------------product_type--------------------------------------------
-
-	public function create_product_typeDB(ProductTypes $type) {
-		return DB::call('create_product_type',[
-            $type->getProductTypesName()
-        ])->execute();
-	}
-
-	public function update_product_typeDB(ProductTypes $type) {
-		return DB::call('update_product_type',[
-			$type->getIdproductTypes(),
-			$type->getProductTypesName()
-        ])->execute();
-	}
-
-	public function read_product_typeDB() {
-		return DB::table('read_document_types')->select()->getAll();
 	}
 
 }
