@@ -3,6 +3,8 @@
 use LionRoute\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Locations\CitiesController;
+use App\Http\Controllers\Locations\DepartmentsController;
 use App\Http\Controllers\Manage\DocumentTypesController;
 use App\Http\Controllers\Manage\RolesController;
 use App\Http\Controllers\Products\ProductsController;
@@ -27,6 +29,11 @@ Route::prefix('api', function() {
 
     Route::get('read-roles', [RolesController::class, 'readRoles']);
     Route::get('read-document-types', [DocumentTypesController::class, 'readDocumentTypes']);
+
+    Route::prefix('locations', function() {
+        Route::get('read-departments', [DepartmentsController::class, 'readDepartments']);
+        Route::get('read-cities/{iddepartments}', [CitiesController::class, 'readCitiesByDepartment']);
+    });
 
     Route::prefix('users', function() {
         Route::post('create', [UsersController::class, 'createUsers']);
