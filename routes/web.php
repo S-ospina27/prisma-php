@@ -3,6 +3,7 @@
 use LionRoute\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Manage\RolesController;
 use App\Http\Controllers\Products\ProductsController;
 use App\Http\Controllers\Products\ProductTypesController;
 use App\Http\Controllers\UsersController;
@@ -23,10 +24,16 @@ Route::prefix('api', function() {
         Route::post('login', [LoginController::class, 'auth']);
     });
 
+    Route::get('read-roles', [RolesController::class, 'readRoles']);
+
     Route::prefix('users', function() {
         Route::post('create', [UsersController::class, 'createUsers']);
-        Route::get('read', [UsersController::class, 'readUsers']);
-        Route::post('update',[UsersController::class, 'updateUser']);
+        Route::post('update', [UsersController::class, 'updateUser']);
+
+        Route::prefix('read', function() {
+            Route::get('/', [UsersController::class, 'readUsers']);
+            Route::get('filter', [UsersController::class, 'readFilterUsers']);
+        });
     });
 
     Route::prefix('products', function() {
@@ -35,9 +42,9 @@ Route::prefix('api', function() {
         Route::post('update', [ProductsController::class, 'updateProducts']);
 
         Route::prefix('types', function() {
-            Route::post('create-product-type', [ProductTypesController::class, 'createProductType']);
-            Route::post('update-product-type', [ProductTypesController::class, 'updateProductType']);
-            Route::get('read-product-type', [ProductTypesController::class, 'readProductType']);
+            Route::post('create', [ProductTypesController::class, 'createProductType']);
+            Route::post('update', [ProductTypesController::class, 'updateProductType']);
+            Route::get('read', [ProductTypesController::class, 'readProductType']);
         });
     });
 
@@ -47,8 +54,8 @@ Route::prefix('api', function() {
         Route::post('export', [ServiceOrdersController::class, 'exportServiceOrders']);
 
         Route::prefix('read', function() {
-            Route::get('/', [ServiceOrdersController::class,'readOrders']);
-            Route::get('by-provider/{idprovider_users}', [ServiceOrdersController::class,'readOrdersProvider']);
+            Route::get('/', [ServiceOrdersController::class, 'readOrders']);
+            Route::get('by-provider/{idprovider_users}', [ServiceOrdersController::class, 'readOrdersProvider']);
         });
     });
 });

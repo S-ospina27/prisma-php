@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\UsersModel;
 use Database\Class\Users;
+use LionHelpers\Arr;
 use LionSecurity\RSA;
 use LionSecurity\Validation;
 
@@ -21,8 +22,8 @@ class UsersController {
 
 		$responseCreate = $this->usersModel->createUsersDB(
 			Users::formFields()
-            ->setIdstatus(1)
-            ->setUsersPassword($rsa_encode->users_password)
+                ->setIdstatus(1)
+                ->setUsersPassword($rsa_encode->users_password)
         );
 
 		if ($responseCreate->status === 'database-error') {
@@ -35,6 +36,10 @@ class UsersController {
 	public function readUsers() {
 		return $this->usersModel->readUsersDB();
 	}
+
+    public function readFilterUsers() {
+        return Arr::of($this->readUsers())->tree('roles_name');
+    }
 
 	public function updateUser() {
         $responseUpdate= $this->usersModel->updateUserDB(
