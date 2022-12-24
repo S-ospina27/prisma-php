@@ -3,6 +3,7 @@
 use LionRoute\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Manage\DocumentTypesController;
 use App\Http\Controllers\Manage\RolesController;
 use App\Http\Controllers\Products\ProductsController;
 use App\Http\Controllers\Products\ProductTypesController;
@@ -25,6 +26,7 @@ Route::prefix('api', function() {
     });
 
     Route::get('read-roles', [RolesController::class, 'readRoles']);
+    Route::get('read-document-types', [DocumentTypesController::class, 'readDocumentTypes']);
 
     Route::prefix('users', function() {
         Route::post('create', [UsersController::class, 'createUsers']);
