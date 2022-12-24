@@ -2,7 +2,6 @@
 
 namespace App\Models\Products;
 
-use Database\Class\DocumentTypes;
 use Database\Class\ProductTypes;
 use LionSql\Drivers\MySQLDriver as DB;
 
@@ -26,8 +25,8 @@ class ProductTypesModel {
     }
 
     public function readProductTypesDB() {
-        return DB::fetchClass(DocumentTypes::class)
-            ->table('read_document_types')
+        return DB::fetchClass(ProductTypes::class)
+            ->table('product_types')
             ->select()
             ->getAll();
     }
