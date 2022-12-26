@@ -7,6 +7,7 @@ use App\Http\Controllers\Locations\CitiesController;
 use App\Http\Controllers\Locations\DepartmentsController;
 use App\Http\Controllers\Manage\DocumentTypesController;
 use App\Http\Controllers\Manage\RolesController;
+use App\Http\Controllers\Manage\ServiceStatesController;
 use App\Http\Controllers\Manage\StatusController;
 use App\Http\Controllers\Products\ProductsController;
 use App\Http\Controllers\Products\ProductTypesController;
@@ -33,6 +34,7 @@ Route::prefix('api', function() {
 
     Route::prefix('status', function() {
         Route::get('/', [StatusController::class, 'readStatus']);
+        Route::get('service', [ServiceStatesController::class, 'readServiceStates']);
     });
 
     Route::prefix('locations', function() {
