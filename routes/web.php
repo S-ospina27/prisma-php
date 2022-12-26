@@ -7,6 +7,7 @@ use App\Http\Controllers\Locations\CitiesController;
 use App\Http\Controllers\Locations\DepartmentsController;
 use App\Http\Controllers\Manage\DocumentTypesController;
 use App\Http\Controllers\Manage\RolesController;
+use App\Http\Controllers\Manage\StatusController;
 use App\Http\Controllers\Products\ProductsController;
 use App\Http\Controllers\Products\ProductTypesController;
 use App\Http\Controllers\UsersController;
@@ -29,6 +30,10 @@ Route::prefix('api', function() {
 
     Route::get('read-roles', [RolesController::class, 'readRoles']);
     Route::get('read-document-types', [DocumentTypesController::class, 'readDocumentTypes']);
+
+    Route::prefix('status', function() {
+        Route::get('/', [StatusController::class, 'readStatus']);
+    });
 
     Route::prefix('locations', function() {
         Route::get('read-departments', [DepartmentsController::class, 'readDepartments']);
