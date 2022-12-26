@@ -11,16 +11,16 @@ class ProductTypesModel {
 		
 	}
 
-    public function createProductTypesDB(ProductTypes $type) {
+    public function createProductTypesDB(ProductTypes $productTypes) {
         return DB::call('create_product_type', [
-            $type->getProductTypesName()
+            $productTypes->getProductTypesName()
         ])->execute();
     }
 
-    public function updateProductTypesDB(ProductTypes $type) {
+    public function updateProductTypesDB(ProductTypes $productTypes) {
         return DB::call('update_product_type', [
-            $type->getIdproductTypes(),
-            $type->getProductTypesName()
+            $productTypes->getIdproductTypes(),
+            $productTypes->getProductTypesName()
         ])->execute();
     }
 

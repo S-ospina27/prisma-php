@@ -8,16 +8,16 @@ use LionFiles\Manage;
 
 class ProductsController {
 
-	private ProductsModel $productModel;
+	private ProductsModel $productsModel;
 	private Products $products;
 
 	public function __construct() {
-		$this->productModel = new productsModel();
+		$this->productsModel = new ProductsModel();
 	}
 
 	public function createProducts() {
-        $this->products =  Products::formFields()
-        ->setProductsImage(Manage::rename(request->products_image['name'],"IMG"));
+        $this->products = Products::formFields()
+            ->setProductsImage(Manage::rename(request->products_image['name'], "IMG"));
 
         Manage::upload(
             request->products_image['tmp_name'],
@@ -26,13 +26,12 @@ class ProductsController {
         );
 
         $this->products->setIdstatus(1);
-        $createProducts= $this->productModel->createProductsDB($this->products);
-
+        $createProducts= $this->productsModel->createProductsDB($this->products);
         if ($createProducts->status === 'database-error') {
-            return response->error("a ocurrido un error al crear el producto");
+            return response->error("A ocurrido un error al registrar el producto");
         }
 
-        return response->success("producto creado correctamente");
+        return response->success("Producto registrado correctamente");
     }
 
     public function updateProducts() {
@@ -50,17 +49,16 @@ class ProductsController {
             );
         }
 
-        $updateProducts = $this->productModel->updateProductsDB($this->products);
-
+        $updateProducts = $this->productsModel->updateProductsDB($this->products);
         if ($updateProducts->status === 'database-error') {
-            return	response->error("a ocurrido un error al actualizar el producto");
+            return	response->error("A ocurrido un error al actualizar el producto");
         }
 
-        return response->success("producto actualizado correctamente");
+        return response->success("Producto actualizado correctamente");
     }
 
     public function readProducts() {
-        return $this->productModel->readProductsDB();
+        return $this->productsModel->readProductsDB();
     }
 
 }

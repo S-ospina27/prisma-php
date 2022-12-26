@@ -20,7 +20,7 @@ class ProductTypesController {
             return response->error("a ocurrido un error al crear el tipo de producto");
         }
 
-        return response->success(" tipo de producto creado correctamente");
+        return response->success("Tipo de producto registrado correctamente");
     }
 
     public function readProductType() {
@@ -31,10 +31,10 @@ class ProductTypesController {
         $update_typeproducts = $this->productTypesModel->updateProductTypesDB(ProductTypes::formFields());
 
         if ($update_typeproducts->status === 'database-error') {
-            return response->error("a ocurrido un error al actualizar el tipo de producto");
+            return response->error("A ocurrido un error al actualizar el tipo de producto");
         }
 
-        return response->success(" tipo de producto actualizado correctamente");
+        return response->success("Tipo de producto actualizado correctamente");
     }
 
 }

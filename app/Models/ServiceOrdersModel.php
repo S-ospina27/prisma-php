@@ -4,7 +4,6 @@ namespace App\Models;
 use Database\Class\ServiceOrders;
 use LionSql\Drivers\MySQLDriver as DB;
 
-
 class ServiceOrdersModel {
 
 	public function __construct() {
@@ -55,7 +54,7 @@ class ServiceOrdersModel {
 	public function readOrdersProviderDB($idprovider_users) {
         return DB::table('read_service_orders')
             ->select()
-            ->where(DB::equalTo('idprovider_users'),$idprovider_users)
+            ->where(DB::equalTo('idprovider_users'), $idprovider_users)
             ->getAll();
     }
 
