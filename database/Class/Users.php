@@ -31,19 +31,19 @@ class Users implements \JsonSerializable {
 		$users = new Users();
 
 		$users->setIdusers(
-			isset(request->idusers) ? request->idusers : null
+			isset(request->idusers) ? (int) request->idusers : null
 		);
 
 		$users->setIdroles(
-			isset(request->idroles) ? request->idroles : null
+			isset(request->idroles) ? (int) request->idroles : null
 		);
 
 		$users->setIddocumentTypes(
-			isset(request->iddocument_types) ? request->iddocument_types : null
+			isset(request->iddocument_types) ? (int) request->iddocument_types : null
 		);
 
 		$users->setUsersIdentification(
-			isset(request->users_identification) ? request->users_identification : null
+			isset(request->users_identification) ? (int) request->users_identification : null
 		);
 
 		$users->setUsersName(
@@ -55,7 +55,7 @@ class Users implements \JsonSerializable {
 		);
 
 		$users->setUsersPhone(
-			isset(request->users_phone) ? request->users_phone : null
+			isset(request->users_phone) ? (int) request->users_phone : null
 		);
 
 		$users->setUsersAddress(
@@ -63,7 +63,7 @@ class Users implements \JsonSerializable {
 		);
 
 		$users->setIdcities(
-			isset(request->idcities) ? request->idcities : null
+			isset(request->idcities) ? (int) request->idcities : null
 		);
 
 		$users->setUsersEmail(
@@ -79,11 +79,11 @@ class Users implements \JsonSerializable {
 		);
 
 		$users->setUsersContactPhone(
-			isset(request->users_contact_phone) ? request->users_contact_phone : null
+			isset(request->users_contact_phone) ? (int) request->users_contact_phone : null
 		);
 
 		$users->setIdstatus(
-			isset(request->idstatus) ? request->idstatus : null
+			isset(request->idstatus) ? (int) request->idstatus : null
 		);
 
 		return $users;
