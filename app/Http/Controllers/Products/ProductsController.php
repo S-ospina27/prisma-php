@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Products;
 use App\Models\Products\ProductsModel;
 use Database\Class\Products;
 use LionFiles\Manage;
+use LionHelpers\Str;
 
 class ProductsController {
 
@@ -44,14 +45,11 @@ class ProductsController {
     public function updateProducts() {
         $this->products = Products::formFields();
 
-        if (is_array(request->products_image) && isset(request->products_image['name'])) {
-            $this->products->setProductsImage(
-                Manage::rename(request->products_image['name'], "IMG")
-            );
-
+        if (is_array(request->products_image)) {
+            $this->products->setProductsImage(Manage::rename(request->products_image['name'], "IMG"));
             $this->uploadImage();
         } else {
-            $this->products->setProductsImage(request->products_image_copy);
+            $this->products->setProductsImage(Str::of(request->products_image)->toNull());
         }
 
         $responseUpdate = $this->productsModel->updateProductsDB($this->products);
