@@ -17,48 +17,52 @@ class ProductsController {
 
 	public function createProducts() {
         $this->products = Products::formFields()
-            ->setProductsImage(Manage::rename(request->products_image['name'], "IMG"));
+        ->setProductsImage(Manage::rename(request->products_image['name'], "IMG"))
+        ->setIdstatus(1)
+        ->setIdusers(3);
+
+        $folder = "assets/img/products/";
+        Manage::folder($folder);
 
         Manage::upload(
             request->products_image['tmp_name'],
             $this->products->getProductsImage(),
-            path("public/File/")
+            path("public/{$folder}")
         );
 
-        $this->products->setIdstatus(1);
-        $createProducts= $this->productsModel->createProductsDB($this->products);
-        if ($createProducts->status === 'database-error') {
+        $responseCreate = $this->productsModel->createProductsDB($this->products);
+        if ($responseCreate->status === 'database-error') {
             return response->error("A ocurrido un error al registrar el producto");
         }
 
         return response->success("Producto registrado correctamente");
     }
 
-    public function updateProducts() {
-        $this->products =  Products::formFields();
+public function updateProducts() {
+        $this->products = Products::formFields()
+        ->setProductsImage(Manage::rename(request->products_image['name'], "IMG"));
 
-        if(is_array(request->products_image)) {
-            $this->products->setProductsImage(
-                Manage::rename(request->products_image['name'], "IMG")
-            );
+        $folder = "assets/img/products/";
+        Manage::folder($folder);
 
-            Manage::upload(
-                request->products_image['tmp_name'],
-                $this->products->getProductsImage(),
-                path("public/File/")
-            );
+        Manage::upload(
+            request->products_image['tmp_name'],
+            $this->products->getProductsImage(),
+            path("public/{$folder}")
+        );
+
+        $responseUpdate = $this->productsModel->updateProductsDB($this->products);
+        if ($responseUpdate->status === 'database-error') {
+            return response->error("A ocurrido un error al actualizar el producto");
         }
 
-        $updateProducts = $this->productsModel->updateProductsDB($this->products);
-        if ($updateProducts->status === 'database-error') {
-            return	response->error("A ocurrido un error al actualizar el producto");
-        }
-
-        return response->success("Producto actualizado correctamente");
+        return response->success("Producto aztualizado correctamente");
     }
 
-    public function readProducts() {
-        return $this->productsModel->readProductsDB();
-    }
+
+
+public function readProducts() {
+    return $this->productsModel->readProductsDB();
+}
 
 }
