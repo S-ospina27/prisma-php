@@ -54,8 +54,12 @@ Route::prefix('api', function() {
 
     Route::prefix('products', function() {
         Route::post('create', [ProductsController::class, 'createProducts']);
-        Route::get('read', [ProductsController::class, 'readProducts']);
         Route::post('update', [ProductsController::class, 'updateProducts']);
+
+        Route::prefix('read', function() {
+            Route::get('/', [ProductsController::class, 'readProducts']);
+            Route::get('by-status', [ProductsController::class, 'readFilterProducts']);
+        });
 
         Route::prefix('types', function() {
             Route::post('create', [ProductTypesController::class, 'createProductType']);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Products;
 use App\Models\Products\ProductsModel;
 use Database\Class\Products;
 use LionFiles\Manage;
+use LionHelpers\Arr;
 use LionHelpers\Str;
 
 class ProductsController {
@@ -62,6 +63,10 @@ class ProductsController {
 
     public function readProducts() {
         return $this->productsModel->readProductsDB();
+    }
+
+    public function readFilterProducts() {
+        return Arr::of($this->readProducts())->tree('status_type');
     }
 
 }
