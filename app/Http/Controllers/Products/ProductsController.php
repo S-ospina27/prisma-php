@@ -15,12 +15,7 @@ class ProductsController {
 		$this->productsModel = new ProductsModel();
 	}
 
-	public function createProducts() {
-        $this->products = Products::formFields()
-            ->setProductsImage(Manage::rename(request->products_image['name'], "IMG"))
-            ->setIdstatus(1)
-            ->setIdusers(1);
-
+    private function uploadImage() {
         $folder = "assets/img/products/";
         Manage::folder($folder);
 
@@ -29,6 +24,14 @@ class ProductsController {
             $this->products->getProductsImage(),
             path("public/{$folder}")
         );
+    }
+
+    public function createProducts() {
+        $this->products = Products::formFields()
+            ->setProductsImage(Manage::rename(request->products_image['name'], "IMG"))
+            ->setIdstatus(1)
+            ->setIdusers(1);
+        $this->uploadImage();
 
         $responseCreate = $this->productsModel->createProductsDB($this->products);
         if ($responseCreate->status === 'database-error') {
@@ -46,14 +49,7 @@ class ProductsController {
                 Manage::rename(request->products_image['name'], "IMG")
             );
 
-            $folder = "assets/img/products/";
-            Manage::folder($folder);
-
-            Manage::upload(
-                request->products_image['tmp_name'],
-                $this->products->getProductsImage(),
-                path("public/{$folder}")
-            );
+            $this->uploadImage();
         } else {
             $this->products->setProductsImage(request->products_image_copy);
         }
