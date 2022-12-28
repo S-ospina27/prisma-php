@@ -32,13 +32,13 @@ class ProductsController {
 
         $responseCreate = $this->productsModel->createProductsDB($this->products);
         if ($responseCreate->status === 'database-error') {
-            return response->error("se  registro correctamente el producto");
+            return response->error("A ocurrido un error al registrar el producto");
         }
 
         return response->success("Producto registrado correctamente");
     }
 
-public function updateProducts() {
+    public function updateProducts() {
         $this->products = Products::formFields()
         ->setProductsImage(Manage::rename(request->products_image['name'], "IMG"));
 
@@ -56,13 +56,13 @@ public function updateProducts() {
             return response->error("A ocurrido un error al actualizar el producto");
         }
 
-        return response->success("Producto aztualizado correctamente");
+        return response->success("Producto actualizado correctamente");
     }
 
 
 
-public function readProducts() {
-    return $this->productsModel->readProductsDB();
-}
+    public function readProducts() {
+        return $this->productsModel->readProductsDB();
+    }
 
 }
