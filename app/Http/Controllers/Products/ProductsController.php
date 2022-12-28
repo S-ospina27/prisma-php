@@ -32,7 +32,7 @@ class ProductsController {
 
         $responseCreate = $this->productsModel->createProductsDB($this->products);
         if ($responseCreate->status === 'database-error') {
-            return response->error("A ocurrido un error al registrar el producto");
+            return response->error("se  registro correctamente el producto");
         }
 
         return response->success("Producto registrado correctamente");
