@@ -17,9 +17,9 @@ class ProductsController {
 
 	public function createProducts() {
         $this->products = Products::formFields()
-        ->setProductsImage(Manage::rename(request->products_image['name'], "IMG"))
-        ->setIdstatus(1)
-        ->setIdusers(3);
+            ->setProductsImage(Manage::rename(request->products_image['name'], "IMG"))
+            ->setIdstatus(1)
+            ->setIdusers(1);
 
         $folder = "assets/img/products/";
         Manage::folder($folder);
@@ -39,17 +39,24 @@ class ProductsController {
     }
 
     public function updateProducts() {
-        $this->products = Products::formFields()
-        ->setProductsImage(Manage::rename(request->products_image['name'], "IMG"));
+        $this->products = Products::formFields();
 
-        $folder = "assets/img/products/";
-        Manage::folder($folder);
+        if (is_array(request->products_image) && isset(request->products_image['name'])) {
+            $this->products->setProductsImage(
+                Manage::rename(request->products_image['name'], "IMG")
+            );
 
-        Manage::upload(
-            request->products_image['tmp_name'],
-            $this->products->getProductsImage(),
-            path("public/{$folder}")
-        );
+            $folder = "assets/img/products/";
+            Manage::folder($folder);
+
+            Manage::upload(
+                request->products_image['tmp_name'],
+                $this->products->getProductsImage(),
+                path("public/{$folder}")
+            );
+        } else {
+            $this->products->setProductsImage(request->products_image_copy);
+        }
 
         $responseUpdate = $this->productsModel->updateProductsDB($this->products);
         if ($responseUpdate->status === 'database-error') {
@@ -58,8 +65,6 @@ class ProductsController {
 
         return response->success("Producto actualizado correctamente");
     }
-
-
 
     public function readProducts() {
         return $this->productsModel->readProductsDB();
