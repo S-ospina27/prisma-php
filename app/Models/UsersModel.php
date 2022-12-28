@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Class\ReadUsers;
 use Database\Class\Users;
 use LionSql\Drivers\MySQLDriver as DB;
 
@@ -30,10 +31,13 @@ class UsersModel {
 	}
 
 	public function readUsersDB() {
-		return DB::table('read_users')->select()->getAll();
+		return DB::fetchClass(ReadUsers::class)
+            ->table('read_users')
+            ->select()
+            ->getAll();
 	}
 
-	public function updateUserDB(Users $users) {
+	public function updateUsersDB(Users $users) {
 		return DB::call('update_users', [
 			$users->getIdroles(),
 			$users->getUsersName(),

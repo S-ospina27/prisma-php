@@ -44,7 +44,7 @@ Route::prefix('api', function() {
 
     Route::prefix('users', function() {
         Route::post('create', [UsersController::class, 'createUsers']);
-        Route::post('update', [UsersController::class, 'updateUser']);
+        Route::post('update', [UsersController::class, 'updateUsers']);
 
         Route::prefix('read', function() {
             Route::get('/', [UsersController::class, 'readUsers']);
