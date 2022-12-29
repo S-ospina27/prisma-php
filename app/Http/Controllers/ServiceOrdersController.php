@@ -15,34 +15,32 @@ class ServiceOrdersController {
 	private ServiceOrdersModel $orders;
 
 	public function __construct() {
-		$this->orders =  new ServiceOrdersModel();
+		$this->orders = new ServiceOrdersModel();
 	}
 
 	public function createOrders() {
-		$createOrders= $this->orders->createOrdersDB(
+		$createOrders = $this->orders->createOrdersDB(
 			ServiceOrders::formFields()
-				->setServiceOrdersCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
-				->setIdserviceStates(1)
-		);
+            ->setServiceOrdersCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
+            ->setIdserviceStates(1)
+        );
 
 		if($createOrders->status === 'database-error') {
 			return response->error('ocurrio un error al crear la orden');
 		}
 
-		return response->success('se genero la orden correctamente');
+		return response->success('Orden de servicio generada correctamente');
 	}
 
 	public function updateOrders() {
 		$serviceOrders=ServiceOrders::formFields();
-
-		if($serviceOrders->getIdserviceStates() === 7){
+		if($serviceOrders->getIdserviceStates() === 7) {
 			$serviceOrders->setServiceOrdersDateDelivery(Carbon::now()->format('Y-m-d H:i:s'));
 		}
 
 		$updateOrdes = $this->orders->updateOrdersDB($serviceOrders);
-
-		if($updateOrdes->status === 'database-error'){
-			return	response->error('ocurrio un error al actualizar la orden');
+		if($updateOrdes->status === 'database-error') {
+			return	response->error('Ocurrió un error al actualizar la orden de servicio');
 		}
 
 		return response->success('se actualizo correctamente');
@@ -58,8 +56,8 @@ class ServiceOrdersController {
 
 	public function exportServiceOrders() {
 		$export = $this->orders->exportServiceOrdersDB((object) [
-			'date_start'=>request->date_start,
-			'date_end'=>Carbon::parse(request->date_end)->addDay()->format('Y-m-d')
+			'date_start' => request->date_start,
+			'date_end' => Carbon::parse(request->date_end)->addDay()->format('Y-m-d')
 		]);
 
 		if (isset($export->status)) {
@@ -90,17 +88,13 @@ class ServiceOrdersController {
 			$index ++;
 		}
 
-		$fullpath='assets/excel/service_orders/';
-		$name=Manage::rename('service_orders.xlsx','EXCEL');
+		$fullpath = 'assets/excel/service_orders/';
+		$name = Manage::rename('service_orders.xlsx','EXCEL');
+		Spreadsheet::saveExcel(Str::of($fullpath)->concat($name)->get());
 
-		Spreadsheet::saveExcel(
-			Str::of($fullpath)->concat($name)->get()
-		);
-
-		return response->success("Excel generado correctamente",[
-			"url"=>	Str::of(env->SERVER_URL)->concat("/")->concat($fullpath)->concat($name)->get(),
+		return response->success("Excel generado correctamente", [
+			"url" => Str::of(env->SERVER_URL)->concat("/")->concat($fullpath)->concat($name)->get(),
 		]);
 	}
-
 
 }
