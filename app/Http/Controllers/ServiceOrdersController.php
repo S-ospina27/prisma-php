@@ -21,8 +21,9 @@ class ServiceOrdersController {
 	public function createOrders() {
 		$createOrders = $this->orders->createOrdersDB(
 			ServiceOrders::formFields()
-            ->setServiceOrdersCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
-            ->setIdserviceStates(1)
+                ->setServiceOrdersCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
+                ->setIdserviceStates(1)
+                ->setServiceOrdersConsecutive(request->service_orders_type === 'MUESTRA' ? 'OM' : 'OS')
         );
 
 		if($createOrders->status === 'database-error') {

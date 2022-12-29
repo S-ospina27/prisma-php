@@ -32,19 +32,19 @@ class ServiceOrders implements \JsonSerializable {
 		$serviceorders = new ServiceOrders();
 
 		$serviceorders->setIdserviceOrders(
-			isset(request->idservice_orders) ? request->idservice_orders : null
+			isset(request->idservice_orders) ? (int) request->idservice_orders : null
 		);
 
 		$serviceorders->setIdproducts(
-			isset(request->idproducts) ? request->idproducts : null
+			isset(request->idproducts) ? (int) request->idproducts : null
 		);
 
 		$serviceorders->setIdserviceStates(
-			isset(request->idservice_states) ? request->idservice_states : null
+			isset(request->idservice_states) ? (int) request->idservice_states : null
 		);
 
 		$serviceorders->setIdusers(
-			isset(request->idusers) ? request->idusers : null
+			isset(request->idusers) ? (int) request->idusers : null
 		);
 
 		$serviceorders->setServiceOrdersCreationDate(
@@ -68,7 +68,7 @@ class ServiceOrders implements \JsonSerializable {
 		);
 
 		$serviceorders->setServiceOrdersAmount(
-			isset(request->service_orders_amount) ? request->service_orders_amount : null
+			isset(request->service_orders_amount) ? (int) request->service_orders_amount : null
 		);
 
 		$serviceorders->setServiceOrdersNotDefectiveAmount(
@@ -84,7 +84,7 @@ class ServiceOrders implements \JsonSerializable {
 		);
 
 		$serviceorders->setServiceOrdersTotalPrice(
-			isset(request->service_orders_total_price) ? request->service_orders_total_price : null
+			isset(request->service_orders_total_price) ? (int) request->service_orders_total_price : null
 		);
 
 		$serviceorders->setServiceOrdersPendingAmount(
