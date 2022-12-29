@@ -31,8 +31,7 @@ class UsersModel {
 	}
 
 	public function readUsersDB() {
-		return DB::fetchClass(ReadUsers::class)
-            ->table('read_users')
+		return DB::table('read_users')
             ->select()
             ->getAll();
 	}
