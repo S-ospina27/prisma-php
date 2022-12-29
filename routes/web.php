@@ -69,8 +69,8 @@ Route::prefix('api', function() {
     });
 
     Route::prefix('service-orders', function() {
-        Route::post('create', [ServiceOrdersController::class, 'createOrders']);
-        Route::post('update', [ServiceOrdersController::class, 'updateOrders']);
+        Route::post('create', [ServiceOrdersController::class, 'createServiceOrders']);
+        Route::post('update', [ServiceOrdersController::class, 'updateServiceOrders']);
         Route::post('export', [ServiceOrdersController::class, 'exportServiceOrders']);
 
         Route::prefix('read', function() {

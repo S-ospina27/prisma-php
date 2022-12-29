@@ -18,29 +18,39 @@ class ServiceOrdersController {
 		$this->orders = new ServiceOrdersModel();
 	}
 
-	public function createOrders() {
-		$createOrders = $this->orders->createOrdersDB(
+	public function createServiceOrders() {
+		$responseCreate = $this->orders->createServiceOrdersDB(
 			ServiceOrders::formFields()
                 ->setServiceOrdersCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
                 ->setIdserviceStates(1)
                 ->setServiceOrdersConsecutive(request->service_orders_type === 'MUESTRA' ? 'OM' : 'OS')
         );
 
-		if($createOrders->status === 'database-error') {
+		if($responseCreate->status === 'database-error') {
+			return $responseCreate;
 			return response->error('ocurrio un error al crear la orden');
 		}
 
 		return response->success('Orden de servicio generada correctamente');
 	}
 
-	public function updateOrders() {
-		$serviceOrders=ServiceOrders::formFields();
+	public function updateServiceOrders() {
+		$serviceOrders = ServiceOrders::formFields()
+			->setServiceOrdersObservation(Str::of(request->service_orders_observation)->toNull())
+			->setServiceOrdersDateDelivery(Str::of(request->service_orders_date_delivery)->toNull())
+			->setServiceOrdersNotDefectiveAmount(Str::of(request->service_orders_not_defective_amount)->toNull())
+			->setServiceOrdersDefectiveAmount(Str::of(request->service_orders_defective_amount)->toNull())
+			->setServiceOrdersPendingAmount(Str::of(request->service_orders_pending_amount)->toNull())
+			->setServiceOrdersConsecutive(request->service_orders_type === 'MUESTRA' ? 'OM' : 'OS');
+
+
 		if($serviceOrders->getIdserviceStates() === 7) {
 			$serviceOrders->setServiceOrdersDateDelivery(Carbon::now()->format('Y-m-d H:i:s'));
 		}
 
-		$updateOrdes = $this->orders->updateOrdersDB($serviceOrders);
-		if($updateOrdes->status === 'database-error') {
+		$responseUpdate = $this->orders->updateServiceOrdersDB($serviceOrders);
+		if($responseUpdate->status === 'database-error') {
+			return $responseUpdate;
 			return	response->error('Ocurrió un error al actualizar la orden de servicio');
 		}
 
