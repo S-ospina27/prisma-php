@@ -33,7 +33,6 @@ class ServiceOrdersModel {
 			$serviceOrders->getIdproducts(),
 			$serviceOrders->getIdserviceStates(),
             $serviceOrders->getIdusers(),
-			$serviceOrders->getServiceOrdersCreationDate(),
 			$serviceOrders->getServiceOrdersDateDelivery(),
 			$serviceOrders->getServiceOrdersFinishedProduct(),
 			$serviceOrders->getServiceOrdersType(),
