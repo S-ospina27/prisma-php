@@ -21,9 +21,9 @@ class ServiceOrdersController {
 	public function createServiceOrders() {
 		$responseCreate = $this->orders->createServiceOrdersDB(
 			ServiceOrders::formFields()
-				->setServiceOrdersCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
-				->setIdserviceStates(1)
-				->setServiceOrdersConsecutive(request->service_orders_type === 'MUESTRA' ? 'OM' : 'OS')
+			->setServiceOrdersCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
+			->setIdserviceStates(1)
+			->setServiceOrdersConsecutive(request->service_orders_type === 'MUESTRA' ? 'OM' : 'OS')
 		);
 
 		if($responseCreate->status === 'database-error') {
@@ -35,13 +35,13 @@ class ServiceOrdersController {
 
 	public function updateServiceOrders() {
 		$serviceOrders = ServiceOrders::formFields()
-			->setServiceOrdersObservation(Str::of(request->service_orders_observation)->toNull())
-			->setServiceOrdersDateDelivery(Str::of(request->service_orders_date_delivery)->toNull())
-			->setServiceOrdersNotDefectiveAmount(Str::of(request->service_orders_not_defective_amount)->toNull())
-			->setServiceOrdersDefectiveAmount(Str::of(request->service_orders_defective_amount)->toNull())
-			->setServiceOrdersPendingAmount(Str::of(request->service_orders_pending_amount)->toNull())
-			->setServiceOrdersConsecutive(request->service_orders_type === 'MUESTRA' ? 'OM' : 'OS');
-
+		->setServiceOrdersNotDefectiveAmount(
+			request->service_orders_defective_amount > 0 ?request->service_orders_amount - request->service_orders_defective_amount :Str::of(request->service_orders_not_defective_amount)->toNull())
+		->setServiceOrdersObservation(Str::of(request->service_orders_observation)->toNull())
+		->setServiceOrdersDateDelivery(Str::of(request->service_orders_date_delivery)->toNull())
+		->setServiceOrdersDefectiveAmount(Str::of(request->service_orders_defective_amount)->toNull())
+		->setServiceOrdersPendingAmount(Str::of(request->service_orders_pending_amount)->toNull())
+		->setServiceOrdersConsecutive(request->service_orders_type === 'MUESTRA' ? 'OM' : 'OS');
 		if($serviceOrders->getIdserviceStates() === 7) {
 			$serviceOrders->setServiceOrdersDateDelivery(Carbon::now()->format('Y-m-d H:i:s'));
 		}
@@ -99,7 +99,7 @@ class ServiceOrdersController {
 
 		$fullpath = 'assets/excel/service_orders/';
 		$name = Manage::rename('service_orders.xlsx', 'EXCEL');
-		Manage::folder($fullpath);
+		manage::folder($fullpath);
 		Spreadsheet::saveExcel(Str::of($fullpath)->concat($name)->get());
 
 		return response->success("Excel generado correctamente", [

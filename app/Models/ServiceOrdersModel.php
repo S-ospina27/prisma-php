@@ -39,6 +39,7 @@ class ServiceOrdersModel {
 			$serviceOrders->getServiceOrdersConsecutive(),
 			$serviceOrders->getServiceOrdersAmount(),
 			$serviceOrders->getServiceOrdersDefectiveAmount(),
+			$serviceOrders->getServiceOrdersNotDefectiveAmount(),
 			$serviceOrders->getServiceOrdersObservation(),
 			$serviceOrders->getServiceOrdersTotalPrice(),
 			$serviceOrders->getServiceOrdersPendingAmount(),
