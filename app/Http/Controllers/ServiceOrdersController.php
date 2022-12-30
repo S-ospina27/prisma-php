@@ -99,7 +99,7 @@ class ServiceOrdersController {
 
 		$fullpath = 'assets/excel/service_orders/';
 		$name = Manage::rename('service_orders.xlsx', 'EXCEL');
-		manage::folder($fullpath);
+		Manage::folder($fullpath);
 		Spreadsheet::saveExcel(Str::of($fullpath)->concat($name)->get());
 
 		return response->success("Excel generado correctamente", [
