@@ -80,20 +80,20 @@ class ServiceOrdersController {
 			Spreadsheet::addBorder("A{$index}:N{$index}", Border::BORDER_THIN, "000000");
 			Spreadsheet::addAlignmentHorizontal("A{$index}:N{$index}", 'center');
 			Spreadsheet::addBackground("A{$index}:N{$index}","f2f2f2");
-			Spreadsheet::setCell("A{$index}", $item->service_type);
-			Spreadsheet::setCell("B{$index}", $item->fullname);
-			Spreadsheet::setCell("C{$index}", $item->idproducts);
-			Spreadsheet::setCell("D{$index}", $item->service_orders_creation_date);
-			Spreadsheet::setCell("E{$index}", $item->service_orders_date_delivery);
-			Spreadsheet::setCell("F{$index}", $item->service_orders_finished_product);
-			Spreadsheet::setCell("G{$index}", $item->service_orders_type);
-			Spreadsheet::setCell("H{$index}", $item->service_orders_consecutive);
-			Spreadsheet::setCell("I{$index}", $item->service_orders_amount);
-			Spreadsheet::setCell("J{$index}", $item->service_orders_not_defective_amount);
+			Spreadsheet::setCell("A{$index}", $item->full_consecutive);
+			Spreadsheet::setCell("B{$index}", $item->service_type);
+			Spreadsheet::setCell("C{$index}", $item->products_reference);
+			Spreadsheet::setCell("D{$index}", $item->service_orders_type);
+			Spreadsheet::setCell("E{$index}", $item->fullname);
+			Spreadsheet::setCell("F{$index}", $item->service_orders_amount);
+			Spreadsheet::setCell("G{$index}", $item->service_orders_total_price);
+			Spreadsheet::setCell("H{$index}", $item->service_orders_finished_product);
+			Spreadsheet::setCell("I{$index}", $item->service_orders_creation_date);
+			Spreadsheet::setCell("J{$index}", $item->service_orders_date_delivery);
 			Spreadsheet::setCell("K{$index}", $item->service_orders_defective_amount);
-			Spreadsheet::setCell("L{$index}", $item->service_orders_observation);
-			Spreadsheet::setCell("M{$index}", $item->service_orders_total_price);
-			Spreadsheet::setCell("N{$index}", $item->service_orders_pending_amount);
+			Spreadsheet::setCell("L{$index}", $item->service_orders_not_defective_amount);
+			Spreadsheet::setCell("M{$index}", $item->service_orders_pending_amount);
+			Spreadsheet::setCell("N{$index}", $item->service_orders_observation);
 			$index ++;
 		}
 
