@@ -21,17 +21,16 @@ class ServiceOrdersController {
 	public function createServiceOrders() {
 		$responseCreate = $this->orders->createServiceOrdersDB(
 			ServiceOrders::formFields()
-                ->setServiceOrdersCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
-                ->setIdserviceStates(1)
-                ->setServiceOrdersConsecutive(request->service_orders_type === 'MUESTRA' ? 'OM' : 'OS')
-        );
+				->setServiceOrdersCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
+				->setIdserviceStates(1)
+				->setServiceOrdersConsecutive(request->service_orders_type === 'MUESTRA' ? 'OM' : 'OS')
+		);
 
 		if($responseCreate->status === 'database-error') {
-			return $responseCreate;
-			return response->error('ocurrio un error al crear la orden');
+			return response->error('Ocurrió un error al crear la orden de servicio');
 		}
 
-		return response->success('Orden de servicio generada correctamente');
+		return response->success('Orden de servicio creada correctamente');
 	}
 
 	public function updateServiceOrders() {
@@ -43,7 +42,6 @@ class ServiceOrdersController {
 			->setServiceOrdersPendingAmount(Str::of(request->service_orders_pending_amount)->toNull())
 			->setServiceOrdersConsecutive(request->service_orders_type === 'MUESTRA' ? 'OM' : 'OS');
 
-
 		if($serviceOrders->getIdserviceStates() === 7) {
 			$serviceOrders->setServiceOrdersDateDelivery(Carbon::now()->format('Y-m-d H:i:s'));
 		}
@@ -54,7 +52,7 @@ class ServiceOrdersController {
 			return	response->error('Ocurrió un error al actualizar la orden de servicio');
 		}
 
-		return response->success('se actualizo correctamente');
+		return response->success('Orden de servicio actualizada correctamente');
 	}
 
 	public function readOrders() {
@@ -78,7 +76,7 @@ class ServiceOrdersController {
 		$index = 6;
 		Spreadsheet::loadExcel(storage_path('Template/Excel/Ordenes_servicio.xlsx'), 'ORDENES_SERVICIO');
 
-		foreach($export as $key=> $item){
+		foreach($export as $key=> $item) {
 			Spreadsheet::addBorder("A{$index}:N{$index}", Border::BORDER_THIN, "000000");
 			Spreadsheet::addAlignmentHorizontal("A{$index}:N{$index}", 'center');
 			Spreadsheet::addBackground("A{$index}:N{$index}","f2f2f2");
@@ -100,7 +98,8 @@ class ServiceOrdersController {
 		}
 
 		$fullpath = 'assets/excel/service_orders/';
-		$name = Manage::rename('service_orders.xlsx','EXCEL');
+		$name = Manage::rename('service_orders.xlsx', 'EXCEL');
+		manage::folder($fullpath);
 		Spreadsheet::saveExcel(Str::of($fullpath)->concat($name)->get());
 
 		return response->success("Excel generado correctamente", [
