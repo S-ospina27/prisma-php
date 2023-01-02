@@ -20,12 +20,12 @@ class LoginController {
 
         $cont = $this->loginModel->accountExistenceDB($users);
         if ($cont->cont === 0) {
-            return response->error("El correo/contraseña son incorrectos");
+            return response->response("existence-error", "El correo/contraseña son incorrectos");
         }
 
         $data = $this->loginModel->authDB($users);
         if ($data->getIdstatus() === 2) {
-            return response->error("Esta cuenta está inactiva, contacte a soporte para mas información");
+            return response->warning("Esta cuenta está inactiva, contacte a soporte para mas información");
         }
 
         if ((int) request->count_errors >= 3) {
@@ -45,10 +45,11 @@ class LoginController {
             return response->error("El correo/contraseña son incorrectos");
         }
 
-        return response->success("Bienvenido: {$data->getUsersName()} {$data->getUsersLastname()}", [
+        $full_name = "{$data->getUsersName()} {$data->getUsersLastname()}";
+        return response->success("Bienvenido: {$full_name}", [
             'jwt' => JWT::encode([
                 'session' => true,
-                'user_name' => "{$data->getUsersName()} {$data->getUsersLastname()}",
+                'user_name' => $full_name,
             ])
         ]);
     }
