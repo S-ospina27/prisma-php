@@ -24,6 +24,10 @@ class LoginController {
         }
 
         $data = $this->loginModel->authDB($users);
+        if ($data->getIdroles() === 3) {
+            return response->warning("Esta cuenta no tiene autorización para ingresar a la plataforma");
+        }
+
         if ($data->getIdstatus() === 2) {
             return response->warning("Esta cuenta está inactiva, contacte a soporte para mas información");
         }
@@ -49,6 +53,8 @@ class LoginController {
         return response->success("Bienvenido: {$full_name}", [
             'jwt' => JWT::encode([
                 'session' => true,
+                'idusers' => $data->getIdusers(),
+                'idroles' => $data->getIdroles(),
                 'user_name' => $full_name,
             ])
         ]);
