@@ -35,13 +35,17 @@ class ServiceOrdersController {
 
 	public function updateServiceOrders() {
 		$serviceOrders = ServiceOrders::formFields()
-		->setServiceOrdersNotDefectiveAmount(
-			request->service_orders_defective_amount > 0 ?request->service_orders_amount - request->service_orders_defective_amount :Str::of(request->service_orders_not_defective_amount)->toNull())
+		->setServiceOrdersNotDefectiveAmount(Str::of(request->service_orders_not_defective_amount)->toNull())
 		->setServiceOrdersObservation(Str::of(request->service_orders_observation)->toNull())
 		->setServiceOrdersDateDelivery(Str::of(request->service_orders_date_delivery)->toNull())
 		->setServiceOrdersDefectiveAmount(Str::of(request->service_orders_defective_amount)->toNull())
 		->setServiceOrdersPendingAmount(Str::of(request->service_orders_pending_amount)->toNull())
 		->setServiceOrdersConsecutive(request->service_orders_type === 'MUESTRA' ? 'OM' : 'OS');
+
+		// if($serviceOrders->getServiceOrdersDefectiveAmount() != null){
+		// 	$serviceOrders->
+		// }
+
 		if($serviceOrders->getIdserviceStates() === 7) {
 			$serviceOrders->setServiceOrdersDateDelivery(Carbon::now()->format('Y-m-d H:i:s'));
 		}
