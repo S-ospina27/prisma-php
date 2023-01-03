@@ -74,13 +74,13 @@ class ServiceOrders implements \JsonSerializable {
 		);
 
 		if (isset(request->service_orders_not_defective_amount)) {
-			if (Str::of(request->service_orders_not_defective_amount)->toNull() != null) {
+			if (request->service_orders_not_defective_amount != "") {
 				$serviceorders->setServiceOrdersNotDefectiveAmount((int) request->service_orders_not_defective_amount);
 			}
 		}
 
 		if (isset(request->service_orders_defective_amount)) {
-			if (Str::of(request->service_orders_defective_amount)->toNull() != null) {
+			if (request->service_orders_defective_amount != "") {
 				$serviceorders->setServiceOrdersDefectiveAmount((int) request->service_orders_defective_amount);
 			}
 		}
@@ -94,7 +94,7 @@ class ServiceOrders implements \JsonSerializable {
 		);
 
 		if (isset(request->service_orders_pending_amount)) {
-			if (Str::of(request->service_orders_pending_amount)->toNull() != null) {
+			if (request->service_orders_pending_amount != "") {
 				$serviceorders->setServiceOrdersPendingAmount((int) request->service_orders_pending_amount);
 			}
 		}
