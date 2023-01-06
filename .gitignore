@@ -1,4 +1,0 @@
-/vendor/
-/storage/**/*.key
-.env
-.phpunit.result.cache
