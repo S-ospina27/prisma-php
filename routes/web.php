@@ -11,8 +11,9 @@ use App\Http\Controllers\Manage\ServiceStatesController;
 use App\Http\Controllers\Manage\StatusController;
 use App\Http\Controllers\Products\ProductsController;
 use App\Http\Controllers\Products\ProductTypesController;
+use App\Http\Controllers\ServiceOrders\GraphicServiceOrdersController;
+use App\Http\Controllers\ServiceOrders\ServiceOrdersController;
 use App\Http\Controllers\UsersController;
-use App\Http\Controllers\ServiceOrdersController;
 
 /**
  * ------------------------------------------------------------------------------
@@ -76,6 +77,10 @@ Route::prefix('api', function() {
         Route::prefix('read', function() {
             Route::get('/', [ServiceOrdersController::class, 'readOrders']);
             Route::get('by-provider/{idprovider_users}', [ServiceOrdersController::class, 'readOrdersProvider']);
+
+            Route::prefix('graphics', function() {
+                Route::get('amount-orders', [GraphicServiceOrdersController::class, 'readAmountOrders']);
+            });
         });
     });
 });

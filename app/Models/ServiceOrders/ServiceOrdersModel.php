@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\ServiceOrders;
 
 use Database\Class\ServiceOrders;
 use LionSql\Drivers\MySQL as DB;
@@ -49,7 +49,9 @@ class ServiceOrdersModel {
 	}
 
 	public function readOrdersDB() {
-		return DB::table('read_service_orders')->select()->getAll();
+		return DB::table('read_service_orders')
+            ->select()
+            ->getAll();
 	}
 
 	public function readOrdersProviderDB($idprovider_users) {
