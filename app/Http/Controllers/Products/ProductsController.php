@@ -24,7 +24,7 @@ class ProductsController {
         Manage::upload(
             request->products_image['tmp_name'],
             $this->products->getProductsImage(),
-            path("public/{$folder}")
+            $folder
         );
     }
 

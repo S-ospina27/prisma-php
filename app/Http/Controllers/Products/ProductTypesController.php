@@ -14,7 +14,9 @@ class ProductTypesController {
 	}
 
     public function createProductType() {
-        $create_typeproducts = $this->productTypesModel->createProductTypesDB(ProductTypes::formFields());
+        $create_typeproducts = $this->productTypesModel->createProductTypesDB(
+            ProductTypes::formFields()
+        );
 
         if ($create_typeproducts->status === 'database-error') {
             return response->error("a ocurrido un error al crear el tipo de producto");
@@ -28,7 +30,9 @@ class ProductTypesController {
     }
 
     public function updateProductType() {
-        $update_typeproducts = $this->productTypesModel->updateProductTypesDB(ProductTypes::formFields());
+        $update_typeproducts = $this->productTypesModel->updateProductTypesDB(
+            ProductTypes::formFields()
+        );
 
         if ($update_typeproducts->status === 'database-error') {
             return response->error("A ocurrido un error al actualizar el tipo de producto");

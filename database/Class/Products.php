@@ -36,9 +36,11 @@ class Products implements \JsonSerializable {
 			isset(request->idproduct_types) ? request->idproduct_types : null
 		);
 
-		$products->setProductsImage(
-			isset(request->products_image) ? request->products_image : null
-		);
+        if (isset(request->products_image)) {
+            if (!is_array(request->products_image)) {
+                $products->setProductsImage(request->products_image);
+            }
+        }
 
 		$products->setProductsDescription(
 			isset(request->products_description) ? request->products_description : null

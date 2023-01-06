@@ -4,10 +4,7 @@ namespace Database\Class;
 
 class ReadProducts implements \JsonSerializable {
 
-	private ?int $idusers = null;
 	private ?int $idproducts = null;
-	private ?int $idproduct_types = null;
-	private ?int $idstatus = null;
 	private ?string $products_reference = null;
 	private ?string $products_image = null;
 	private ?string $products_description = null;
@@ -27,20 +24,8 @@ class ReadProducts implements \JsonSerializable {
 	public static function formFields(): ReadProducts {
 		$readproducts = new ReadProducts();
 
-		$readproducts->setIdusers(
-			isset(request->idusers) ? request->idusers : null
-		);
-
 		$readproducts->setIdproducts(
 			isset(request->idproducts) ? request->idproducts : null
-		);
-
-		$readproducts->setIdproductTypes(
-			isset(request->idproduct_types) ? request->idproduct_types : null
-		);
-
-		$readproducts->setIdstatus(
-			isset(request->idstatus) ? request->idstatus : null
 		);
 
 		$readproducts->setProductsReference(
@@ -74,39 +59,12 @@ class ReadProducts implements \JsonSerializable {
 		return $readproducts;
 	}
 
-	public function getIdusers(): ?int {
-		return $this->idusers;
-	}
-
-	public function setIdusers(?int $idusers): ReadProducts {
-		$this->idusers = $idusers;
-		return $this;
-	}
-
 	public function getIdproducts(): ?int {
 		return $this->idproducts;
 	}
 
 	public function setIdproducts(?int $idproducts): ReadProducts {
 		$this->idproducts = $idproducts;
-		return $this;
-	}
-
-	public function getIdproductTypes(): ?int {
-		return $this->idproduct_types;
-	}
-
-	public function setIdproductTypes(?int $idproduct_types): ReadProducts {
-		$this->idproduct_types = $idproduct_types;
-		return $this;
-	}
-
-	public function getIdstatus(): ?int {
-		return $this->idstatus;
-	}
-
-	public function setIdstatus(?int $idstatus): ReadProducts {
-		$this->idstatus = $idstatus;
 		return $this;
 	}
 
