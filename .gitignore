@@ -2,4 +2,4 @@
 /storage/**/*.key
 .env
 .phpunit.result.cache
-/assets/
+/public/assets/
