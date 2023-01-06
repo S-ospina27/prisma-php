@@ -3,7 +3,7 @@
 namespace App\Models\Manage;
 
 use Database\Class\Roles;
-use LionSql\Drivers\MySQLDriver as DB;
+use LionSql\Drivers\MySQL as DB;
 
 class RolesModel {
 
@@ -12,7 +12,10 @@ class RolesModel {
 	}
 
     public function readRolesDB() {
-        return DB::fetchClass(Roles::class)->table('roles')->select()->getAll();
+        return DB::fetchClass(Roles::class)
+            ->table('roles')
+            ->select()
+            ->getAll();
     }
 
 }

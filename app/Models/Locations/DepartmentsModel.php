@@ -3,7 +3,7 @@
 namespace App\Models\Locations;
 
 use Database\Class\Departments;
-use LionSql\Drivers\MySQLDriver as DB;
+use LionSql\Drivers\MySQL as DB;
 
 class DepartmentsModel {
 

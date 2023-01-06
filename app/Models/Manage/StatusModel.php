@@ -3,7 +3,7 @@
 namespace App\Models\Manage;
 
 use Database\Class\Status;
-use LionSql\Drivers\MySQLDriver as DB;
+use LionSql\Drivers\MySQL as DB;
 
 class StatusModel {
 

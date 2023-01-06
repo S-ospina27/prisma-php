@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Models;
+
 use Database\Class\ServiceOrders;
-use LionSql\Drivers\MySQLDriver as DB;
+use LionSql\Drivers\MySQL as DB;
 
 class ServiceOrdersModel {
 

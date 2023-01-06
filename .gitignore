@@ -1,5 +1,4 @@
 /vendor/
-/storage/secret/
+/storage/**/*.key
 .env
 .phpunit.result.cache
-/public/assets/

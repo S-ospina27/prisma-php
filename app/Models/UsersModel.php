@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use Database\Class\ReadUsers;
 use Database\Class\Users;
-use LionSql\Drivers\MySQLDriver as DB;
+use LionSql\Drivers\MySQL as DB;
 
 class UsersModel {
 

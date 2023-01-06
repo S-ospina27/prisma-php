@@ -6,13 +6,13 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\{ InputInterface, InputArgument, InputOption };
 use Symfony\Component\Console\Output\OutputInterface;
 use LionFiles\Manage;
-use LionSQL\Drivers\MySQLDriver as DB;
+use LionSQL\Drivers\MySQL as DB;
 use App\Traits\Framework\ClassPath;
 use LionHelpers\Str;
 
 class CapsuleCommand extends Command {
 
-    protected static $defaultName = "db:capsule";
+	protected static $defaultName = "db:capsule";
 
     protected function initialize(InputInterface $input, OutputInterface $output) {
 

@@ -3,7 +3,7 @@
 namespace App\Models\Auth;
 
 use Database\Class\Users;
-use LionSql\Drivers\MySQLDriver as DB;
+use LionSql\Drivers\MySQL as DB;
 
 class LoginModel {
 
