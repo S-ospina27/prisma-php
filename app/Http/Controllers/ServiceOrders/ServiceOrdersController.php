@@ -5,6 +5,8 @@ namespace App\Http\Controllers\ServiceOrders;
 use App\Models\ServiceOrders\ServiceOrdersModel;
 use Carbon\Carbon;
 use Database\Class\ServiceOrders;
+use Dompdf\Dompdf;
+use Dompdf\Exception as DomException;
 use LionFiles\Manage;
 use LionSpreadsheet\Spreadsheet;
 use LionHelpers\Str;
@@ -130,7 +132,21 @@ class ServiceOrdersController {
             ->get();
 
         $file_content = Str::of($file_content)->replace("--replace--", $replace)->get();
-        file_put_contents("assets/example.html", $file_content);
+        // file_put_contents("assets/example.html", $file_content);
+
+        try {
+            $dompdf = new Dompdf();
+            $dompdf->loadHtml(
+                utf8_decode($file_content)
+                // "<h1>Hello world</h1>"
+            );
+            $dompdf->setPaper('A4', 'portrait');
+            $dompdf->render();
+            // $dompdf->stream("example.pdf", ['Attachment' => true]);
+            file_put_contents("assets/example.pdf", $dompdf->output());
+        } catch (DomException $e) {
+            return $e;
+        }
 
         // fullname, service_orders_creation_date, service_orders_date_delivery, product_types_name,
         // products_reference, service_orders_finished_product, full_consecutive, service_type
@@ -138,7 +154,7 @@ class ServiceOrdersController {
         // service_orders_total_price, service_orders_observation
 
         return response->success('PDF generado correctamente', [
-            'url' => env->SERVER_URL . "/assets/example.html"
+            'url' => env->SERVER_URL . "/assets/example.pdf"
         ]);
     }
 
