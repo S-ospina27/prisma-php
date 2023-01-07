@@ -33,6 +33,7 @@ class GraphicServiceOrdersModel {
     public function readUnitPercentagesDB() {
         return DB::table('service_orders')
             ->select(
+                DB::alias(DB::count('*'), 'cont'),
                 DB::alias(DB::sum('service_orders_not_defective_amount'), 'cont_success'),
                 DB::alias(DB::sum('service_orders_defective_amount'), 'cont_err')
             )->get();
