@@ -14,9 +14,13 @@ class GraphicServiceOrdersController {
 	}
 
     public function readAmountOrders() {
-        return Arr::of(
-            $this->graphicServiceOrdersModel->readAmountOrdersDB()
-        )->keyBy('service_type');
+        $amountOrders = $this->graphicServiceOrdersModel->readAmountOrdersDB();
+
+        if (isset($amountOrders->status)) {
+            return $amountOrders;
+        }
+
+        return Arr::of($amountOrders)->keyBy('service_type');
     }
 
 }
