@@ -13,6 +13,7 @@ use App\Http\Controllers\Products\ProductsController;
 use App\Http\Controllers\Products\ProductTypesController;
 use App\Http\Controllers\ServiceOrders\GraphicServiceOrdersController;
 use App\Http\Controllers\ServiceOrders\ServiceOrdersController;
+use App\Http\Controllers\ServiceRequest\ServiceRequestController;
 use App\Http\Controllers\UsersController;
 
 /**
@@ -88,4 +89,11 @@ Route::prefix('api', function() {
             });
         });
     });
+
+  Route::prefix('service-request', function() {
+        Route::get('read', [ServiceRequestController::class, 'readServiceRrequest']);
+
+    });
+
 });
+
