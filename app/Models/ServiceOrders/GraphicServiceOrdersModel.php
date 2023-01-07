@@ -33,10 +33,15 @@ class GraphicServiceOrdersModel {
     public function readUnitPercentagesDB() {
         return DB::table('service_orders')
             ->select(
-                DB::alias(DB::count('*'), 'cont'),
+                DB::alias('CONCAT(service_orders_consecutive, "-", idservice_orders)', 'consecutive'),
+                DB::alias('service_orders_amount', 'cont'),
                 DB::alias(DB::sum('service_orders_not_defective_amount'), 'cont_success'),
                 DB::alias(DB::sum('service_orders_defective_amount'), 'cont_err')
-            )->get();
+            )
+            ->where('idservice_states')
+            ->in(1, 2, 3, 5, 6, 7, 8)
+            ->groupBy('idservice_orders')
+            ->getAll();
     }
 
 }
