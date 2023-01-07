@@ -35,7 +35,7 @@ class GraphicServiceOrdersModel {
             ->select(
                 DB::alias(DB::sum('service_orders_not_defective_amount'), 'cont_success'),
                 DB::alias(DB::sum('service_orders_defective_amount'), 'cont_err')
-            )->getAll();
+            )->get();
     }
 
 }
