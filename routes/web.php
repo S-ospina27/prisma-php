@@ -80,6 +80,7 @@ Route::prefix('api', function() {
 
             Route::prefix('graphics', function() {
                 Route::get('amount-orders', [GraphicServiceOrdersController::class, 'readAmountOrders']);
+                Route::get('unit-percentages', [GraphicServiceOrdersController::class, 'readUnitPercentages']);
             });
         });
     });

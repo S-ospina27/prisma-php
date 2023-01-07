@@ -23,4 +23,8 @@ class GraphicServiceOrdersController {
         return Arr::of($amountOrders)->keyBy('service_type');
     }
 
+    public function readUnitPercentages() {
+        return $this->graphicServiceOrdersModel->readUnitPercentagesDB();
+    }
+
 }
