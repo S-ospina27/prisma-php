@@ -24,7 +24,7 @@ class ServiceOrdersController {
                 ->setServiceOrdersCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
                 ->setIdserviceStates(1)
                 ->setServiceOrdersConsecutive(request->service_orders_type === 'MUESTRA' ? 'OM' : 'OS')
-                ->setServiceOrdersNotDefectiveAmount((int) request->service_orders_not_defective_amount)
+                ->setServiceOrdersNotDefectiveAmount((int) request->service_orders_amount)
         );
 
         if($responseCreate->status === 'database-error') {
