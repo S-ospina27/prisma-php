@@ -2,6 +2,7 @@
 
 namespace App\Models\ServiceOrders;
 
+use Database\Class\ReadServiceOrders;
 use Database\Class\ServiceOrders;
 use LionSql\Drivers\MySQL as DB;
 
@@ -53,6 +54,14 @@ class ServiceOrdersModel {
             ->select()
             ->getAll();
 	}
+
+    public function readServiceOrdersByIdDB(ServiceOrders $serviceOrders): ReadServiceOrders {
+        return DB::fetchClass(ReadServiceOrders::class)
+            ->table('read_service_orders')
+            ->select()
+            ->where(DB::equalTo('idservice_orders'), $serviceOrders->getIdserviceOrders())
+            ->get();
+    }
 
 	public function readOrdersProviderDB($idprovider_users) {
         return DB::table('read_service_orders')

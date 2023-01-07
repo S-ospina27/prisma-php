@@ -72,7 +72,11 @@ Route::prefix('api', function() {
     Route::prefix('service-orders', function() {
         Route::post('create', [ServiceOrdersController::class, 'createServiceOrders']);
         Route::post('update', [ServiceOrdersController::class, 'updateServiceOrders']);
-        Route::post('export', [ServiceOrdersController::class, 'exportServiceOrders']);
+
+        Route::prefix('export', function() {
+            Route::post('excel', [ServiceOrdersController::class, 'exportServiceOrdersExcel']);
+            Route::get('pdf/{idservice_orders}', [ServiceOrdersController::class, 'exportServiceOrdersPDF']);
+        });
 
         Route::prefix('read', function() {
             Route::get('/', [ServiceOrdersController::class, 'readOrders']);

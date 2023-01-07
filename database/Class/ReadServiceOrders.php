@@ -4,21 +4,26 @@ namespace Database\Class;
 
 class ReadServiceOrders implements \JsonSerializable {
 
-	private ?string $service_type = null;
+	private ?int $idservice_orders = null;
 	private ?string $fullname = null;
 	private ?int $idusers = null;
+	private ?int $idservice_states = null;
 	private ?int $idproducts = null;
 	private ?string $service_orders_creation_date = null;
 	private ?string $service_orders_date_delivery = null;
 	private ?string $service_orders_finished_product = null;
 	private ?string $service_orders_type = null;
 	private ?string $service_orders_consecutive = null;
+	private ?string $full_consecutive = null;
 	private ?int $service_orders_amount = null;
 	private ?int $service_orders_not_defective_amount = null;
 	private ?int $service_orders_defective_amount = null;
 	private ?string $service_orders_observation = null;
 	private ?int $service_orders_total_price = null;
 	private ?int $service_orders_pending_amount = null;
+	private ?string $service_type = null;
+	private ?string $products_reference = null;
+	private ?string $product_types_name = null;
 
 	public function __construct() {
 
@@ -31,8 +36,8 @@ class ReadServiceOrders implements \JsonSerializable {
 	public static function formFields(): ReadServiceOrders {
 		$readserviceorders = new ReadServiceOrders();
 
-		$readserviceorders->setServiceType(
-			isset(request->service_type) ? request->service_type : null
+		$readserviceorders->setIdserviceOrders(
+			isset(request->idservice_orders) ? request->idservice_orders : null
 		);
 
 		$readserviceorders->setFullname(
@@ -41,6 +46,10 @@ class ReadServiceOrders implements \JsonSerializable {
 
 		$readserviceorders->setIdusers(
 			isset(request->idusers) ? request->idusers : null
+		);
+
+		$readserviceorders->setIdserviceStates(
+			isset(request->idservice_states) ? request->idservice_states : null
 		);
 
 		$readserviceorders->setIdproducts(
@@ -67,6 +76,10 @@ class ReadServiceOrders implements \JsonSerializable {
 			isset(request->service_orders_consecutive) ? request->service_orders_consecutive : null
 		);
 
+		$readserviceorders->setFullConsecutive(
+			isset(request->full_consecutive) ? request->full_consecutive : null
+		);
+
 		$readserviceorders->setServiceOrdersAmount(
 			isset(request->service_orders_amount) ? request->service_orders_amount : null
 		);
@@ -91,15 +104,27 @@ class ReadServiceOrders implements \JsonSerializable {
 			isset(request->service_orders_pending_amount) ? request->service_orders_pending_amount : null
 		);
 
+		$readserviceorders->setServiceType(
+			isset(request->service_type) ? request->service_type : null
+		);
+
+		$readserviceorders->setProductsReference(
+			isset(request->products_reference) ? request->products_reference : null
+		);
+
+		$readserviceorders->setProductTypesName(
+			isset(request->product_types_name) ? request->product_types_name : null
+		);
+
 		return $readserviceorders;
 	}
 
-	public function getServiceType(): ?string {
-		return $this->service_type;
+	public function getIdserviceOrders(): ?int {
+		return $this->idservice_orders;
 	}
 
-	public function setServiceType(?string $service_type): ReadServiceOrders {
-		$this->service_type = $service_type;
+	public function setIdserviceOrders(?int $idservice_orders): ReadServiceOrders {
+		$this->idservice_orders = $idservice_orders;
 		return $this;
 	}
 
@@ -118,6 +143,15 @@ class ReadServiceOrders implements \JsonSerializable {
 
 	public function setIdusers(?int $idusers): ReadServiceOrders {
 		$this->idusers = $idusers;
+		return $this;
+	}
+
+	public function getIdserviceStates(): ?int {
+		return $this->idservice_states;
+	}
+
+	public function setIdserviceStates(?int $idservice_states): ReadServiceOrders {
+		$this->idservice_states = $idservice_states;
 		return $this;
 	}
 
@@ -175,6 +209,15 @@ class ReadServiceOrders implements \JsonSerializable {
 		return $this;
 	}
 
+	public function getFullConsecutive(): ?string {
+		return $this->full_consecutive;
+	}
+
+	public function setFullConsecutive(?string $full_consecutive): ReadServiceOrders {
+		$this->full_consecutive = $full_consecutive;
+		return $this;
+	}
+
 	public function getServiceOrdersAmount(): ?int {
 		return $this->service_orders_amount;
 	}
@@ -226,6 +269,33 @@ class ReadServiceOrders implements \JsonSerializable {
 
 	public function setServiceOrdersPendingAmount(?int $service_orders_pending_amount): ReadServiceOrders {
 		$this->service_orders_pending_amount = $service_orders_pending_amount;
+		return $this;
+	}
+
+	public function getServiceType(): ?string {
+		return $this->service_type;
+	}
+
+	public function setServiceType(?string $service_type): ReadServiceOrders {
+		$this->service_type = $service_type;
+		return $this;
+	}
+
+	public function getProductsReference(): ?string {
+		return $this->products_reference;
+	}
+
+	public function setProductsReference(?string $products_reference): ReadServiceOrders {
+		$this->products_reference = $products_reference;
+		return $this;
+	}
+
+	public function getProductTypesName(): ?string {
+		return $this->product_types_name;
+	}
+
+	public function setProductTypesName(?string $product_types_name): ReadServiceOrders {
+		$this->product_types_name = $product_types_name;
 		return $this;
 	}
 

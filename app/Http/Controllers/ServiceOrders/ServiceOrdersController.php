@@ -72,7 +72,7 @@ class ServiceOrdersController {
         return $this->serviceOrdersModel->readOrdersProviderDB($idprovider_users);
     }
 
-    public function exportServiceOrders() {
+    public function exportServiceOrdersExcel() {
         $export = $this->serviceOrdersModel->exportServiceOrdersDB((object) [
             'date_start' => request->date_start,
             'date_end' => Carbon::parse(request->date_end)->addDay()->format('Y-m-d')
@@ -113,6 +113,32 @@ class ServiceOrdersController {
 
         return response->success("Excel generado correctamente", [
             "url" => Str::of(env->SERVER_URL)->concat("/")->concat($fullpath)->concat($name)->get(),
+        ]);
+    }
+
+    public function exportServiceOrdersPDF($idservice_orders) {
+        $file_content = file_get_contents(storage_path("Template/html/order-service-report.html"));
+        $serviceOrders = $this->serviceOrdersModel->readServiceOrdersByIdDB(
+            (new ServiceOrders())->setIdserviceOrders((int) $idservice_orders)
+        );
+
+        $replace = Str::of("<tr>")
+            ->concat("<td class='text-danger'>")
+            ->concat($serviceOrders->getFullname())
+            ->concat("</td>")
+            ->concat("</tr>")
+            ->get();
+
+        $file_content = Str::of($file_content)->replace("--replace--", $replace)->get();
+        file_put_contents("assets/example.html", $file_content);
+
+        // fullname, service_orders_creation_date, service_orders_date_delivery, product_types_name,
+        // products_reference, service_orders_finished_product, full_consecutive, service_type
+        // service_orders_amount, service_orders_not_defective_amount, service_orders_defective_amount,
+        // service_orders_total_price, service_orders_observation
+
+        return response->success('PDF generado correctamente', [
+            'url' => env->SERVER_URL . "/assets/example.html"
         ]);
     }
 
