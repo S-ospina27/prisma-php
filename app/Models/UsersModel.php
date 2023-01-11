@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Class\ReadUsers;
 use Database\Class\Users;
 use LionSql\Drivers\MySQL as DB;
 
@@ -34,6 +35,14 @@ class UsersModel {
             ->select()
             ->getAll();
 	}
+
+    public function readUsersByIdDB(ReadUsers $readUsers): ReadUsers {
+        return DB::fetchClass(ReadUsers::class)
+            ->table('read_users')
+            ->select()
+            ->where(DB::equalTo('idusers'), $readUsers->getIdusers())
+            ->get();
+    }
 
 	public function updateUsersDB(Users $users) {
 		return DB::call('update_users', [

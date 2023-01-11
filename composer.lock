@@ -667,16 +667,16 @@
         },
         {
             "name": "lion/mailer",
-            "version": "v4.0.0",
+            "version": "v4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Sleon4/Lion-Mailer.git",
-                "reference": "9b893207dae4b8bbad7dac538a0745038fac34a6"
+                "reference": "4eb422ea57ed396e1957a279e35f47f4ebbba788"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Sleon4/Lion-Mailer/zipball/9b893207dae4b8bbad7dac538a0745038fac34a6",
-                "reference": "9b893207dae4b8bbad7dac538a0745038fac34a6",
+                "url": "https://api.github.com/repos/Sleon4/Lion-Mailer/zipball/4eb422ea57ed396e1957a279e35f47f4ebbba788",
+                "reference": "4eb422ea57ed396e1957a279e35f47f4ebbba788",
                 "shasum": ""
             },
             "require": {
@@ -702,9 +702,9 @@
             "description": "Library created for easy email sending based on PHPMailer.",
             "support": {
                 "issues": "https://github.com/Sleon4/Lion-Mailer/issues",
-                "source": "https://github.com/Sleon4/Lion-Mailer/tree/v4.0.0"
+                "source": "https://github.com/Sleon4/Lion-Mailer/tree/v4.1.0"
             },
-            "time": "2022-12-06T20:58:31+00:00"
+            "time": "2023-01-08T22:14:02+00:00"
         },
         {
             "name": "lion/request",
@@ -1232,16 +1232,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.64.1",
+            "version": "2.65.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "f2e59963f4c4f4fdfb9fcfd752e8d2e2b79a4e2c"
+                "reference": "09acf64155c16dc6f580f36569ae89344e9734a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/f2e59963f4c4f4fdfb9fcfd752e8d2e2b79a4e2c",
-                "reference": "f2e59963f4c4f4fdfb9fcfd752e8d2e2b79a4e2c",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/09acf64155c16dc6f580f36569ae89344e9734a3",
+                "reference": "09acf64155c16dc6f580f36569ae89344e9734a3",
                 "shasum": ""
             },
             "require": {
@@ -1330,7 +1330,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-01-01T23:17:36+00:00"
+            "time": "2023-01-06T15:55:01+00:00"
         },
         {
             "name": "phenx/php-font-lib",

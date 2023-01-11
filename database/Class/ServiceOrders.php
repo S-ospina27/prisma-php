@@ -2,8 +2,6 @@
 
 namespace Database\Class;
 
-use LionHelpers\Str;
-
 class ServiceOrders implements \JsonSerializable {
 
 	private ?int $idservice_orders = null;
@@ -21,6 +19,7 @@ class ServiceOrders implements \JsonSerializable {
 	private ?string $service_orders_observation = null;
 	private ?int $service_orders_total_price = null;
 	private ?int $service_orders_pending_amount = null;
+	private ?string $service_orders_code = null;
 
 	public function __construct() {
 
@@ -31,76 +30,80 @@ class ServiceOrders implements \JsonSerializable {
 	}
 
 	public static function formFields(): ServiceOrders {
-		$serviceorders = new ServiceOrders();
+        $serviceorders = new ServiceOrders();
 
-		$serviceorders->setIdserviceOrders(
-			isset(request->idservice_orders) ? (int) request->idservice_orders : null
-		);
+        $serviceorders->setIdserviceOrders(
+            isset(request->idservice_orders) ? (int) request->idservice_orders : null
+        );
 
-		$serviceorders->setIdproducts(
-			isset(request->idproducts) ? (int) request->idproducts : null
-		);
+        $serviceorders->setIdproducts(
+            isset(request->idproducts) ? (int) request->idproducts : null
+        );
 
-		$serviceorders->setIdserviceStates(
-			isset(request->idservice_states) ? (int) request->idservice_states : null
-		);
+        $serviceorders->setIdserviceStates(
+            isset(request->idservice_states) ? (int) request->idservice_states : null
+        );
 
-		$serviceorders->setIdusers(
-			isset(request->idusers) ? (int) request->idusers : null
-		);
+        $serviceorders->setIdusers(
+            isset(request->idusers) ? (int) request->idusers : null
+        );
 
-		$serviceorders->setServiceOrdersCreationDate(
-			isset(request->service_orders_creation_date) ? request->service_orders_creation_date : null
-		);
+        $serviceorders->setServiceOrdersCreationDate(
+            isset(request->service_orders_creation_date) ? request->service_orders_creation_date : null
+        );
 
-		$serviceorders->setServiceOrdersDateDelivery(
-			isset(request->service_orders_date_delivery) ? request->service_orders_date_delivery : null
-		);
+        $serviceorders->setServiceOrdersDateDelivery(
+            isset(request->service_orders_date_delivery) ? request->service_orders_date_delivery : null
+        );
 
-		$serviceorders->setServiceOrdersFinishedProduct(
-			isset(request->service_orders_finished_product) ? request->service_orders_finished_product : null
-		);
+        $serviceorders->setServiceOrdersFinishedProduct(
+            isset(request->service_orders_finished_product) ? request->service_orders_finished_product : null
+        );
 
-		$serviceorders->setServiceOrdersType(
-			isset(request->service_orders_type) ? request->service_orders_type : null
-		);
+        $serviceorders->setServiceOrdersType(
+            isset(request->service_orders_type) ? request->service_orders_type : null
+        );
 
-		$serviceorders->setServiceOrdersConsecutive(
-			isset(request->service_orders_consecutive) ? request->service_orders_consecutive : null
-		);
+        $serviceorders->setServiceOrdersConsecutive(
+            isset(request->service_orders_consecutive) ? request->service_orders_consecutive : null
+        );
 
-		$serviceorders->setServiceOrdersAmount(
-			isset(request->service_orders_amount) ? (int) request->service_orders_amount : null
-		);
+        $serviceorders->setServiceOrdersAmount(
+            isset(request->service_orders_amount) ? (int) request->service_orders_amount : null
+        );
 
-		if (isset(request->service_orders_not_defective_amount)) {
-			if (request->service_orders_not_defective_amount != "") {
-				$serviceorders->setServiceOrdersNotDefectiveAmount((int) request->service_orders_not_defective_amount);
-			}
-		}
+        if (isset(request->service_orders_not_defective_amount)) {
+            if (request->service_orders_not_defective_amount != "") {
+                $serviceorders->setServiceOrdersNotDefectiveAmount((int) request->service_orders_not_defective_amount);
+            }
+        }
 
-		if (isset(request->service_orders_defective_amount)) {
-			if (request->service_orders_defective_amount != "") {
-				$serviceorders->setServiceOrdersDefectiveAmount((int) request->service_orders_defective_amount);
-			}
-		}
+        if (isset(request->service_orders_defective_amount)) {
+            if (request->service_orders_defective_amount != "") {
+                $serviceorders->setServiceOrdersDefectiveAmount((int) request->service_orders_defective_amount);
+            }
+        }
 
-		$serviceorders->setServiceOrdersObservation(
-			isset(request->service_orders_observation) ? request->service_orders_observation : null
-		);
+        $serviceorders->setServiceOrdersObservation(
+            isset(request->service_orders_observation) ? request->service_orders_observation : null
+        );
 
-		$serviceorders->setServiceOrdersTotalPrice(
-			isset(request->service_orders_total_price) ? (int) request->service_orders_total_price : null
-		);
+        $serviceorders->setServiceOrdersTotalPrice(
+            isset(request->service_orders_total_price) ? (int) request->service_orders_total_price : null
+        );
 
-		if (isset(request->service_orders_pending_amount)) {
-			if (request->service_orders_pending_amount != "") {
-				$serviceorders->setServiceOrdersPendingAmount((int) request->service_orders_pending_amount);
-			}
-		}
+        if (isset(request->service_orders_pending_amount)) {
+            if (request->service_orders_pending_amount != "") {
+                $serviceorders->setServiceOrdersPendingAmount((int) request->service_orders_pending_amount);
+            }
+        }
 
-		return $serviceorders;
-	}
+        $serviceorders->setServiceOrdersCode(
+            isset(request->service_orders_code) ? request->service_orders_code : null
+        );
+
+        return $serviceorders;
+    }
 
 	public function getIdserviceOrders(): ?int {
 		return $this->idservice_orders;
@@ -234,6 +237,15 @@ class ServiceOrders implements \JsonSerializable {
 
 	public function setServiceOrdersPendingAmount(?int $service_orders_pending_amount): ServiceOrders {
 		$this->service_orders_pending_amount = $service_orders_pending_amount;
+		return $this;
+	}
+
+	public function getServiceOrdersCode(): ?string {
+		return $this->service_orders_code;
+	}
+
+	public function setServiceOrdersCode(?string $service_orders_code): ServiceOrders {
+		$this->service_orders_code = $service_orders_code;
 		return $this;
 	}
 

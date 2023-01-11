@@ -26,7 +26,8 @@ class ServiceOrdersModel {
 			$serviceOrders->getServiceOrdersNotDefectiveAmount(),
 			$serviceOrders->getServiceOrdersObservation(),
 			$serviceOrders->getServiceOrdersTotalPrice(),
-			$serviceOrders->getServiceOrdersPendingAmount()
+			$serviceOrders->getServiceOrdersPendingAmount(),
+            $serviceOrders->getServiceOrdersCode()
 		])->execute();
 	}
 
@@ -60,6 +61,14 @@ class ServiceOrdersModel {
             ->table('read_service_orders')
             ->select()
             ->where(DB::equalTo('idservice_orders'), $serviceOrders->getIdserviceOrders())
+            ->get();
+    }
+
+    public function readServiceOrdersByCodeDB(ServiceOrders $serviceOrders): ReadServiceOrders {
+        return DB::fetchClass(ReadServiceOrders::class)
+            ->table('read_service_orders')
+            ->select()
+            ->where(DB::equalTo('service_orders_code'), $serviceOrders->getServiceOrdersCode())
             ->get();
     }
 

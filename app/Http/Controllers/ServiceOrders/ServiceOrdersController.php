@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ServiceOrders;
 
 use App\Models\ServiceOrders\ServiceOrdersModel;
+use App\Models\UsersModel;
 use Carbon\Carbon;
 use Database\Class\ServiceOrders;
 use Dompdf\Dompdf;
@@ -10,29 +11,35 @@ use Dompdf\Exception as DomException;
 use LionFiles\Manage;
 use LionSpreadsheet\Spreadsheet;
 use LionHelpers\Str;
+use LionMailer\Mailer;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 
 class ServiceOrdersController {
 
 	private ServiceOrdersModel $serviceOrdersModel;
+    private UsersModel $usersModel;
 
 	public function __construct() {
 		$this->serviceOrdersModel = new ServiceOrdersModel();
+        $this->usersModel = new UsersModel();
 	}
 
 	public function createServiceOrders() {
-        $responseCreate = $this->serviceOrdersModel->createServiceOrdersDB(
-            ServiceOrders::formFields()
-                ->setServiceOrdersCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
-                ->setIdserviceStates(1)
-                ->setServiceOrdersConsecutive(request->service_orders_type === 'MUESTRA' ? 'OM' : 'OS')
-                ->setServiceOrdersNotDefectiveAmount((int) request->service_orders_amount)
-        );
+        $code = md5(uniqid());
+        $serviceOrders = ServiceOrders::formFields()
+            ->setServiceOrdersCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
+            ->setIdserviceStates(1)
+            ->setServiceOrdersConsecutive(request->service_orders_type === 'MUESTRA' ? 'OM' : 'OS')
+            ->setServiceOrdersNotDefectiveAmount((int) request->service_orders_amount)
+            ->setServiceOrdersCode($code);
 
+        $responseCreate = $this->serviceOrdersModel->createServiceOrdersDB($serviceOrders);
         if($responseCreate->status === 'database-error') {
             return response->error('Ocurrió un error al crear la orden de servicio');
         }
 
+        $order = $this->serviceOrdersModel->readServiceOrdersByCodeDB($serviceOrders);
+        $this->exportServiceOrdersPDF($order->getIdserviceOrders());
         return response->success('Orden de servicio creada correctamente');
     }
 
@@ -119,42 +126,70 @@ class ServiceOrdersController {
     }
 
     public function exportServiceOrdersPDF($idservice_orders) {
-        $file_content = file_get_contents(storage_path("Template/html/order-service-report.html"));
-        $serviceOrders = $this->serviceOrdersModel->readServiceOrdersByIdDB(
+        $order = $this->serviceOrdersModel->readServiceOrdersByIdDB(
             (new ServiceOrders())->setIdserviceOrders((int) $idservice_orders)
         );
 
-        $replace = Str::of("<tr>")
-            ->concat("<td class='text-danger'>")
-            ->concat($serviceOrders->getFullname())
-            ->concat("</td>")
-            ->concat("</tr>")
+        $pdf_name = "{$order->getFullConsecutive()}.pdf";
+        $ext = Manage::getExtension("valsan.jpg");
+        $base64 = "data:image/{$ext};base64," . base64_encode(file_get_contents("assets/img/valsan.jpg"));
+        $total = number_format(($order->getServiceOrdersAmount() * $order->getServiceOrdersTotalPrice()));
+
+        $content_pdf = Str::of(file_get_contents(storage_path("Template/html/service-orders-report.html")))
+            ->replace("--IMAGE_REPLACE--", $base64)
+            ->replace("--PROVIDER_NAME_REPLACE--", "{$order->getUsersName()} {$order->getUsersLastname()}")
+            ->replace("--PROVIDER_IDENTIFICATION_REPLACE--", $order->getUsersIdentification())
+            ->replace("--PROVIDER_DOCUMENT_TYPE_REPLACE--", $order->getDocumentTypesName())
+            ->replace("--PROVIDER_ADDRESS_REPLACE--", $order->getUsersAddress())
+            ->replace("--PROVIDER_PHONE_REPLACE--", $order->getUsersPhone())
+            ->replace("--PROVIDER_EMAIL_REPLACE--", $order->getUsersEmail())
+            ->replace("--ORDER_CONSECUTIVE_REPLACE--", $order->getFullConsecutive())
+            ->replace("--ORDER_CREATION_DATE_REPLACE--", $order->getServiceOrdersCreationDate())
+            ->replace("--ORDER_PRODUCT_TYPE_REPLACE--", $order->getProductTypesName())
+            ->replace("--ORDER_REFERENCE_REPLACE--", $order->getProductsReference())
+            ->replace("--ORDER_DESCRIPTION_REPLACE--", $order->getProductsDescription())
+            ->replace("--ORDER_QUANTITY_REPLACE--", $order->getServiceOrdersAmount())
+            ->replace("--ORDER_VALUE_REPLACE--", number_format($order->getServiceOrdersTotalPrice()))
+            ->replace("--ORDER_TOTAL_REPLACE--", $total)
             ->get();
 
-        $file_content = Str::of($file_content)->replace("--replace--", $replace)->get();
-        // file_put_contents("assets/example.html", $file_content);
+        file_put_contents("assets/example.pdf", $content_pdf);
 
         try {
             $dompdf = new Dompdf();
-            $dompdf->loadHtml(
-                utf8_decode($file_content)
-                // "<h1>Hello world</h1>"
-            );
+            $dompdf->loadHtml(utf8_encode($content_pdf));
             $dompdf->setPaper('A4', 'portrait');
             $dompdf->render();
-            // $dompdf->stream("example.pdf", ['Attachment' => true]);
+            // file_put_contents("assets/{$pdf_name}", $dompdf->output());
             file_put_contents("assets/example.pdf", $dompdf->output());
         } catch (DomException $e) {
-            return $e;
+            finish(response->error("A ocurrido un error al generar la orden de servicio [PDF]"));
         }
 
-        // fullname, service_orders_creation_date, service_orders_date_delivery, product_types_name,
-        // products_reference, service_orders_finished_product, full_consecutive, service_type
-        // service_orders_amount, service_orders_not_defective_amount, service_orders_defective_amount,
-        // service_orders_total_price, service_orders_observation
+        // $content_email = Str::of(file_get_contents(storage_path("Template/html/service-orders-email.html")))
+        //     ->replace("--CONSECUTIVE--", $order->getFullConsecutive())
+        //     ->replace("--PROVIDER_NAME--", $order->getFullname())
+        //     ->replace("--URL_SERVICE_ORDERS--", env->SERVER_URL_AUD . "/service-orders")
+        //     ->get();
+
+        // $responseMailer = Mailer::from(env->MAIL_USERNAME)
+        //     ->address($order->getUsersEmail())
+        //     ->replyTo(env->MAIL_USERNAME)
+        //     ->subject('Valsan Networking')
+        //     ->body(utf8_decode($content_email))
+        //     ->altBody(utf8_decode($content_email))
+        //     ->attachment("assets/{$pdf_name}", $order->getFullConsecutive() . '.pdf')
+        //     ->embeddedImage("assets/img/prisma.png", "--IMG_REPLACE--")
+        //     ->send();
+
+        // if ($responseMailer->status === 'error') {
+        //     return response->error('No se ha enviado el correo al proveedor');
+        // }
+
+        // Manage::remove("assets/{$pdf_name}");
 
         return response->success('PDF generado correctamente', [
-            'url' => env->SERVER_URL . "/assets/example.pdf"
+            'url' => env->SERVER_URL . "/assets/example.pdf",
         ]);
     }
 
