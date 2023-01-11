@@ -90,10 +90,13 @@ Route::prefix('api', function() {
         });
     });
 
-  Route::prefix('service-request', function() {
-        Route::get('read', [ServiceRequestController::class, 'readServiceRrequest']);
+    Route::prefix('service-request', function() {
+        Route::get('read', [ServiceRequestController::class, 'readServiceRequest']);
+        Route::post('update', [ServiceRequestController::class, 'updateServiceRequest']);
 
+        Route::prefix('export', function() {
+            Route::post('excel', [ServiceRequestController::class, 'exportServiceRequestExcel']);
+        });
     });
-
 });
 
