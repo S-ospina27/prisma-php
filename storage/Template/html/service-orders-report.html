@@ -16,12 +16,12 @@
 <body>
 	<!-- header -->
 	<img
-	src="--IMAGE_REPLACE--"
-	alt="Valsan Networking"
-	title="Valsan Networking"
-	width="140px"
-	height="40px"
-	style="float: left; position: absolute; margin-top: 25px; margin-left: 25px;"
+		src="--IMAGE_REPLACE--"
+		alt="Valsan Networking"
+		title="Valsan Networking"
+		width="140px"
+		height="40px"
+		style="float: left; position: absolute; margin-top: 25px; margin-left: 25px;"
 	>
 
 	<div style="float: right; position: absolute; margin-top: 15px; margin-right: 25px; text-align: center;">
@@ -30,13 +30,13 @@
 		<label style="color: #AAAAAA; font-size: 14px;">NIT: 901168711-9</label>
 	</div>
 
-	<div style="margin-top: 110px; text-align: center;">
-		<h2>Orden de Servicio</h2>
+	<div style="margin-top: 150px; text-align: center;">
+		<h1>Orden de Servicio</h1>
 	</div>
 
 	<!-- body -->
 	<table style="width: 100%; font-size: 14px; border: 1pt solid #000000; border-radius: 5px;">
-		<thead style="background-color: #E8E8E8; color: #000000;" align="right">
+		<thead align="right">
 			<tr>
 				<th scope="col" style="padding: 6px; border-bottom: 1pt solid #000000;">
 					<label>CONSECUTIVO: --ORDER_CONSECUTIVE_REPLACE--</label>
@@ -49,22 +49,87 @@
 					<table style="width: 100%; border-collapse: collapse;">
 						<thead style="background-color: #E8E8E8; color: #000000;">
 							<tr>
-								<th scope="col" style="padding: 6px; border-bottom: 1pt solid #000000;">NOMBRES</th>
-								<th scope="col" style="padding: 6px; border-bottom: 1pt solid #000000;">IDENTIFICACION</th>
-								<th scope="col" style="padding: 6px; border-bottom: 1pt solid #000000;">TIPO DOCUMENTO</th>
-								<th scope="col" style="padding: 6px; border-bottom: 1pt solid #000000;">DIRECCION</th>
-								<th scope="col" style="padding: 6px; border-bottom: 1pt solid #000000;">TELEFONO</th>
-								<th scope="col" style="padding: 6px; border-bottom: 1pt solid #000000;">CORREO</th>
+								<th scope="col" style="padding: 6px; border-bottom: 1pt solid #000000;">
+									DATOS ORDEN DE SERVICIO
+								</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td style="padding: 6px;">--PROVIDER_NAME_REPLACE--</td>
-								<td style="padding: 6px;">--PROVIDER_IDENTIFICATION_REPLACE--</td>
-								<td style="padding: 6px;">--PROVIDER_DOCUMENT_TYPE_REPLACE--</td>
-								<td style="padding: 6px;">--PROVIDER_ADDRESS_REPLACE--</td>
-								<td style="padding: 6px;">--PROVIDER_PHONE_REPLACE--</td>
-								<td style="padding: 6px;">--PROVIDER_EMAIL_REPLACE--</td>
+								<td>
+									<table style="width: 100%; border-collapse: collapse;">
+										<tbody>
+											<tr>
+												<td style="padding: 6px; width: 300px;">
+													<strong>TIPO ORDEN: </strong>--ORDER_TYPE_REPLACE--
+												</td>
+
+												<td style="padding: 6px; width: 300px;">
+													<strong>ESTADO: </strong>--ORDER_STATE_REPLACE--
+												</td>
+											</tr>
+
+											<tr>
+												<td style="padding: 6px;" colspan="2">
+													<strong>FECHA CREACION: </strong>--ORDER_CREATION_DATE_REPLACE--
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					<table style="width: 100%; border-collapse: collapse;">
+						<thead style="background-color: #E8E8E8; color: #000000;">
+							<tr>
+								<th scope="col" style="padding: 6px; border-bottom: 1pt solid #000000;">
+									DATOS PROVEEDOR
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<table style="width: 100%; border-collapse: collapse;">
+										<tbody>
+											<tr>
+												<td style="padding: 6px; width: 300px;">
+													<strong>NOMBRES: </strong>--PROVIDER_NAME_REPLACE--
+												</td>
+
+												<td style="padding: 6px; width: 300px;">
+													<strong>IDENTIFICACION: </strong>--PROVIDER_IDENTIFICATION_REPLACE--
+												</td>
+											</tr>
+
+											<tr>
+												<td style="padding: 6px; width: 300px;">
+													<strong>TIPO DOCUMENTO: </strong>--PROVIDER_DOCUMENT_TYPE_REPLACE--
+												</td>
+
+												<td style="padding: 6px; width: 300px;">
+													<strong>DIRECCION: </strong>--PROVIDER_ADDRESS_REPLACE--
+												</td>
+											</tr>
+
+											<tr>
+												<td style="padding: 6px; width: 300px;">
+													<strong>TELEFONO: </strong>--PROVIDER_PHONE_REPLACE--
+												</td>
+
+												<td style="padding: 6px; width: 300px;">
+													<strong>CORREO: </strong>--PROVIDER_EMAIL_REPLACE--
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -76,48 +141,34 @@
 					<table style="width: 100%; border-collapse: collapse; text-align: center;">
 						<thead style="background-color: #E8E8E8; color: #000000;">
 							<tr>
-								<th scope="col" style="padding: 6px; border-bottom: 1pt solid #000000;">FECHA INGRESO</th>
+								<th scope="col" style="padding: 6px; border-bottom: 1pt solid #000000;">
+									DATOS PRODUCTO
+								</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td style="padding: 6px;">--ORDER_CREATION_DATE_REPLACE--</td>
-							</tr>
-						</tbody>
-					</table>
-				</td>
-			</tr>
+								<td>
+									<table style="width: 100%; border-collapse: collapse;">
+										<tbody>
+											<tr>
+												<td style="padding: 6px; width: 300px;">
+													<strong>REFERENCIA: </strong>--PRODUCT_REFERENCE_REPLACE--
+												</td>
 
-			<tr>
-				<td>
-					<table style="width: 100%; border-collapse: collapse; text-align: center;">
-						<thead style="background-color: #E8E8E8; color: #000000;">
-							<tr>
-								<th scope="col" style="padding: 6px; border-bottom: 1pt solid #000000;">TIPO PRODUCTO</th>
-								<th scope="col" style="padding: 6px; border-bottom: 1pt solid #000000;">REFERENCIA</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr style="text-align: center;">
-								<td style="padding: 6px; width: 200px;">--ORDER_PRODUCT_TYPE_REPLACE--</td>
-								<td style="padding: 6px; width: 200px;">--ORDER_REFERENCE_REPLACE--</td>
-							</tr>
-						</tbody>
-					</table>
-				</td>
-			</tr>
+												<td style="padding: 6px; width: 300px;">
+													<strong>TIPO: </strong>--PRODUCT_TYPE_REPLACE--
+												</td>
+											</tr>
 
-			<tr>
-				<td>
-					<table style="width: 100%; border-collapse: collapse; text-align: center;">
-						<thead style="background-color: #E8E8E8; color: #000000;">
-							<tr>
-								<th scope="col" style="padding: 6px; border-bottom: 1pt solid #000000;">DESCRIPCION</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td style="padding: 6px;">--ORDER_DESCRIPTION_REPLACE--</td>
+											<tr>
+												<td style="padding: 6px;" colspan="2">
+													<strong>DESCRIPCION: </strong>--PRODUCT_DESCRIPCION_REPLACE--
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
 							</tr>
 						</tbody>
 					</table>

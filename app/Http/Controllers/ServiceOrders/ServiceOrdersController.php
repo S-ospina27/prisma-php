@@ -137,17 +137,19 @@ class ServiceOrdersController {
 
         $content_pdf = Str::of(file_get_contents(storage_path("Template/html/service-orders-report.html")))
             ->replace("--IMAGE_REPLACE--", $base64)
+            ->replace("--ORDER_TYPE_REPLACE--", $order->getServiceOrdersType())
+            ->replace("--ORDER_CONSECUTIVE_REPLACE--", $order->getFullConsecutive())
+            ->replace("--ORDER_STATE_REPLACE--", $order->getServiceType())
+            ->replace("--ORDER_CREATION_DATE_REPLACE--", $order->getServiceOrdersCreationDate())
             ->replace("--PROVIDER_NAME_REPLACE--", "{$order->getUsersName()} {$order->getUsersLastname()}")
             ->replace("--PROVIDER_IDENTIFICATION_REPLACE--", $order->getUsersIdentification())
             ->replace("--PROVIDER_DOCUMENT_TYPE_REPLACE--", $order->getDocumentTypesName())
             ->replace("--PROVIDER_ADDRESS_REPLACE--", $order->getUsersAddress())
             ->replace("--PROVIDER_PHONE_REPLACE--", $order->getUsersPhone())
             ->replace("--PROVIDER_EMAIL_REPLACE--", $order->getUsersEmail())
-            ->replace("--ORDER_CONSECUTIVE_REPLACE--", $order->getFullConsecutive())
-            ->replace("--ORDER_CREATION_DATE_REPLACE--", $order->getServiceOrdersCreationDate())
-            ->replace("--ORDER_PRODUCT_TYPE_REPLACE--", $order->getProductTypesName())
-            ->replace("--ORDER_REFERENCE_REPLACE--", $order->getProductsReference())
-            ->replace("--ORDER_DESCRIPTION_REPLACE--", $order->getProductsDescription())
+            ->replace("--PRODUCT_REFERENCE_REPLACE--", $order->getProductsReference())
+            ->replace("--PRODUCT_TYPE_REPLACE--", $order->getProductTypesName())
+            ->replace("--PRODUCT_DESCRIPCION_REPLACE--", $order->getProductsDescription())
             ->replace("--ORDER_QUANTITY_REPLACE--", $order->getServiceOrdersAmount())
             ->replace("--ORDER_VALUE_REPLACE--", number_format($order->getServiceOrdersTotalPrice()))
             ->replace("--ORDER_TOTAL_REPLACE--", $total)
@@ -160,33 +162,33 @@ class ServiceOrdersController {
             $dompdf->loadHtml(utf8_encode($content_pdf));
             $dompdf->setPaper('A4', 'portrait');
             $dompdf->render();
-            // file_put_contents("assets/{$pdf_name}", $dompdf->output());
-            file_put_contents("assets/example.pdf", $dompdf->output());
+            file_put_contents("assets/{$pdf_name}", $dompdf->output());
+            // file_put_contents("assets/example.pdf", $dompdf->output());
         } catch (DomException $e) {
             finish(response->error("A ocurrido un error al generar la orden de servicio [PDF]"));
         }
 
-        // $content_email = Str::of(file_get_contents(storage_path("Template/html/service-orders-email.html")))
-        //     ->replace("--CONSECUTIVE--", $order->getFullConsecutive())
-        //     ->replace("--PROVIDER_NAME--", $order->getFullname())
-        //     ->replace("--URL_SERVICE_ORDERS--", env->SERVER_URL_AUD . "/service-orders")
-        //     ->get();
+        $content_email = Str::of(file_get_contents(storage_path("Template/html/service-orders-email.html")))
+            ->replace("--CONSECUTIVE--", $order->getFullConsecutive())
+            ->replace("--PROVIDER_NAME--", $order->getFullname())
+            ->replace("--URL_SERVICE_ORDERS--", env->SERVER_URL_AUD . "/service-orders")
+            ->get();
 
-        // $responseMailer = Mailer::from(env->MAIL_USERNAME)
-        //     ->address($order->getUsersEmail())
-        //     ->replyTo(env->MAIL_USERNAME)
-        //     ->subject('Valsan Networking')
-        //     ->body(utf8_decode($content_email))
-        //     ->altBody(utf8_decode($content_email))
-        //     ->attachment("assets/{$pdf_name}", $order->getFullConsecutive() . '.pdf')
-        //     ->embeddedImage("assets/img/prisma.png", "--IMG_REPLACE--")
-        //     ->send();
+        $responseMailer = Mailer::from(env->MAIL_USERNAME)
+            ->address($order->getUsersEmail())
+            ->replyTo(env->MAIL_USERNAME)
+            ->subject('Valsan Networking')
+            ->body(utf8_decode($content_email))
+            ->altBody(utf8_decode($content_email))
+            ->attachment("assets/{$pdf_name}", $order->getFullConsecutive() . '.pdf')
+            ->embeddedImage("assets/img/prisma.png", "--IMG_REPLACE--")
+            ->send();
 
-        // if ($responseMailer->status === 'error') {
-        //     return response->error('No se ha enviado el correo al proveedor');
-        // }
+        if ($responseMailer->status === 'error') {
+            return response->error('No se ha enviado el correo al proveedor');
+        }
 
-        // Manage::remove("assets/{$pdf_name}");
+        Manage::remove("assets/{$pdf_name}");
 
         return response->success('PDF generado correctamente', [
             'url' => env->SERVER_URL . "/assets/example.pdf",
