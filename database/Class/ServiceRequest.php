@@ -34,7 +34,7 @@ class ServiceRequest implements \JsonSerializable {
 		$servicerequest = new ServiceRequest();
 
 		$servicerequest->setIdserviceRequest(
-			isset(request->idservice_request) ? request->idservice_request : null
+			isset(request->idservice_request) ? (int)request->idservice_request : null
 		);
 
 		$servicerequest->setIdusersDealers(
@@ -50,7 +50,7 @@ class ServiceRequest implements \JsonSerializable {
 		);
 
 		$servicerequest->setIdusersTechnical(
-			isset(request->idusers_technical) ? request->idusers_technical : null
+			isset(request->idusers_technical) ? (int) request->idusers_technical : null
 		);
 
 		$servicerequest->setIdserviceStates(
