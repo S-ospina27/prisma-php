@@ -11,15 +11,13 @@ class ServiceRequestModel {
 		
 	}
 
-	public function readServiceRequestDB(){
+	public function readServiceRequestDB() {
 		return DB::table('read_service_request')
 		->select()
 		->getAll();
 	}
 
 	public function updateServiceRequestDB(ServiceRequest $serviceRequest) {
-		// finish($serviceRequest);
-
 		return DB::call('update_services_request', [
 			$serviceRequest->getIdusersTechnical(),
 			$serviceRequest->getIdserviceStates(),
@@ -28,7 +26,6 @@ class ServiceRequestModel {
 		])->execute();
 	}
 
-
 	public function exportServiceRequestDB(object $dates) {
         return DB::table('read_service_request')
             ->select()
@@ -36,4 +33,5 @@ class ServiceRequestModel {
             ->between($dates->date_start, $dates->date_end)
             ->getAll();
     }
+
 }
