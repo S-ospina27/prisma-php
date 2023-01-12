@@ -107,16 +107,13 @@ Route::prefix('api', function() {
 
         Route::prefix('read', function() {
             Route::get('/', [SparePartsController::class, 'readSpareParts']);
-            Route::get('by-spare-parts/{idspare_parts}', [SparePartsController::class, 'readSBypareParts']);
+            Route::get('by-spare-parts/{idspare_parts}', [SparePartsController::class, 'readBySpareParts']);
+        });
 
+        Route::prefix('history', function() {
+            Route::get('read', [PartsHistoryController::class, 'readPartsHistory']);
+            Route::post('create', [PartsHistoryController::class, 'createPartsHistory']);
+            Route::post('update', [PartsHistoryController::class, 'updateSpareParts']);
         });
     });
-
-    Route::prefix('parts-history', function() {
-        Route::get('read', [PartsHistoryController::class, 'readPartsHistory']);
-        Route::post('create', [PartsHistoryController::class, 'CreatePartsHistory']);
-        Route::post('update', [PartsHistoryController::class, 'updateSpareParts']);
-
-    });
 });
-
