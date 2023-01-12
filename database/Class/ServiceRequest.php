@@ -54,7 +54,7 @@ class ServiceRequest implements \JsonSerializable {
 		);
 
 		$servicerequest->setIdserviceStates(
-			isset(request->idservice_states) ? request->idservice_states : null
+			isset(request->idservice_states) ? (int) request->idservice_states : null
 		);
 
 		$servicerequest->setServiceRequestCreationDate(

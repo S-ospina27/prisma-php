@@ -18,10 +18,11 @@ class ServiceRequestModel {
 	}
 
 	public function updateServiceRequestDB(ServiceRequest $serviceRequest) {
-		return DB::call('update_services_request', [
+		return DB::call('update_service_request', [
 			$serviceRequest->getIdusersTechnical(),
 			$serviceRequest->getIdserviceStates(),
 			$serviceRequest->getServiceRequestDateVisit(),
+			$serviceRequest->getServiceRequestDateClose(),
 			$serviceRequest->getIdserviceRequest(),
 		])->execute();
 	}

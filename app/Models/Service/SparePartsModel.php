@@ -12,11 +12,11 @@ class SparePartsModel {
 	}
 
 	public function readSparePartsDB() {
-		return DB::table("spare_parts")->select()->getAll();
+		return DB::table("read_spare_parts")->select()->getAll();
 	}
 
 	public function readSparePartsByIdDB($idspare_parts) {
-		return DB::table('spare_parts')
+		return DB::table('read_spare_parts')
 			->select()
 			->where(DB::equalTo('idspare_parts'), $idspare_parts)
 			->get();
@@ -40,7 +40,7 @@ class SparePartsModel {
 	}
 
 	public function updateSparePartsDigitalQuantityDB(SpareParts $spareParts) {
-		return DB::call('updateSparePartsDigitalQuantity', [
+		return DB::call('update_spare_parts_digital_quantity', [
 			$spareParts->getSparePartsDigitalQuantity(),
 			$spareParts->getIdspareParts()
 		])->execute();
