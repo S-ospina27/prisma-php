@@ -667,16 +667,16 @@
         },
         {
             "name": "lion/mailer",
-            "version": "v4.1.0",
+            "version": "v4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Sleon4/Lion-Mailer.git",
-                "reference": "4eb422ea57ed396e1957a279e35f47f4ebbba788"
+                "reference": "a7e4708889652d4ed687920dca13726c97c23cba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Sleon4/Lion-Mailer/zipball/4eb422ea57ed396e1957a279e35f47f4ebbba788",
-                "reference": "4eb422ea57ed396e1957a279e35f47f4ebbba788",
+                "url": "https://api.github.com/repos/Sleon4/Lion-Mailer/zipball/a7e4708889652d4ed687920dca13726c97c23cba",
+                "reference": "a7e4708889652d4ed687920dca13726c97c23cba",
                 "shasum": ""
             },
             "require": {
@@ -702,9 +702,9 @@
             "description": "Library created for easy email sending based on PHPMailer.",
             "support": {
                 "issues": "https://github.com/Sleon4/Lion-Mailer/issues",
-                "source": "https://github.com/Sleon4/Lion-Mailer/tree/v4.1.0"
+                "source": "https://github.com/Sleon4/Lion-Mailer/tree/v4.2.0"
             },
-            "time": "2023-01-08T22:14:02+00:00"
+            "time": "2023-01-12T19:55:41+00:00"
         },
         {
             "name": "lion/request",
