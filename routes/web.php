@@ -9,11 +9,13 @@ use App\Http\Controllers\Manage\DocumentTypesController;
 use App\Http\Controllers\Manage\RolesController;
 use App\Http\Controllers\Manage\ServiceStatesController;
 use App\Http\Controllers\Manage\StatusController;
+use App\Http\Controllers\PartsHistory\PartsHistoryController;
 use App\Http\Controllers\Products\ProductsController;
 use App\Http\Controllers\Products\ProductTypesController;
 use App\Http\Controllers\ServiceOrders\GraphicServiceOrdersController;
 use App\Http\Controllers\ServiceOrders\ServiceOrdersController;
 use App\Http\Controllers\ServiceRequest\ServiceRequestController;
+use App\Http\Controllers\SpareParts\SparePartsController;
 use App\Http\Controllers\UsersController;
 
 /**
@@ -97,6 +99,24 @@ Route::prefix('api', function() {
         Route::prefix('export', function() {
             Route::post('excel', [ServiceRequestController::class, 'exportServiceRequestExcel']);
         });
+    });
+
+    Route::prefix('spare-parts', function() {
+        Route::post('create', [SparePartsController::class, 'createSpareParts']);
+        Route::post('update', [SparePartsController::class, 'updateSpareParts']);
+
+        Route::prefix('read', function() {
+            Route::get('/', [SparePartsController::class, 'readSpareParts']);
+            Route::get('by-spare-parts/{idspare_parts}', [SparePartsController::class, 'readSBypareParts']);
+
+        });
+    });
+
+    Route::prefix('parts-history', function() {
+        Route::get('read', [PartsHistoryController::class, 'readPartsHistory']);
+        Route::post('create', [PartsHistoryController::class, 'CreatePartsHistory']);
+        Route::post('update', [PartsHistoryController::class, 'updateSpareParts']);
+
     });
 });
 
