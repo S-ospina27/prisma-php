@@ -14,25 +14,19 @@ class SparePartsController {
 	}
 
 	public function readSpareParts() {
-
 		return $this->sparePartsModel->readSparePartsDB();
 	}
 
-public function readSBypareParts($idspare_parts) {
-        return $this->sparePartsModel->readSByparePartsDB($idspare_parts);
+	public function readBySpareParts($idspare_parts) {
+        return $this->sparePartsModel->readBySparePartsDB($idspare_parts);
     }
 
-	public function createSpareParts(){
-
+	public function createSpareParts() {
 		return $this->sparePartsModel->createSparePartsDB(SpareParts::formFields());
-
 	}
 
-	public function updateSpareParts(){
-
+	public function updateSpareParts() {
 		return $this->sparePartsModel->updateSparePartsDB(SpareParts::formFields());
-
 	}
-
 
 }
