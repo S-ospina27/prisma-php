@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\ServiceOrders;
 
 use App\Models\ServiceOrders\ServiceOrdersModel;
-use App\Models\UsersModel;
 use Carbon\Carbon;
 use Database\Class\ServiceOrders;
 use Dompdf\Dompdf;
@@ -17,21 +16,20 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 class ServiceOrdersController {
 
 	private ServiceOrdersModel $serviceOrdersModel;
-    private UsersModel $usersModel;
 
 	public function __construct() {
 		$this->serviceOrdersModel = new ServiceOrdersModel();
-        $this->usersModel = new UsersModel();
 	}
 
 	public function createServiceOrders() {
-        $code = md5(uniqid());
         $serviceOrders = ServiceOrders::formFields()
             ->setServiceOrdersCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
             ->setIdserviceStates(1)
             ->setServiceOrdersConsecutive(request->service_orders_type === 'MUESTRA' ? 'OM' : 'OS')
             ->setServiceOrdersNotDefectiveAmount((int) request->service_orders_amount)
-            ->setServiceOrdersCode($code);
+            ->setServiceOrdersDefectiveAmount(0)
+            ->setServiceOrdersPendingAmount(0)
+            ->setServiceOrdersCode(md5(uniqid()));
 
         $responseCreate = $this->serviceOrdersModel->createServiceOrdersDB($serviceOrders);
         if($responseCreate->status === 'database-error') {
@@ -94,30 +92,32 @@ class ServiceOrdersController {
         $index = 6;
         Spreadsheet::loadExcel(storage_path('Template/Excel/Ordenes_servicio.xlsx'), 'ORDENES_SERVICIO');
 
-        foreach($export as $key=> $item) {
-            Spreadsheet::addBorder("A{$index}:N{$index}", Border::BORDER_THIN, "000000");
-            Spreadsheet::addAlignmentHorizontal("A{$index}:N{$index}", 'center');
-            Spreadsheet::addBackground("A{$index}:N{$index}","f2f2f2");
-            Spreadsheet::setCell("A{$index}", $item->full_consecutive);
-            Spreadsheet::setCell("B{$index}", $item->service_type);
-            Spreadsheet::setCell("C{$index}", $item->products_reference);
-            Spreadsheet::setCell("D{$index}", $item->service_orders_type);
-            Spreadsheet::setCell("E{$index}", $item->fullname);
-            Spreadsheet::setCell("F{$index}", $item->service_orders_amount);
-            Spreadsheet::setCell("G{$index}", $item->service_orders_total_price);
-            Spreadsheet::setCell("H{$index}", $item->service_orders_finished_product);
-            Spreadsheet::setCell("I{$index}", $item->service_orders_creation_date);
-            Spreadsheet::setCell("J{$index}", $item->service_orders_date_delivery);
-            Spreadsheet::setCell("K{$index}", $item->service_orders_defective_amount);
-            Spreadsheet::setCell("L{$index}", $item->service_orders_not_defective_amount);
-            Spreadsheet::setCell("M{$index}", $item->service_orders_pending_amount);
-            Spreadsheet::setCell("N{$index}", $item->service_orders_observation);
-            $index ++;
+        foreach($export as $key => $order) {
+            Spreadsheet::addBorder("A{$index}:O{$index}", Border::BORDER_THIN, "000000");
+            Spreadsheet::addAlignmentHorizontal("A{$index}:O{$index}", 'center');
+            Spreadsheet::addBackground("A{$index}:O{$index}","F2F2F2");
+
+            Spreadsheet::setCell("A{$index}", $order->getFullConsecutive());
+            Spreadsheet::setCell("B{$index}", $order->getServiceType());
+            Spreadsheet::setCell("C{$index}", $order->getProductsReference());
+            Spreadsheet::setCell("D{$index}", $order->getServiceOrdersType());
+            Spreadsheet::setCell("E{$index}", $order->getFullName());
+            Spreadsheet::setCell("F{$index}", $order->getServiceOrdersAmount());
+            Spreadsheet::setCell("G{$index}", $order->getServiceOrdersTotalPrice());
+            Spreadsheet::setCell("H{$index}", $order->getServiceOrdersFinishedProduct());
+            Spreadsheet::setCell("I{$index}", $order->getServiceOrdersCreationDate());
+            Spreadsheet::setCell("J{$index}", $order->getServiceOrdersDateDelivery());
+            Spreadsheet::setCell("K{$index}", $order->getServiceOrdersAmount());
+            Spreadsheet::setCell("L{$index}", $order->getServiceOrdersDefectiveAmount());
+            Spreadsheet::setCell("M{$index}", $order->getServiceOrdersNotDefectiveAmount());
+            Spreadsheet::setCell("N{$index}", $order->getServiceOrdersPendingAmount());
+            Spreadsheet::setCell("O{$index}", $order->getServiceOrdersObservation());
+            $index++;
         }
 
         $fullpath = 'assets/excel/service_orders/';
         $name = Manage::rename('service_orders.xlsx', 'EXCEL');
-        manage::folder($fullpath);
+        Manage::folder($fullpath);
         Spreadsheet::saveExcel(Str::of($fullpath)->concat($name)->get());
 
         return response->success("Excel generado correctamente", [
@@ -170,7 +170,7 @@ class ServiceOrdersController {
 
         $content_email = Str::of(file_get_contents(storage_path("Template/html/service-orders-email.html")))
             ->replace("--CONSECUTIVE--", $order->getFullConsecutive())
-            ->replace("--PROVIDER_NAME--", $order->getFullname())
+            ->replace("--PROVIDER_NAME--", "{$order->getUsersName()} {$order->getUsersLastname()}")
             ->replace("--URL_SERVICE_ORDERS--", env->SERVER_URL_AUD . "/service-orders")
             ->get();
 

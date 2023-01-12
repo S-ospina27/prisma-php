@@ -24,6 +24,7 @@ class ServiceOrdersModel {
 			$serviceOrders->getServiceOrdersConsecutive(),
 			$serviceOrders->getServiceOrdersAmount(),
 			$serviceOrders->getServiceOrdersNotDefectiveAmount(),
+            $serviceOrders->getServiceOrdersDefectiveAmount(),
 			$serviceOrders->getServiceOrdersObservation(),
 			$serviceOrders->getServiceOrdersTotalPrice(),
 			$serviceOrders->getServiceOrdersPendingAmount(),
@@ -80,7 +81,8 @@ class ServiceOrdersModel {
     }
 
     public function exportServiceOrdersDB(object $dates) {
-        return DB::table('read_service_orders')
+        return DB::fetchClass(ReadServiceOrders::class)
+            ->table('read_service_orders')
             ->select()
             ->where('service_orders_creation_date')
             ->between($dates->date_start, $dates->date_end)
