@@ -26,6 +26,7 @@ class SparePartsController {
 	}
 
 	public function updateSpareParts() {
+
 		return $this->sparePartsModel->updateSparePartsDB(SpareParts::formFields());
 	}
 
