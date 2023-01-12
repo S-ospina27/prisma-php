@@ -12,40 +12,25 @@ class SparePartsModel {
 		
 	}
 
-	public function readSparePartsDB() {
-		return DB::table("read_spare_parts")->select()->getAll();
-	}
+    public function createSparePartsDB(SpareParts $spareParts) {
+        return DB::call('create_spare_parts', [
+            $spareParts->getSparePartsName(),
+            $spareParts->getSparePartsAmount()
+        ])->execute();
+    }
 
-	public function readSparePartsByIdDB(SpareParts $spareParts): ReadSpareParts {
-		return DB::fetchClass(ReadSpareParts::class)
-            ->table('read_spare_parts')
-			->select()
-			->where(DB::equalTo('idspare_parts'), $spareParts->getIdspareParts())
-			->get();
-	}
+    public function readSparePartsDB() {
+        return DB::table("spare_parts")
+            ->select()
+            ->getAll();
+    }
 
-	public function createSparePartsDB(SpareParts $spareParts) {
-		return DB::call('create_spare_parts', [
-			$spareParts->getSparePartsName(),
-			$spareParts->getSparePartsAmount(),
-			$spareParts->getSparePartsDigitalQuantity()
-		])->execute();
-	}
-
-	public function updateSparePartsDB(SpareParts $spareParts) {
-		return DB::call('update_spare_parts', [
-			$spareParts->getSparePartsName(),
-			$spareParts->getSparePartsAmount(),
-			$spareParts->getSparePartsDigitalQuantity(),
-			$spareParts->getIdspareParts()
-		])->execute();
-	}
-
-	public function updateSparePartsDigitalQuantityDB(SpareParts $spareParts) {
-		return DB::call('update_spare_parts_digital_quantity', [
-			$spareParts->getSparePartsDigitalQuantity(),
-			$spareParts->getIdspareParts()
-		])->execute();
-	}
+    public function updateSparePartsDB(SpareParts $spareParts) {
+        return DB::call('update_spare_parts', [
+            $spareParts->getSparePartsName(),
+            $spareParts->getSparePartsAmount(),
+            $spareParts->getIdspareParts()
+        ])->execute();
+    }
 
 }

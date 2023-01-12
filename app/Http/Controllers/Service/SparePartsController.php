@@ -10,48 +10,46 @@ class SparePartsController {
 	private SparePartsModel $sparePartsModel;
 
 	public function __construct() {
-		$this->sparePartsModel	= new SparePartsModel();
+		$this->sparePartsModel= new SparePartsModel();
 	}
 
-	public function readSpareParts() {
-		return $this->sparePartsModel->readSparePartsDB();
-	}
+    public function createSpareParts() {
+        $responseCreate = $this->sparePartsModel->createSparePartsDB(SpareParts::formFields());
+        if ($responseCreate->status === 'database-error') {
+            return response->error("A ocurrido un error al crear el repuesto");
+        }
 
-	public function readSparePartsById($idspare_parts) {
-		return $this->sparePartsModel->readSparePartsByIdDB($idspare_parts);
-	}
+        return response->success("Repuesto registrado correctamente");
+    }
 
-	public function createSpareParts() {
-		$createSpareParts = $this->sparePartsModel->createSparePartsDB(
-			SpareParts::formFields()->setSparePartsDigitalQuantity(request->spare_parts_amount)
-		);
+    public function readSpareParts() {
+        return $this->sparePartsModel->readSparePartsDB();
+    }
 
-		if($createSpareParts->status === 'database-error') {
-			return response->error('Ocurrió un error al crear el repuesto');
-		}
+    public function updateSpareParts() {
+        $spareParts = SpareParts::formFields();
+        $separate = explode("-", $spareParts->getSparePartsAmount());
 
-		return response->success('Repuesto creado correctamente');
-	}
+        if (count($separate) > 1) {
+            $spareParts->setSparePartsAmount(abs($spareParts->getSparePartsAmount()) * -1);
+        }
 
-	public function updateSpareParts() {
-        $spareParts = (new SpareParts())
-            ->setIdspareParts((int) request->idspare_parts)
-            ->setSparePartsAmount((int) request->spare_parts_amount);
+        if ($spareParts->getSparePartsAmount() < 0) {
+            $spareParts->setSparePartsAmount(
+                (int) request->spare_parts_amount_copy - abs($spareParts->getSparePartsAmount())
+            );
+        } else {
+            $spareParts->setSparePartsAmount(
+                (int) request->spare_parts_amount_copy + $spareParts->getSparePartsAmount()
+            );
+        }
 
-		$sparePartsRead = $this->sparePartsModel->readSparePartsByIdDB($spareParts);
+        $responseUpdate = $this->sparePartsModel->updateSparePartsDB($spareParts);
+        if ($responseUpdate->status === 'database-error') {
+            return response->error("A ocurrido un error al actualizar el repuesto");
+        }
 
-        $diference = $spareParts->getSparePartsAmount() - $sparePartsRead->getSparePartsAmount();
-        $spareParts
-            ->setSparePartsAmount($sparePartsRead->getSparePartsAmount() + $diference)
-            ->setSparePartsDigitalQuantity($sparePartsRead->getSparePartsDigitalQuantity() + $diference)
-            ->setSparePartsName($sparePartsRead->getSparePartsName());
-
-		$updateSpareParts = $this->sparePartsModel->updateSparePartsDB($spareParts);
-		if($updateSpareParts->status === 'database-error') {
-			return response->error('Ocurrió un error al actualizar el repuesto');
-		}
-
-		return response->success('Repuesto actualizado correctamente');
-	}
+        return response->success("Repuesto actualizado correctamente");
+    }
 
 }

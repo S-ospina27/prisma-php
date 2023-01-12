@@ -15,6 +15,7 @@ use App\Http\Controllers\Service\PartsHistoryController;
 use App\Http\Controllers\Service\ServiceOrdersController;
 use App\Http\Controllers\Service\ServiceRequestController;
 use App\Http\Controllers\Service\SparePartsController;
+use App\Http\Controllers\Service\TechnicalInventoryController;
 use App\Http\Controllers\UsersController;
 use LionRoute\Route;
 
@@ -104,15 +105,11 @@ Route::prefix('api', function() {
     Route::prefix('spare-parts', function() {
         Route::post('create', [SparePartsController::class, 'createSpareParts']);
         Route::post('update', [SparePartsController::class, 'updateSpareParts']);
+        Route::get('read', [SparePartsController::class, 'readSpareParts']);
 
-        Route::prefix('read', function() {
-            Route::get('/', [SparePartsController::class, 'readSpareParts']);
-            Route::get('by-spare-parts/{idspare_parts}', [SparePartsController::class, 'readBySpareParts']);
-        });
-
-        Route::prefix('history', function() {
-            Route::get('read', [PartsHistoryController::class, 'readPartsHistory']);
-            Route::post('create', [PartsHistoryController::class, 'createPartsHistory']);
+        Route::prefix('inventory', function() {
+            Route::post('create', [TechnicalInventoryController::class, 'createTechnicalInventory']);
+            Route::get('read', [TechnicalInventoryController::class, 'readTechnicalInventory']);
         });
     });
 });

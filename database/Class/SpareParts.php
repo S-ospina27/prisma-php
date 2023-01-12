@@ -7,7 +7,6 @@ class SpareParts implements \JsonSerializable {
 	private ?int $idspare_parts = null;
 	private ?string $spare_parts_name = null;
 	private ?int $spare_parts_amount = null;
-	private ?int $spare_parts_digital_quantity = null;
 
 	public function __construct() {
 
@@ -21,7 +20,7 @@ class SpareParts implements \JsonSerializable {
 		$spareparts = new SpareParts();
 
 		$spareparts->setIdspareParts(
-			isset(request->idspare_parts) ? request->idspare_parts : null
+			isset(request->idspare_parts) ? (int) request->idspare_parts : null
 		);
 
 		$spareparts->setSparePartsName(
@@ -29,11 +28,7 @@ class SpareParts implements \JsonSerializable {
 		);
 
 		$spareparts->setSparePartsAmount(
-			isset(request->spare_parts_amount) ? request->spare_parts_amount : null
-		);
-
-		$spareparts->setSparePartsDigitalQuantity(
-			isset(request->spare_parts_digital_quantity) ? request->spare_parts_digital_quantity : null
+			isset(request->spare_parts_amount) ? (int) request->spare_parts_amount : null
 		);
 
 		return $spareparts;
@@ -63,15 +58,6 @@ class SpareParts implements \JsonSerializable {
 
 	public function setSparePartsAmount(?int $spare_parts_amount): SpareParts {
 		$this->spare_parts_amount = $spare_parts_amount;
-		return $this;
-	}
-
-	public function getSparePartsDigitalQuantity(): ?int {
-		return $this->spare_parts_digital_quantity;
-	}
-
-	public function setSparePartsDigitalQuantity(?int $spare_parts_digital_quantity): SpareParts {
-		$this->spare_parts_digital_quantity = $spare_parts_digital_quantity;
 		return $this;
 	}
 
