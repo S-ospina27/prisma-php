@@ -42,4 +42,12 @@ class SparePartsModel {
 		])->execute();
 
 	}
+	public function updateSparePartsDigitalQuantityDB(SpareParts $spareParts){
+
+		return DB::call('updateSparePartsDigitalQuantity',[
+			$spareParts->getSparePartsDigitalQuantity(),
+			$spareParts->getIdspareParts()
+		])->execute();
+
+	}
 }

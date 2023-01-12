@@ -6,6 +6,7 @@ use App\Models\PartsHistory\PartsHistoryModel;
 use App\Models\Spareparts\SparePartsModel;
 use Carbon\Carbon;
 use Database\Class\PartsHistory;
+use Database\Class\SpareParts;
 
 
 class PartsHistoryController {
@@ -28,7 +29,18 @@ class PartsHistoryController {
 
 
 	public function CreatePartsHistory(){
-		return $readSpart=  $this->sparePartsModel->readSparePartsDB();
+		$readSpart=  $this->sparePartsModel->readSByparePartsDB(request->idspare_parts);
+
+		if(request->parts_history_digital_quantity > $readSpart->spare_parts_digital_quantity){
+			return response->error("El inventario no cuenta con la cantidad suficiente de repuestos que solicitas");
+		}
+		$this->sparePartsModel->updateSparePartsDigitalQuantityDB(
+			SpareParts::formFields()
+			->setSparePartsDigitalQuantity(
+				$readSpart->spare_parts_digital_quantity - request->parts_history_digital_quantity
+			)
+			->setIdspareParts(request->idspare_parts)
+		);
 		return $this->partsHistoryModel->CreatePartsHistoryDB(
 			PartsHistory::formFields()
 			->setPartsHistoryCreationDate(
