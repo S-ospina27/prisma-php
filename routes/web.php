@@ -113,7 +113,6 @@ Route::prefix('api', function() {
         Route::prefix('history', function() {
             Route::get('read', [PartsHistoryController::class, 'readPartsHistory']);
             Route::post('create', [PartsHistoryController::class, 'createPartsHistory']);
-            Route::post('update', [PartsHistoryController::class, 'updateSpareParts']);
         });
     });
 });

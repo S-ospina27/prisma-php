@@ -22,7 +22,7 @@ class SparePartsController {
 	}
 
 	public function createSpareParts() {
-		$createSpareParts= $this->sparePartsModel->createSparePartsDB(
+		$createSpareParts = $this->sparePartsModel->createSparePartsDB(
 			SpareParts::formFields()->setSparePartsDigitalQuantity(request->spare_parts_amount)
 		);
 
@@ -34,23 +34,24 @@ class SparePartsController {
 	}
 
 	public function updateSpareParts() {
+        $spareParts = (new SpareParts())
+            ->setIdspareParts((int) request->idspare_parts)
+            ->setSparePartsAmount((int) request->spare_parts_amount);
 
-		$parts= $this->sparePartsModel->readSparePartsByIdDB(request->idspare_parts);
+		$sparePartsRead = $this->sparePartsModel->readSparePartsByIdDB($spareParts);
 
-		if(request->spare_parts_amount > $parts->spare_parts_digital_quantity) {
-			$spare_parts_amount=request->spare_parts_amount + $parts->spare_parts_amount;
-			$amount_quantity=request->spare_parts_amount + $parts->spare_parts_digital_quantity;
-		}
+        $diference = $spareParts->getSparePartsAmount() - $sparePartsRead->getSparePartsAmount();
+        $spareParts
+            ->setSparePartsAmount($sparePartsRead->getSparePartsAmount() + $diference)
+            ->setSparePartsDigitalQuantity($sparePartsRead->getSparePartsDigitalQuantity() + $diference)
+            ->setSparePartsName($sparePartsRead->getSparePartsName());
 
-		$updateSpareParts = $this->sparePartsModel->updateSparePartsDB(
-			SpareParts::formFields()
-			->setSparePartsDigitalQuantity($amount_quantity)
-			->setSparePartsAmount($spare_parts_amount)
-		);
+		$updateSpareParts = $this->sparePartsModel->updateSparePartsDB($spareParts);
 		if($updateSpareParts->status === 'database-error') {
 			return response->error('Ocurrió un error al actualizar el repuesto');
 		}
-		return response->success('Repuesto Actualizado  correctamente');
+
+		return response->success('Repuesto actualizado correctamente');
 	}
 
 }
