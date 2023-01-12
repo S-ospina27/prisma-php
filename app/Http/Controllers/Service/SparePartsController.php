@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\SpareParts;
+namespace App\Http\Controllers\Service;
 
-use App\Models\Spareparts\SparePartsModel;
+use App\Models\Service\SparePartsModel;
 use Database\Class\SpareParts;
 
 class SparePartsController {
@@ -17,8 +17,8 @@ class SparePartsController {
 		return $this->sparePartsModel->readSparePartsDB();
 	}
 
-	public function readBySpareParts($idspare_parts) {
-        return $this->sparePartsModel->readBySparePartsDB($idspare_parts);
+	public function readSparePartsById($idspare_parts) {
+        return $this->sparePartsModel->readSparePartsByIdDB($idspare_parts);
     }
 
 	public function createSpareParts() {

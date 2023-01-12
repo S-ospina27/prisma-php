@@ -1,6 +1,5 @@
 <?php
 
-use LionRoute\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Locations\CitiesController;
@@ -9,14 +8,15 @@ use App\Http\Controllers\Manage\DocumentTypesController;
 use App\Http\Controllers\Manage\RolesController;
 use App\Http\Controllers\Manage\ServiceStatesController;
 use App\Http\Controllers\Manage\StatusController;
-use App\Http\Controllers\PartsHistory\PartsHistoryController;
 use App\Http\Controllers\Products\ProductsController;
 use App\Http\Controllers\Products\ProductTypesController;
-use App\Http\Controllers\ServiceOrders\GraphicServiceOrdersController;
-use App\Http\Controllers\ServiceOrders\ServiceOrdersController;
-use App\Http\Controllers\ServiceRequest\ServiceRequestController;
-use App\Http\Controllers\SpareParts\SparePartsController;
+use App\Http\Controllers\Service\GraphicServiceOrdersController;
+use App\Http\Controllers\Service\PartsHistoryController;
+use App\Http\Controllers\Service\ServiceOrdersController;
+use App\Http\Controllers\Service\ServiceRequestController;
+use App\Http\Controllers\Service\SparePartsController;
 use App\Http\Controllers\UsersController;
+use LionRoute\Route;
 
 /**
  * ------------------------------------------------------------------------------

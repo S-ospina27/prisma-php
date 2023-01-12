@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\ServiceRequest;
+namespace App\Http\Controllers\Service;
 
-use App\Models\ServiceRequest\ServiceRequestModel;
+use App\Models\Service\ServiceRequestModel;
 use Carbon\Carbon;
 use LionSpreadsheet\Spreadsheet;
 use Database\Class\ServiceRequest;

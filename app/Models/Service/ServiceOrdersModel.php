@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\ServiceOrders;
+namespace App\Models\Service;
 
 use Database\Class\ReadServiceOrders;
 use Database\Class\ServiceOrders;

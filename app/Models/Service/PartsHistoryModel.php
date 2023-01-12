@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\PartsHistory;
+namespace App\Models\Service;
 
 use LionSQL\Drivers\MySQL as DB;
 use Database\Class\PartsHistory;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Spareparts;
+namespace App\Models\Service;
 
 use Database\Class\SpareParts;
 use LionSQL\Drivers\MySQL as DB;
@@ -15,7 +15,7 @@ class SparePartsModel {
 		return DB::table("spare_parts")->select()->getAll();
 	}
 
-	public function readBySparePartsDB($idspare_parts) {
+	public function readSparePartsByIdDB($idspare_parts) {
 		return DB::table('spare_parts')
 			->select()
 			->where(DB::equalTo('idspare_parts'), $idspare_parts)

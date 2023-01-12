@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\PartsHistory;
+namespace App\Http\Controllers\Service;
 
-use App\Models\PartsHistory\PartsHistoryModel;
-use App\Models\Spareparts\SparePartsModel;
+use App\Models\Service\PartsHistoryModel;
+use App\Models\Service\SparePartsModel;
 use Carbon\Carbon;
 use Database\Class\PartsHistory;
 use Database\Class\SpareParts;
@@ -23,7 +23,7 @@ class PartsHistoryController {
 	}
 
 	public function createPartsHistory() {
-		$readSpart = $this->sparePartsModel->readSByparePartsDB(request->idspare_parts);
+		$readSpart = $this->sparePartsModel->readSparePartsByIdDB(request->idspare_parts);
 		if(request->parts_history_digital_quantity > $readSpart->spare_parts_digital_quantity) {
 			return response->error("El inventario no cuenta con la cantidad suficiente de repuestos que solicitas");
 		}

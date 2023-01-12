@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\ServiceOrders;
+namespace App\Models\Service;
 
 use LionSQL\Drivers\MySQL as DB;
 

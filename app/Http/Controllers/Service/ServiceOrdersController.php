@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\ServiceOrders;
+namespace App\Http\Controllers\Service;
 
-use App\Models\ServiceOrders\ServiceOrdersModel;
+use App\Models\Service\ServiceOrdersModel;
 use Carbon\Carbon;
 use Database\Class\ServiceOrders;
 use Dompdf\Dompdf;

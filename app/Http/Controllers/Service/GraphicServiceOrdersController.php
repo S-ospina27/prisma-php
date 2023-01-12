@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\ServiceOrders;
+namespace App\Http\Controllers\Service;
 
-use App\Models\ServiceOrders\GraphicServiceOrdersModel;
+use App\Models\Service\GraphicServiceOrdersModel;
 use LionHelpers\Arr;
 
 class GraphicServiceOrdersController {
