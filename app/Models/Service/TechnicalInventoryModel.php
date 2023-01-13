@@ -22,10 +22,17 @@ class TechnicalInventoryModel {
         ])->execute();
     }
 
+    public function updateTechnicalInventoryDB(TechnicalInventory $technicalInventory) {
+        return DB::call('update_technical_inventory', [
+            $technicalInventory->getIdserviceStates(),
+            $technicalInventory->getTechnicalInventoryDescription(),
+            $technicalInventory->getIdtechnicalInventory()
+        ])->execute();
+    }
     public function readTechnicalInventoryDB() {
-        return DB::table('technical_inventory')
-            ->select()
-            ->getAll();
+        return DB::table('read_technical_inventory')
+        ->select()
+        ->getAll();
     }
 
 }
