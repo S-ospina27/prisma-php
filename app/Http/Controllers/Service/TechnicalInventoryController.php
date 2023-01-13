@@ -40,21 +40,30 @@ class TechnicalInventoryController {
     public function updateTechnicalInventory(){
         $sparts = SpareParts::formFields();
         $Technical = TechnicalInventory::formFields();
-       $readSpareParts= $this->sparePartsModel->readBySparePartsDB($sparts->getIdspareParts());
+        $readSpareParts= $this->sparePartsModel->readBySparePartsDB($sparts->getIdspareParts());
         $sparts->setSparePartsAmount($readSpareParts->spare_parts_amount);
 
-        if($Technical->getTechnicalInventoryAmount() > $sparts->getSparePartsAmount()){
+        if($Technical->getTechnicalInventoryAmount() > $sparts->getSparePartsAmount()) {
             return response->error("la cantidad ingresada sobre pasa a la que hay en el inventario");
         }
-        elseif($Technical->getIdserviceStates() == 3){
+        if($Technical->getIdserviceStates() == 3) {
             $sparts->setSparePartsAmount($sparts->getSparePartsAmount() - $Technical->getTechnicalInventoryAmount());
+            $this->sparePartsModel->update_spare_parts_amount($sparts);
+            $responseUpdate = $this->technicalInventoryModel->updateTechnicalInventoryDB($Technical);
+            return response->success("Inventario del tecnico actualizado correctamente 3");
         }
-        $this->sparePartsModel->update_spare_parts_amount($sparts);
-        $responseUpdate = $this->technicalInventoryModel->updateTechnicalInventoryDB($Technical);
-        if ($responseUpdate->status === 'database-error') {
-            return response->error("A ocurrido un error al actualizar el inventario del tecnico");
+        elseif ($Technical->getIdserviceStates() == 8) {
+            if( $Technical->getTechnicalInventoryQuantityUsed() <= $Technical->getTechnicalInventoryAmount()) {
+                $Technical->setTechnicalInventoryAmount(
+                    $Technical->getTechnicalInventoryAmount() - $Technical->getTechnicalInventoryQuantityUsed()
+                );
+                $responseUpdate = $this->technicalInventoryModel->updateReduceTechnicalInventoryDB($Technical);
+                return response->success("Inventario del tecnico actualizado correctamente 8");
+            }
+            else{
+             return response->error("Error la cantidad de ingresada de repuestos usados es mayor a la cantidad de repuesto que tiene en su inventario verifique porfavor");
+            }
         }
-        return response->success("Inventario del tecnico actualizado correctamente");
     }
 
 }

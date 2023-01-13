@@ -29,6 +29,16 @@ class TechnicalInventoryModel {
             $technicalInventory->getIdtechnicalInventory()
         ])->execute();
     }
+
+     public function updateReduceTechnicalInventoryDB(TechnicalInventory $technicalInventory) {
+        return DB::call('update_reduce_technical_inventory', [
+            $technicalInventory->getTechnicalInventoryAmount(),
+            $technicalInventory->getTechnicalInventoryQuantityUsed(),
+            $technicalInventory->getIdserviceStates(),
+            $technicalInventory->getIdtechnicalInventory()
+        ])->execute();
+    }
+
     public function readTechnicalInventoryDB() {
         return DB::table('read_technical_inventory')
         ->select()
