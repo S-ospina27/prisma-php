@@ -93,12 +93,8 @@ class TechnicalInventoryController {
                 $this->technicalInventoryModel->updateReduceTechnicalInventoryDB($Technical);
                 return response->success("se registraron la cantidad de repuestos usados correctamente");
             }
-            else{
-            return response->error("Error la cantidad de ingresada de repuestos usados es mayor a la cantidad de repuesto que tiene en su inventario verifique porfavor");
         }
     }
-  }
-
 
 
 }
