@@ -63,24 +63,24 @@ class TechnicalInventoryController {
                     ->setTechnicalInventoryQuantityUsed(0)
                     ->setTechnicalInventoryQuantityAvailable((int) request->technical_inventory_amount)
             );
+        } else {
+            $calculate = $this->technicalInventory->getTechnicalInventoryAmount() + $this->technicalInventory->getTechnicalInventoryQuantityAvailable();
+
+            if ($this->technicalInventory->getIdserviceStates() === 4) {
+                $calculate -= $this->technicalInventory->getTechnicalInventoryAmount();
+            } elseif ($this->technicalInventory->getIdserviceStates() === 8) {
+                $this->quantityValidate($quantity);
+                $this->updateAmount($quantity);
+            }
+
+            $responseRequest = $this->technicalInventoryModel->updateTechnicalInventoryByPendingDB(
+                $this->technicalInventory
+                    ->setIdserviceStates(6)
+                    ->setTechnicalInventoryQuantityUsed(0)
+                    ->setTechnicalInventoryAmount($calculate)
+                    ->setTechnicalInventoryQuantityAvailable($calculate)
+            );
         }
-
-        $calculate = $this->technicalInventory->getTechnicalInventoryAmount() + $this->technicalInventory->getTechnicalInventoryQuantityAvailable();
-
-        if ($this->technicalInventory->getIdserviceStates() === 4) {
-            $calculate -= $this->technicalInventory->getTechnicalInventoryAmount();
-        } elseif ($this->technicalInventory->getIdserviceStates() === 8) {
-            $this->quantityValidate($quantity);
-            $this->updateAmount($quantity);
-        }
-
-        $responseRequest = $this->technicalInventoryModel->updateTechnicalInventoryByPendingDB(
-            $this->technicalInventory
-                ->setIdserviceStates(6)
-                ->setTechnicalInventoryQuantityUsed(0)
-                ->setTechnicalInventoryAmount($calculate)
-                ->setTechnicalInventoryQuantityAvailable($calculate)
-        );
 
         if ($responseRequest->status === 'database-error') {
             return response->error("A ocurrido un error al añadir el repuesto al inventario del tecnico");
@@ -96,7 +96,7 @@ class TechnicalInventoryController {
     public function updateTechnicalInventory() {
         $responseUpdate = null;
         $technicalInventory = TechnicalInventory::formFields()
-            ->setTechnicalInventoryCreationDate(Carbon::now()->format('Y-m-d H:i:s'));
+        ->setTechnicalInventoryCreationDate(Carbon::now()->format('Y-m-d H:i:s'));
 
         if (in_array($technicalInventory->getIdserviceStates(), [3, 5, 7, 8])) {
             $responseUpdate = $this->technicalInventoryModel->updateTechnicalInventoryByStateDB(
