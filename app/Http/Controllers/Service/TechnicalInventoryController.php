@@ -4,100 +4,115 @@ namespace App\Http\Controllers\Service;
 
 use App\Models\Service\TechnicalInventoryModel;
 use App\Models\Service\SparePartsModel;
+use Carbon\Carbon;
 use Database\Class\TechnicalInventory;
 use Database\Class\SpareParts;
-
 
 class TechnicalInventoryController {
 
     private TechnicalInventoryModel $technicalInventoryModel;
     private SparePartsModel $sparePartsModel;
 
+    private SpareParts $spareParts;
+    private TechnicalInventory $technicalInventory;
+
     public function __construct() {
         $this->technicalInventoryModel = new TechnicalInventoryModel();
         $this->sparePartsModel = new SparePartsModel();
     }
 
-    public function createTechnicalInventory() {
-        $responseCreate = $this->technicalInventoryModel->createTechnicalInventoryDB(
-            TechnicalInventory::formFields()
-            ->setIdserviceStates(6)
-            ->setTechnicalInventoryQuantityUsed(0)
-            ->setTechnicalInventoryQuantityAvailable((int) request->technical_inventory_amount)
+    private function quantityValidate(SpareParts $quantity) {
+        if ($this->technicalInventory->getTechnicalInventoryAmount() > $quantity->getSparePartsAmount()) {
+            finish(response->warning("La cantidad solicitada excede de la cantidad disponible actualmente, vuelva a realizar una nueva solicitud: CANT DISPONIBLE ({$quantity->getSparePartsAmount()})"));
+        }
+    }
+
+    private function updateAmount(SpareParts $quantity) {
+        $responseUpdateSpareparts = $this->sparePartsModel->updateSparePartsAmountDB(
+            $this->spareParts->setSparePartsAmount(
+                $quantity->getSparePartsAmount() - $this->technicalInventory->getTechnicalInventoryAmount()
+            )
         );
 
-        if ($responseCreate->status === 'database-error') {
-            return response->error("A ocurrido un error al crear el inventario del tecnico");
+        if ($responseUpdateSpareparts->status === 'database-error') {
+            finish(response->error("A ocurrido un error al añadir el repuesto al inventario del tecnico"));
+        }
+    }
+
+    public function createTechnicalInventory() {
+        $this->spareParts = SpareParts::formFields();
+        $quantity = $this->sparePartsModel->readSparePartsByIdDB($this->spareParts);
+
+        $this->technicalInventory = TechnicalInventory::formFields()
+            ->setIdusers((int) request->idusers)
+            ->setTechnicalInventoryCreationDate(Carbon::now()->format('Y-m-d H:i:s'));
+
+        $existTechnicalInventory = $this->technicalInventoryModel->readTechnicalInventoryExistDB(
+            $this->technicalInventory
+        );
+
+        $responseRequest = null;
+
+        if ($existTechnicalInventory->cont === 0) {
+            $this->quantityValidate($quantity);
+            $this->updateAmount($quantity);
+
+            $responseRequest = $this->technicalInventoryModel->createTechnicalInventoryDB(
+                $this->technicalInventory
+                    ->setIdserviceStates(6)
+                    ->setTechnicalInventoryQuantityUsed(0)
+                    ->setTechnicalInventoryQuantityAvailable((int) request->technical_inventory_amount)
+            );
         }
 
-        return response->success("Inventario del tecnico creado correctamente");
+        $calculate = $this->technicalInventory->getTechnicalInventoryAmount() + $this->technicalInventory->getTechnicalInventoryQuantityAvailable();
+
+        if ($this->technicalInventory->getIdserviceStates() === 4) {
+            $calculate -= $this->technicalInventory->getTechnicalInventoryAmount();
+        } elseif ($this->technicalInventory->getIdserviceStates() === 8) {
+            $this->quantityValidate($quantity);
+            $this->updateAmount($quantity);
+        }
+
+        $responseRequest = $this->technicalInventoryModel->updateTechnicalInventoryByPendingDB(
+            $this->technicalInventory
+                ->setIdserviceStates(6)
+                ->setTechnicalInventoryQuantityUsed(0)
+                ->setTechnicalInventoryAmount($calculate)
+                ->setTechnicalInventoryQuantityAvailable($calculate)
+        );
+
+        if ($responseRequest->status === 'database-error') {
+            return response->error("A ocurrido un error al añadir el repuesto al inventario del tecnico");
+        }
+
+        return response->success("Repuesto añadido correctamente");
     }
 
     public function readTechnicalInventory() {
         return $this->technicalInventoryModel->readTechnicalInventoryDB();
     }
 
-    public function updateTechnicalInventory(){
-        $sparts = SpareParts::formFields();
-        $Technical = TechnicalInventory::formFields();
-        $readSpareParts= $this->sparePartsModel->readBySparePartsDB($Technical->getIdspareParts());
-        if($Technical->getIdserviceStates() == 5  && $Technical->getTechnicalInventoryQuantityUsed() == 0) {
-           if($readSpareParts->spare_parts_amount >= $Technical->getTechnicalInventoryAmount()) {
-               $sparts->setSparePartsAmount(
-                $readSpareParts->spare_parts_amount - $Technical->getTechnicalInventoryAmount()
+    public function updateTechnicalInventory() {
+        $responseUpdate = null;
+        $technicalInventory = TechnicalInventory::formFields()
+            ->setTechnicalInventoryCreationDate(Carbon::now()->format('Y-m-d H:i:s'));
+
+        if (in_array($technicalInventory->getIdserviceStates(), [3, 5, 7, 8])) {
+            $responseUpdate = $this->technicalInventoryModel->updateTechnicalInventoryByStateDB(
+                $technicalInventory
             );
-               $this->sparePartsModel->update_spare_parts_amount($sparts);
-               $this->technicalInventoryModel->updateTechnicalInventoryDB($Technical);
-               return response->success("Su solicitud fue aceptada");
-           }
-           return response->error("la cantidad ingresa es mayor a la del inventario global");
-       }
-       if($Technical->getIdserviceStates() == 5){
-            if($readSpareParts->spare_parts_amount >= $Technical->getTechnicalInventoryAmount()) {
-                $sparts->setSparePartsAmount(
-                $readSpareParts->spare_parts_amount - $Technical->getTechnicalInventoryAmount()
-                );
-                $this->sparePartsModel->update_spare_parts_amount($sparts);
-                $readTechnical=$this->technicalInventoryModel->readByTechnicalInventoryDB($Technical);
-                if(isset($readTechnical->idusers)) {
-                    $Technical->setIdtechnicalInventory($readTechnical->idtechnical_inventory);
-                    $Technical->setTechnicalInventoryAmount(
-                        $readTechnical->technical_inventory_amount + $Technical->getTechnicalInventoryAmount()
-                    );
-                    $Technical->setTechnicalInventoryQuantityAvailable(
-                        $readTechnical->technical_inventory_quantity_available + (int) request->technical_inventory_amount
-                    );
-                    $Technical->setIdserviceStates(6);
-                    $this->technicalInventoryModel->updateIncreaseTechnicalInventory($Technical);
-                    return response->success("Sea incrementado el monto de su inventario");
-                }else{
-                    $this->technicalInventoryModel->createTechnicalInventoryDB(
-                    TechnicalInventory::formFields()
-                    ->setIdserviceStates(6)
-                    ->setTechnicalInventoryQuantityUsed(0)
-                    ->setTechnicalInventoryQuantityAvailable((int) request->technical_inventory_amount)
-                    );
-                    return response->success("se creo un nuevo ");
-                }
-            }
-            return response->error("la cantidad ingresa es mayor a la del inventario global");
+        } elseif ($technicalInventory->getIdserviceStates() === 4) {
+            $responseUpdate = $this->technicalInventoryModel->updateTechnicalInventoryByNoveltyDB(
+                $technicalInventory
+            );
         }
-        elseif ($Technical->getIdserviceStates() == 8) {
-            if( $Technical->getTechnicalInventoryQuantityUsed() <= $Technical->getTechnicalInventoryAmount()) {
-                $Technical->setTechnicalInventoryAmount(
-                    $Technical->getTechnicalInventoryAmount() - $Technical->getTechnicalInventoryQuantityUsed()
-                );
-                $Technical->setTechnicalInventoryQuantityAvailable(
-                $Technical->getTechnicalInventoryQuantityAvailable() - $Technical->getTechnicalInventoryQuantityUsed()
-                );
-                $this->technicalInventoryModel->updateReduceTechnicalInventoryDB($Technical);
-                return response->success("se registraron la cantidad de repuestos usados correctamente");
-            }
+
+        if ($responseUpdate->status === 'database-error') {
+            return response->error("A ocurrido un error al actualizar el inventario");
         }
+
+        return response->success("Inventario actualizado correctamente");
     }
 
-
 }
-
-
-

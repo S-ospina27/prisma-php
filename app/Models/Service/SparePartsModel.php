@@ -2,10 +2,8 @@
 
 namespace App\Models\Service;
 
-use Database\Class\ReadSpareParts;
 use Database\Class\SpareParts;
 use LionSQL\Drivers\MySQL as DB;
-use PhpParser\Node\Expr\Cast\Object_;
 
 class SparePartsModel {
 
@@ -22,15 +20,16 @@ class SparePartsModel {
 
     public function readSparePartsDB() {
         return DB::table("spare_parts")
-        ->select()
-        ->getAll();
+            ->select()
+            ->getAll();
     }
 
-    public function readBySparePartsDB($idspare_parts) {
-        return DB::table("spare_parts")
-        ->select()
-        ->where(DB::equalTo('idspare_parts'),$idspare_parts)
-        ->get();
+    public function readSparePartsByIdDB(SpareParts $spareParts): SpareParts {
+        return DB::fetchClass(SpareParts::class)
+            ->table("spare_parts")
+            ->select()
+            ->where(DB::equalTo('idspare_parts'), $spareParts->getIdspareParts())
+            ->get();
     }
 
     public function updateSparePartsDB(SpareParts $spareParts) {
@@ -41,7 +40,7 @@ class SparePartsModel {
         ])->execute();
     }
 
-    public function update_spare_parts_amount( SpareParts $spareParts) {
+    public function updateSparePartsAmountDB(SpareParts $spareParts) {
         return DB::call('update_spare_parts_amount', [
             $spareParts->getSparePartsAmount(),
             $spareParts->getIdspareParts()

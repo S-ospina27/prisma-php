@@ -106,7 +106,6 @@ Route::prefix('api', function() {
         Route::post('update', [SparePartsController::class, 'updateSpareParts']);
         Route::get('read', [SparePartsController::class, 'readSpareParts']);
 
-
         Route::prefix('inventory', function() {
             Route::post('create', [TechnicalInventoryController::class, 'createTechnicalInventory']);
             Route::post('update', [TechnicalInventoryController::class, 'updateTechnicalInventory']);

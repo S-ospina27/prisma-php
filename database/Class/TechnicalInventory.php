@@ -12,6 +12,7 @@ class TechnicalInventory implements \JsonSerializable {
 	private ?int $technical_inventory_quantity_available = null;
 	private ?int $idservice_states = null;
 	private ?string $technical_inventory_description = null;
+	private ?string $technical_inventory_creation_date = null;
 
 	public function __construct() {
 
@@ -54,6 +55,10 @@ class TechnicalInventory implements \JsonSerializable {
 
 		$technicalinventory->setTechnicalInventoryDescription(
 			isset(request->technical_inventory_description) ? request->technical_inventory_description : null
+		);
+
+		$technicalinventory->setTechnicalInventoryCreationDate(
+			isset(request->technical_inventory_creation_date) ? request->technical_inventory_creation_date : null
 		);
 
 		return $technicalinventory;
@@ -128,6 +133,15 @@ class TechnicalInventory implements \JsonSerializable {
 
 	public function setTechnicalInventoryDescription(?string $technical_inventory_description): TechnicalInventory {
 		$this->technical_inventory_description = $technical_inventory_description;
+		return $this;
+	}
+
+	public function getTechnicalInventoryCreationDate(): ?string {
+		return $this->technical_inventory_creation_date;
+	}
+
+	public function setTechnicalInventoryCreationDate(?string $technical_inventory_creation_date): TechnicalInventory {
+		$this->technical_inventory_creation_date = $technical_inventory_creation_date;
 		return $this;
 	}
 

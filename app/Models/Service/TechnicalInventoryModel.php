@@ -18,48 +18,52 @@ class TechnicalInventoryModel {
             $technicalInventory->getTechnicalInventoryAmount(),
             $technicalInventory->getTechnicalInventoryQuantityUsed(),
             $technicalInventory->getTechnicalInventoryQuantityAvailable(),
-            $technicalInventory->getIdserviceStates()
-        ])->execute();
-    }
-
-    public function updateTechnicalInventoryDB(TechnicalInventory $technicalInventory) {
-        return DB::call('update_technical_inventory', [
             $technicalInventory->getIdserviceStates(),
-            $technicalInventory->getTechnicalInventoryDescription(),
-            $technicalInventory->getIdtechnicalInventory()
-        ])->execute();
-    }
-
-    public function updateReduceTechnicalInventoryDB(TechnicalInventory $technicalInventory) {
-        return DB::call('update_reduce_technical_inventory', [
-            $technicalInventory->getTechnicalInventoryAmount(),
-            $technicalInventory->getTechnicalInventoryQuantityAvailable(),
-            $technicalInventory->getTechnicalInventoryQuantityUsed(),
-            $technicalInventory->getIdserviceStates(),
-            $technicalInventory->getIdtechnicalInventory()
-        ])->execute();
-    }
-    public function updateIncreaseTechnicalInventory(TechnicalInventory $technicalInventory) {
-        return DB::call('update_increase_technical_inventory', [
-            $technicalInventory->getTechnicalInventoryAmount(),
-            $technicalInventory->getIdserviceStates(),
-            $technicalInventory->getTechnicalInventoryQuantityAvailable(),
-            $technicalInventory->getIdtechnicalInventory()
+            $technicalInventory->getTechnicalInventoryCreationDate()
         ])->execute();
     }
 
     public function readTechnicalInventoryDB() {
         return DB::table('read_technical_inventory')
-        ->select()
-        ->getAll();
+            ->select()
+            ->getAll();
     }
 
-    public function readByTechnicalInventoryDB(TechnicalInventory $technicalInventory) {
+    public function readTechnicalInventoryExistDB(TechnicalInventory $technicalInventory) {
         return DB::table('technical_inventory')
-        ->select()
-        ->where(DB::equalTo('idusers'),$technicalInventory->getIdusers())
-        ->and(DB::equalTo('idspare_parts'),$technicalInventory->getIdspareParts())
-        ->get();
+            ->select(DB::alias(DB::count('*'), 'cont'))
+            ->where(DB::equalTo('idusers'), $technicalInventory->getIdusers())
+            ->and(DB::equalTo('idspare_parts'), $technicalInventory->getIdspareParts())
+            ->get();
+    }
+
+    public function updateTechnicalInventoryByPendingDB(TechnicalInventory $technicalInventory) {
+        return DB::call('update_technical_inventory_pending', [
+            $technicalInventory->getTechnicalInventoryAmount(),
+            $technicalInventory->getTechnicalInventoryQuantityUsed(),
+            $technicalInventory->getTechnicalInventoryQuantityAvailable(),
+            $technicalInventory->getIdserviceStates(),
+            $technicalInventory->getTechnicalInventoryDescription(),
+            $technicalInventory->getTechnicalInventoryCreationDate(),
+            $technicalInventory->getIdtechnicalInventory()
+        ])->execute();
+    }
+
+    public function updateTechnicalInventoryByStateDB(TechnicalInventory $technicalInventory) {
+        return DB::call('update_technical_inventory_state', [
+            $technicalInventory->getIdserviceStates(),
+            $technicalInventory->getTechnicalInventoryCreationDate(),
+            $technicalInventory->getIdtechnicalInventory()
+        ])->execute();
+    }
+
+    public function updateTechnicalInventoryByNoveltyDB(TechnicalInventory $technicalInventory) {
+        return DB::call('update_technical_inventory_novelty', [
+            $technicalInventory->getIdserviceStates(),
+            $technicalInventory->getTechnicalInventoryDescription(),
+            $technicalInventory->getTechnicalInventoryCreationDate(),
+            $technicalInventory->getIdtechnicalInventory()
+        ])->execute();
     }
 
 }
