@@ -96,7 +96,7 @@ class TechnicalInventoryController {
     public function updateTechnicalInventory() {
         $responseUpdate = null;
         $technicalInventory = TechnicalInventory::formFields()
-        ->setTechnicalInventoryCreationDate(Carbon::now()->format('Y-m-d H:i:s'));
+            ->setTechnicalInventoryCreationDate(Carbon::now()->format('Y-m-d H:i:s'));
 
         if (in_array($technicalInventory->getIdserviceStates(), [3, 5, 7, 8])) {
             $responseUpdate = $this->technicalInventoryModel->updateTechnicalInventoryByStateDB(
