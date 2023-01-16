@@ -13,8 +13,8 @@ class ServiceRequestModel {
 
 	public function readServiceRequestDB() {
 		return DB::table('read_service_request')
-		->select()
-		->getAll();
+		  ->select()
+		  ->getAll();
 	}
 
 	public function updateServiceRequestDB(ServiceRequest $serviceRequest) {
