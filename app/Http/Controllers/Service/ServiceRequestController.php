@@ -79,7 +79,7 @@ class ServiceRequestController {
 
         $fullpath = 'assets/excel/service_request/';
         $name = Manage::rename('service_request.xlsx', 'EXCEL');
-        manage::folder($fullpath);
+        Manage::folder($fullpath);
         Spreadsheet::saveExcel(Str::of($fullpath)->concat($name)->get());
 
         return response->success("Excel generado correctamente", [
