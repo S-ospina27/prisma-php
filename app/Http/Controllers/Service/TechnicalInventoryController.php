@@ -106,6 +106,8 @@ class TechnicalInventoryController {
             $responseUpdate = $this->technicalInventoryModel->updateTechnicalInventoryByNoveltyDB(
                 $technicalInventory
             );
+        } else {
+            return response->warning("No se puede actualizar un inventario en estado pendiente");
         }
 
         if ($responseUpdate->status === 'database-error') {
