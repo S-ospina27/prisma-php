@@ -23,6 +23,9 @@ class ServiceRequestModel {
 			$serviceRequest->getIdserviceStates(),
 			$serviceRequest->getServiceRequestDateVisit(),
 			$serviceRequest->getServiceRequestDateClose(),
+		    $serviceRequest->getServiceRequestValue(),
+			$serviceRequest->getServiceRequestPaymentMethods(),
+			$serviceRequest->getServiceRequestTechnicalNovelty(),
 			$serviceRequest->getIdserviceRequest(),
 		])->execute();
 	}

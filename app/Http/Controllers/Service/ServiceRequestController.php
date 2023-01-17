@@ -23,14 +23,16 @@ class ServiceRequestController {
 	}
 
 	public function updateServiceRequest() {
-        $responseUpdate = $this->serviceRequest->updateServiceRequestDB(
-            ServiceRequest::formFields()->setServiceRequestDateClose(
-                request->idservice_states === 8 ? Carbon::now()->format('Y-m-d H:i:s') : null
-            )
-        );
+        $serviceRequest = ServiceRequest::formFields();
 
+        if (in_array($serviceRequest->getIdserviceStates(), [8, 9])) {
+            $serviceRequest->setServiceRequestDateClose(Carbon::now()->format('Y-m-d H:i:s'));
+        }
+
+
+        $responseUpdate = $this->serviceRequest->updateServiceRequestDB($serviceRequest);
         if($responseUpdate->status === 'database-error') {
-            return response->error('Ocurrió un error al actualizar la solicitud');
+            return response->error('Ocurrió un error al actualizar la solicitud',$responseUpdate);
         }
 
         return response->success('Solicitud actualizada correctamente');

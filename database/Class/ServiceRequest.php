@@ -8,6 +8,7 @@ class ServiceRequest implements \JsonSerializable {
 	private ?int $idusers_dealers = null;
 	private ?int $idcities = null;
 	private ?int $idproducts = null;
+	private ?int $idproduct_types = null;
 	private ?int $idusers_technical = null;
 	private ?int $idservice_states = null;
 	private ?string $service_request_creation_date = null;
@@ -21,6 +22,9 @@ class ServiceRequest implements \JsonSerializable {
 	private ?string $service_request_warranty = null;
 	private ?string $service_request_date_visit = null;
 	private ?string $service_request_date_close = null;
+	private ?int $service_request_value = null;
+	private ?string $service_request_payment_methods = null;
+	private ?string $service_request_technical_novelty = null;
 
 	public function __construct() {
 
@@ -34,19 +38,23 @@ class ServiceRequest implements \JsonSerializable {
 		$servicerequest = new ServiceRequest();
 
 		$servicerequest->setIdserviceRequest(
-			isset(request->idservice_request) ? (int)request->idservice_request : null
+			isset(request->idservice_request) ? (int) request->idservice_request : null
 		);
 
 		$servicerequest->setIdusersDealers(
-			isset(request->idusers_dealers) ? request->idusers_dealers : null
+			isset(request->idusers_dealers) ? (int) request->idusers_dealers : null
 		);
 
 		$servicerequest->setIdcities(
-			isset(request->idcities) ? request->idcities : null
+			isset(request->idcities) ? (int) request->idcities : null
 		);
 
 		$servicerequest->setIdproducts(
-			isset(request->idproducts) ? request->idproducts : null
+			isset(request->idproducts) ? (int) request->idproducts : null
+		);
+
+		$servicerequest->setIdproductTypes(
+			isset(request->idproduct_types) ? (int) request->idproduct_types : null
 		);
 
 		$servicerequest->setIdusersTechnical(
@@ -74,7 +82,7 @@ class ServiceRequest implements \JsonSerializable {
 		);
 
 		$servicerequest->setServiceRequestPhoneContact(
-			isset(request->service_request_phone_contact) ? request->service_request_phone_contact : null
+			isset(request->service_request_phone_contact) ? (int) request->service_request_phone_contact : null
 		);
 
 		$servicerequest->setServiceRequestEmail(
@@ -99,6 +107,18 @@ class ServiceRequest implements \JsonSerializable {
 
 		$servicerequest->setServiceRequestDateClose(
 			isset(request->service_request_date_close) ? request->service_request_date_close : null
+		);
+
+		$servicerequest->setServiceRequestValue(
+			isset(request->service_request_value) ? (int) request->service_request_value : null
+		);
+
+		$servicerequest->setServiceRequestPaymentMethods(
+			isset(request->service_request_payment_methods) ? request->service_request_payment_methods : null
+		);
+
+		$servicerequest->setServiceRequestTechnicalNovelty(
+			isset(request->service_request_technical_novelty) ? request->service_request_technical_novelty : null
 		);
 
 		return $servicerequest;
@@ -137,6 +157,15 @@ class ServiceRequest implements \JsonSerializable {
 
 	public function setIdproducts(?int $idproducts): ServiceRequest {
 		$this->idproducts = $idproducts;
+		return $this;
+	}
+
+	public function getIdproductTypes(): ?int {
+		return $this->idproduct_types;
+	}
+
+	public function setIdproductTypes(?int $idproduct_types): ServiceRequest {
+		$this->idproduct_types = $idproduct_types;
 		return $this;
 	}
 
@@ -254,6 +283,33 @@ class ServiceRequest implements \JsonSerializable {
 
 	public function setServiceRequestDateClose(?string $service_request_date_close): ServiceRequest {
 		$this->service_request_date_close = $service_request_date_close;
+		return $this;
+	}
+
+	public function getServiceRequestValue(): ?int {
+		return $this->service_request_value;
+	}
+
+	public function setServiceRequestValue(?int $service_request_value): ServiceRequest {
+		$this->service_request_value = $service_request_value;
+		return $this;
+	}
+
+	public function getServiceRequestPaymentMethods(): ?string {
+		return $this->service_request_payment_methods;
+	}
+
+	public function setServiceRequestPaymentMethods(?string $service_request_payment_methods): ServiceRequest {
+		$this->service_request_payment_methods = $service_request_payment_methods;
+		return $this;
+	}
+
+	public function getServiceRequestTechnicalNovelty(): ?string {
+		return $this->service_request_technical_novelty;
+	}
+
+	public function setServiceRequestTechnicalNovelty(?string $service_request_technical_novelty): ServiceRequest {
+		$this->service_request_technical_novelty = $service_request_technical_novelty;
 		return $this;
 	}
 

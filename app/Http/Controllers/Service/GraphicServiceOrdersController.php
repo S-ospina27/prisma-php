@@ -27,4 +27,5 @@ class GraphicServiceOrdersController {
         return $this->graphicServiceOrdersModel->readUnitPercentagesDB();
     }
 
+
 }
