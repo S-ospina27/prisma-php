@@ -155,15 +155,12 @@ class ServiceOrdersController {
             ->replace("--ORDER_TOTAL_REPLACE--", $total)
             ->get();
 
-        file_put_contents("assets/example.pdf", $content_pdf);
-
         try {
             $dompdf = new Dompdf();
             $dompdf->loadHtml(utf8_encode($content_pdf));
             $dompdf->setPaper('A4', 'portrait');
             $dompdf->render();
             file_put_contents("assets/{$pdf_name}", $dompdf->output());
-            // file_put_contents("assets/example.pdf", $dompdf->output());
         } catch (DomException $e) {
             finish(response->error("A ocurrido un error al generar la orden de servicio [PDF]"));
         }

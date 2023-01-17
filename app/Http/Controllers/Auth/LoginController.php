@@ -24,10 +24,6 @@ class LoginController {
         }
 
         $data = $this->loginModel->authDB($users);
-        if ($data->getIdroles() === 3) {
-            return response->warning("Esta cuenta no tiene autorización para ingresar a la plataforma");
-        }
-
         if ($data->getIdstatus() === 2) {
             return response->warning("Esta cuenta está inactiva, contacte a soporte para mas información");
         }
