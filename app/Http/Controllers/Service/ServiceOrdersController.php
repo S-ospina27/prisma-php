@@ -75,8 +75,8 @@ class ServiceOrdersController {
         return $this->serviceOrdersModel->readOrdersDB();
     }
 
-    public function readOrdersProvider($idprovider_users) {
-        return $this->serviceOrdersModel->readOrdersProviderDB($idprovider_users);
+    public function readOrdersByProvider($idprovider_users) {
+        return $this->serviceOrdersModel->readOrdersByProviderDB($idprovider_users);
     }
 
     public function exportServiceOrdersExcel() {
@@ -171,7 +171,7 @@ class ServiceOrdersController {
         $content_email = Str::of(file_get_contents(storage_path("Template/html/service-orders-email.html")))
             ->replace("--CONSECUTIVE--", $order->getFullConsecutive())
             ->replace("--PROVIDER_NAME--", "{$order->getUsersName()} {$order->getUsersLastname()}")
-            ->replace("--URL_SERVICE_ORDERS--", env->SERVER_URL_AUD . "/service-orders")
+            ->replace("--URL_SERVICE_ORDERS--", env->SERVER_URL_AUD . "/service/orders")
             ->get();
 
         $responseMailer = Mailer::from(env->MAIL_USERNAME)

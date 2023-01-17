@@ -72,41 +72,43 @@ Route::prefix('api', function() {
         });
     });
 
-    Route::prefix('service-orders', function() {
-        Route::post('create', [ServiceOrdersController::class, 'createServiceOrders']);
-        Route::post('update', [ServiceOrdersController::class, 'updateServiceOrders']);
+    Route::prefix('service', function() {
+        Route::prefix('orders', function() {
+            Route::post('create', [ServiceOrdersController::class, 'createServiceOrders']);
+            Route::post('update', [ServiceOrdersController::class, 'updateServiceOrders']);
 
-        Route::prefix('export', function() {
-            Route::post('excel', [ServiceOrdersController::class, 'exportServiceOrdersExcel']);
-            Route::get('pdf/{idservice_orders}', [ServiceOrdersController::class, 'exportServiceOrdersPDF']);
-        });
+            Route::prefix('export', function() {
+                Route::post('excel', [ServiceOrdersController::class, 'exportServiceOrdersExcel']);
+                Route::get('pdf/{idservice_orders}', [ServiceOrdersController::class, 'exportServiceOrdersPDF']);
+            });
 
-        Route::prefix('read', function() {
-            Route::get('/', [ServiceOrdersController::class, 'readOrders']);
-            Route::get('by-provider/{idprovider_users}', [ServiceOrdersController::class, 'readOrdersProvider']);
+            Route::prefix('read', function() {
+                Route::get('/', [ServiceOrdersController::class, 'readOrders']);
+                Route::get('by-provider/{idprovider_users}', [ServiceOrdersController::class, 'readOrdersByProvider']);
 
-            Route::prefix('graphics', function() {
-                Route::get('amount-orders', [GraphicServiceOrdersController::class, 'readAmountOrders']);
-                Route::get('unit-percentages', [GraphicServiceOrdersController::class, 'readUnitPercentages']);
+                Route::prefix('graphics', function() {
+                    Route::get('amount-orders', [GraphicServiceOrdersController::class, 'readAmountOrders']);
+                    Route::get('unit-percentages', [GraphicServiceOrdersController::class, 'readUnitPercentages']);
+                });
             });
         });
-    });
 
-    Route::prefix('service-request', function() {
-        Route::get('read', [ServiceRequestController::class, 'readServiceRequest']);
-        Route::post('update', [ServiceRequestController::class, 'updateServiceRequest']);
+        Route::prefix('request', function() {
+            Route::get('read', [ServiceRequestController::class, 'readServiceRequest']);
+            Route::post('update', [ServiceRequestController::class, 'updateServiceRequest']);
 
-        Route::prefix('export', function() {
-            Route::post('excel', [ServiceRequestController::class, 'exportServiceRequestExcel']);
+            Route::prefix('export', function() {
+                Route::post('excel', [ServiceRequestController::class, 'exportServiceRequestExcel']);
+            });
         });
-    });
 
-    Route::prefix('spare-parts', function() {
-        Route::post('create', [SparePartsController::class, 'createSpareParts']);
-        Route::post('update', [SparePartsController::class, 'updateSpareParts']);
-        Route::get('read', [SparePartsController::class, 'readSpareParts']);
+        Route::prefix('spare-parts', function() {
+            Route::post('create', [SparePartsController::class, 'createSpareParts']);
+            Route::post('update', [SparePartsController::class, 'updateSpareParts']);
+            Route::get('read', [SparePartsController::class, 'readSpareParts']);
+        });
 
-        Route::prefix('inventory', function() {
+        Route::prefix('technical-inventory', function() {
             Route::post('create', [TechnicalInventoryController::class, 'createTechnicalInventory']);
             Route::post('update', [TechnicalInventoryController::class, 'updateTechnicalInventory']);
             Route::get('read', [TechnicalInventoryController::class, 'readTechnicalInventory']);

@@ -33,6 +33,7 @@ class UsersController {
         );
 
 		if ($responseCreate->status === 'database-error') {
+            return $responseCreate;
 			return response->error('Ha ocurrido un error al crear el usuario');
 		}
 

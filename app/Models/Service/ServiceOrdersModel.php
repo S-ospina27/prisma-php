@@ -73,7 +73,7 @@ class ServiceOrdersModel {
             ->get();
     }
 
-	public function readOrdersProviderDB($idprovider_users) {
+	public function readOrdersByProviderDB($idprovider_users) {
         return DB::table('read_service_orders')
             ->select()
             ->where(DB::equalTo('idprovider_users'), $idprovider_users)
