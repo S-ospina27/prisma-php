@@ -51,11 +51,17 @@ class GraphicServiceOrdersModel {
             DB::alias(DB::sum('service_request_value'), 'total_item'),
             DB::alias(DB::year('service_request_date_close'), 'year_item'),
             DB::alias(DB::month('service_request_date_close'), 'month_item')
-        )->where(DB::equalTo('service_request_warranty'), 'SI')
-        ->groupBy(DB::year('service_request_date_close'), DB::month('service_request_date_close'))
-        ->orderBy(DB::year('service_request_date_close'))
-        ->desc()
-        ->getAll();
+        )
+            ->where(DB::equalTo('service_request_warranty'), 'SI')
+            ->groupBy(
+                DB::year('service_request_date_close'),
+                DB::month('service_request_date_close')
+            )
+            ->orderBy(
+                DB::year('service_request_date_close') . DB::desc(true),
+                DB::month('service_request_date_close') . DB::asc(true)
+            )
+            ->getAll();
     }
 
 }
