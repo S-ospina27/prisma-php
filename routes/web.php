@@ -103,6 +103,8 @@ Route::prefix('api', function() {
                 Route::prefix('graphics', function() {
                     Route::get('count-warranty', [GraphicServiceOrdersController::class, 'readCountServiceRequestWarranty']);
                     Route::get('total-charges-per-month', [GraphicServiceOrdersController::class, 'readTotalChargesPerMonth']);
+                    Route::get('read-total-charges-without-warranty', [GraphicServiceOrdersController::class, 'readTotalChargesWithoutWarranty']);
+                    Route::get('read-average-time/{idusers_technical}', [GraphicServiceOrdersController::class, 'readAverageTime']);
                 });
             });
 

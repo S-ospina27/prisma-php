@@ -2,6 +2,8 @@
 
 namespace App\Models\Service;
 
+use Database\Class\ServiceRequest;
+use Database\Class\ServiceRequestDates;
 use LionSQL\Drivers\MySQL as DB;
 
 class GraphicServiceOrdersModel {
@@ -41,9 +43,9 @@ class GraphicServiceOrdersModel {
 
     public function readCountServiceRequestWarrantyDB() {
         return DB::table("service_request")
-            ->select(DB::alias(DB::count('*'), 'cont'), "service_request_warranty")
-            ->groupBy("service_request_warranty")
-            ->getAll();
+        ->select(DB::alias(DB::count('*'), 'cont'), "service_request_warranty")
+        ->groupBy("service_request_warranty")
+        ->getAll();
     }
 
     public function readTotalChargesPerMonthDB() {
@@ -52,15 +54,41 @@ class GraphicServiceOrdersModel {
             DB::alias(DB::year('service_request_date_close'), 'year_item'),
             DB::alias(DB::month('service_request_date_close'), 'month_item')
         )
-            ->where(DB::equalTo('service_request_warranty'), 'SI')
-            ->groupBy(
-                DB::year('service_request_date_close'),
-                DB::month('service_request_date_close')
-            )
-            ->orderBy(
-                DB::year('service_request_date_close') . DB::desc(true),
-                DB::month('service_request_date_close') . DB::asc(true)
-            )
+        ->where(DB::equalTo('service_request_warranty'), 'SI')
+        ->groupBy(
+            DB::year('service_request_date_close'),
+            DB::month('service_request_date_close')
+        )
+        ->orderBy(
+            DB::year('service_request_date_close') . DB::desc(true),
+            DB::month('service_request_date_close') . DB::asc(true)
+        )
+        ->getAll();
+    }
+
+    public function readTotalChargesWithoutWarrantyDB() {
+        return DB::table('service_request')->select(
+            DB::alias(DB::sum('service_request_value'), 'total_item'),
+            DB::alias(DB::year('service_request_date_close'), 'year_item'),
+            DB::alias(DB::month('service_request_date_close'), 'month_item')
+        )
+        ->where(DB::equalTo('service_request_warranty'), 'NO')
+        ->groupBy(
+            DB::year('service_request_date_close'),
+            DB::month('service_request_date_close')
+        )
+        ->orderBy(
+            DB::year('service_request_date_close') . DB::desc(true),
+            DB::month('service_request_date_close') . DB::asc(true)
+        )
+        ->getAll();
+    }
+
+    public function readAverageTimeDB(ServiceRequestDates $serviceRequestDates) {
+         return DB::fetchClass(ServiceRequestDates::class)
+            ->table("service_request_dates")
+            ->select()
+            ->where(DB::equalTo('idusers_technical'), $serviceRequestDates->getIdusersTechnical())
             ->getAll();
     }
 

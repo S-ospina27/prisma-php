@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Service;
 
 use App\Models\Service\GraphicServiceOrdersModel;
 use LionHelpers\Arr;
+use Database\Class\ServiceRequest;
+use Database\Class\ServiceRequestDates;
 
 class GraphicServiceOrdersController {
 
@@ -34,6 +36,24 @@ class GraphicServiceOrdersController {
     public function readTotalChargesPerMonth() {
         $data = $this->graphicServiceOrdersModel->readTotalChargesPerMonthDB();
         return !isset($data->status) ? Arr::of($data)->tree('year_item') : [];
+    }
+
+    public function readTotalChargesWithoutWarranty() {
+        $data = $this->graphicServiceOrdersModel->readTotalChargesWithoutWarrantyDB();
+        return !isset($data->status) ? Arr::of($data)->tree('year_item') : [];
+    }
+
+    public function readAverageTime($idusers_technical) {
+        $serviceRequestDates = ServiceRequestDates::formFields()
+            ->setIdusersTechnical((int) $idusers_technical);
+
+        $readDates = $this->graphicServiceOrdersModel->readAverageTimeDB($serviceRequestDates);
+
+        if (isset($readDates->status)) {
+            return $readDates;
+        }
+
+        return $readDates;
     }
 
 }
