@@ -11,6 +11,22 @@ class ServiceRequestModel {
 		
 	}
 
+    public function createServiceRequestDB(ServiceRequest $serviceRequest) {
+        return DB::call('create_service_request', [
+            $serviceRequest->getIdusersDealers(),
+            $serviceRequest->getIdcities(),
+            $serviceRequest->getIdproducts(),
+            $serviceRequest->getIdserviceStates(),
+            $serviceRequest->getServiceRequestCreationDate(),
+            $serviceRequest->getServiceRequestClientName(),
+            $serviceRequest->getServiceRequestAddress(),
+            $serviceRequest->getServiceRequestNeighborhood(),
+            $serviceRequest->getServiceRequestPhoneContact(),
+            $serviceRequest->getServiceRequestEmail(),
+            $serviceRequest->getServiceRequestTroubleReport()
+        ])->execute();
+    }
+
 	public function readServiceRequestDB() {
 		return DB::table('read_service_request')
 		  ->select()
@@ -26,6 +42,7 @@ class ServiceRequestModel {
 		    $serviceRequest->getServiceRequestValue(),
 			$serviceRequest->getServiceRequestPaymentMethods(),
 			$serviceRequest->getServiceRequestTechnicalNovelty(),
+            $serviceRequest->getServiceRequestEvidence(),
 			$serviceRequest->getIdserviceRequest(),
 		])->execute();
 	}

@@ -18,6 +18,21 @@ class ServiceRequestController {
 		$this->serviceRequest = new ServiceRequestModel();
 	}
 
+    public function createServiceRequest() {
+        $responseCreate = $this->serviceRequest->createServiceRequestDB(
+            ServiceRequest::formFields()
+                ->setServiceRequestCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
+                ->setIdserviceStates(6)
+        );
+
+        if ($responseCreate->status === 'database-error') {
+            return $responseCreate;
+            return response->error("A ocurrido un error al generar la solicitud");
+        }
+
+        return response->success("Solicitud generada correctamente");
+    }
+
 	public function readServiceRequest() {
 		return $this->serviceRequest->readServiceRequestDB();
 	}
@@ -26,9 +41,18 @@ class ServiceRequestController {
         $serviceRequest = ServiceRequest::formFields();
 
         if (in_array($serviceRequest->getIdserviceStates(), [8, 9])) {
-            $serviceRequest->setServiceRequestDateClose(Carbon::now()->format('Y-m-d H:i:s'));
-        }
+            $file_name = Manage::rename(request->service_request_evidence['name'], 'IMG');
 
+            Manage::upload(
+                request->service_request_evidence['tmp_name'],
+                $file_name,
+                "assets/img/service/request/evidence/"
+            );
+
+            $serviceRequest
+                ->setServiceRequestDateClose(Carbon::now()->format('Y-m-d H:i:s'))
+                ->setServiceRequestEvidence($file_name);
+        }
 
         $responseUpdate = $this->serviceRequest->updateServiceRequestDB($serviceRequest);
         if($responseUpdate->status === 'database-error') {

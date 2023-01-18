@@ -93,9 +93,9 @@ class ServiceRequest implements \JsonSerializable {
 			isset(request->service_request_trouble_report) ? request->service_request_trouble_report : null
 		);
 
-		$servicerequest->setServiceRequestEvidence(
-			isset(request->service_request_evidence) ? request->service_request_evidence : null
-		);
+		// $servicerequest->setServiceRequestEvidence(
+		// 	isset(request->service_request_evidence) ? request->service_request_evidence : null
+		// );
 
 		$servicerequest->setServiceRequestWarranty(
 			isset(request->service_request_warranty) ? request->service_request_warranty : null

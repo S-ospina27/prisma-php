@@ -94,6 +94,7 @@ Route::prefix('api', function() {
         });
 
         Route::prefix('request', function() {
+            Route::post('create', [ServiceRequestController::class, 'createServiceRequest']);
             Route::post('update', [ServiceRequestController::class, 'updateServiceRequest']);
 
             Route::prefix('read', function() {

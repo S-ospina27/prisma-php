@@ -6,10 +6,14 @@ class ReadServiceRequest implements \JsonSerializable {
 
 	private ?int $idservice_request = null;
 	private ?int $idservice_states = null;
+	private ?int $idproducts = null;
 	private ?int $service_request_value = null;
 	private ?string $service_request_payment_methods = null;
 	private ?string $fullnamedealers = null;
 	private ?string $fullnametechnical = null;
+	private ?string $users_name = null;
+	private ?string $users_lastname = null;
+	private ?string $users_identification = null;
 	private ?int $idusers_technical = null;
 	private ?string $departments_name = null;
 	private ?string $cities_name = null;
@@ -47,6 +51,10 @@ class ReadServiceRequest implements \JsonSerializable {
 			isset(request->idservice_states) ? request->idservice_states : null
 		);
 
+		$readservicerequest->setIdproducts(
+			isset(request->idproducts) ? request->idproducts : null
+		);
+
 		$readservicerequest->setServiceRequestValue(
 			isset(request->service_request_value) ? request->service_request_value : null
 		);
@@ -61,6 +69,18 @@ class ReadServiceRequest implements \JsonSerializable {
 
 		$readservicerequest->setFullnametechnical(
 			isset(request->fullnametechnical) ? request->fullnametechnical : null
+		);
+
+		$readservicerequest->setUsersName(
+			isset(request->users_name) ? request->users_name : null
+		);
+
+		$readservicerequest->setUsersLastname(
+			isset(request->users_lastname) ? request->users_lastname : null
+		);
+
+		$readservicerequest->setUsersIdentification(
+			isset(request->users_identification) ? request->users_identification : null
 		);
 
 		$readservicerequest->setIdusersTechnical(
@@ -152,6 +172,15 @@ class ReadServiceRequest implements \JsonSerializable {
 		return $this;
 	}
 
+	public function getIdproducts(): ?int {
+		return $this->idproducts;
+	}
+
+	public function setIdproducts(?int $idproducts): ReadServiceRequest {
+		$this->idproducts = $idproducts;
+		return $this;
+	}
+
 	public function getServiceRequestValue(): ?int {
 		return $this->service_request_value;
 	}
@@ -185,6 +214,33 @@ class ReadServiceRequest implements \JsonSerializable {
 
 	public function setFullnametechnical(?string $fullnametechnical): ReadServiceRequest {
 		$this->fullnametechnical = $fullnametechnical;
+		return $this;
+	}
+
+	public function getUsersName(): ?string {
+		return $this->users_name;
+	}
+
+	public function setUsersName(?string $users_name): ReadServiceRequest {
+		$this->users_name = $users_name;
+		return $this;
+	}
+
+	public function getUsersLastname(): ?string {
+		return $this->users_lastname;
+	}
+
+	public function setUsersLastname(?string $users_lastname): ReadServiceRequest {
+		$this->users_lastname = $users_lastname;
+		return $this;
+	}
+
+	public function getUsersIdentification(): ?string {
+		return $this->users_identification;
+	}
+
+	public function setUsersIdentification(?string $users_identification): ReadServiceRequest {
+		$this->users_identification = $users_identification;
 		return $this;
 	}
 
