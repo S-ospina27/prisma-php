@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Service;
 
 use App\Models\Service\GraphicServiceOrdersModel;
+use Database\Class\ReadServiceRequestDates;
 use LionHelpers\Arr;
-use Database\Class\ServiceRequest;
-use Database\Class\ServiceRequestDates;
 
 class GraphicServiceOrdersController {
 
@@ -44,7 +43,7 @@ class GraphicServiceOrdersController {
     }
 
     public function readAverageTime($idusers_technical) {
-        $serviceRequestDates = ServiceRequestDates::formFields()
+        $serviceRequestDates = ReadServiceRequestDates::formFields()
             ->setIdusersTechnical((int) $idusers_technical);
 
         $readDates = $this->graphicServiceOrdersModel->readAverageTimeDB($serviceRequestDates);

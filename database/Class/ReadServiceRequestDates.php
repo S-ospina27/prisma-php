@@ -2,7 +2,7 @@
 
 namespace Database\Class;
 
-class ServiceRequestDates implements \JsonSerializable {
+class ReadServiceRequestDates implements \JsonSerializable {
 
 	private ?string $service_request_creation_date = null;
 	private ?string $service_request_date_visit = null;
@@ -17,33 +17,33 @@ class ServiceRequestDates implements \JsonSerializable {
 		return get_object_vars($this);
 	}
 
-	public static function formFields(): ServiceRequestDates {
-		$servicerequestdates = new ServiceRequestDates();
+	public static function formFields(): ReadServiceRequestDates {
+		$readservicerequestdates = new ReadServiceRequestDates();
 
-		$servicerequestdates->setServiceRequestCreationDate(
+		$readservicerequestdates->setServiceRequestCreationDate(
 			isset(request->service_request_creation_date) ? request->service_request_creation_date : null
 		);
 
-		$servicerequestdates->setServiceRequestDateVisit(
+		$readservicerequestdates->setServiceRequestDateVisit(
 			isset(request->service_request_date_visit) ? request->service_request_date_visit : null
 		);
 
-		$servicerequestdates->setServiceRequestDateClose(
+		$readservicerequestdates->setServiceRequestDateClose(
 			isset(request->service_request_date_close) ? request->service_request_date_close : null
 		);
 
-		$servicerequestdates->setIdusersTechnical(
+		$readservicerequestdates->setIdusersTechnical(
 			isset(request->idusers_technical) ? request->idusers_technical : null
 		);
 
-		return $servicerequestdates;
+		return $readservicerequestdates;
 	}
 
 	public function getServiceRequestCreationDate(): ?string {
 		return $this->service_request_creation_date;
 	}
 
-	public function setServiceRequestCreationDate(?string $service_request_creation_date): ServiceRequestDates {
+	public function setServiceRequestCreationDate(?string $service_request_creation_date): ReadServiceRequestDates {
 		$this->service_request_creation_date = $service_request_creation_date;
 		return $this;
 	}
@@ -52,7 +52,7 @@ class ServiceRequestDates implements \JsonSerializable {
 		return $this->service_request_date_visit;
 	}
 
-	public function setServiceRequestDateVisit(?string $service_request_date_visit): ServiceRequestDates {
+	public function setServiceRequestDateVisit(?string $service_request_date_visit): ReadServiceRequestDates {
 		$this->service_request_date_visit = $service_request_date_visit;
 		return $this;
 	}
@@ -61,7 +61,7 @@ class ServiceRequestDates implements \JsonSerializable {
 		return $this->service_request_date_close;
 	}
 
-	public function setServiceRequestDateClose(?string $service_request_date_close): ServiceRequestDates {
+	public function setServiceRequestDateClose(?string $service_request_date_close): ReadServiceRequestDates {
 		$this->service_request_date_close = $service_request_date_close;
 		return $this;
 	}
@@ -70,7 +70,7 @@ class ServiceRequestDates implements \JsonSerializable {
 		return $this->idusers_technical;
 	}
 
-	public function setIdusersTechnical(?int $idusers_technical): ServiceRequestDates {
+	public function setIdusersTechnical(?int $idusers_technical): ReadServiceRequestDates {
 		$this->idusers_technical = $idusers_technical;
 		return $this;
 	}

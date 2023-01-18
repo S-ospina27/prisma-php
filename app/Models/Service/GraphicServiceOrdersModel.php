@@ -2,8 +2,7 @@
 
 namespace App\Models\Service;
 
-use Database\Class\ServiceRequest;
-use Database\Class\ServiceRequestDates;
+use Database\Class\ReadServiceRequestDates;
 use LionSQL\Drivers\MySQL as DB;
 
 class GraphicServiceOrdersModel {
@@ -84,9 +83,9 @@ class GraphicServiceOrdersModel {
         ->getAll();
     }
 
-    public function readAverageTimeDB(ServiceRequestDates $serviceRequestDates) {
-         return DB::fetchClass(ServiceRequestDates::class)
-            ->table("service_request_dates")
+    public function readAverageTimeDB(ReadServiceRequestDates $serviceRequestDates) {
+         return DB::fetchClass(ReadServiceRequestDates::class)
+            ->table("read_service_request_dates")
             ->select()
             ->where(DB::equalTo('idusers_technical'), $serviceRequestDates->getIdusersTechnical())
             ->getAll();
