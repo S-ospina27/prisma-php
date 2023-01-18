@@ -32,11 +32,30 @@ class GraphicServiceOrdersModel {
 
     public function readUnitPercentagesDB() {
         return DB::table('service_orders')
-            ->select(
-                DB::alias(DB::sum('service_orders_amount'), 'cont'),
-                DB::alias(DB::sum('service_orders_not_defective_amount'), 'cont_success'),
-                DB::alias(DB::sum('service_orders_defective_amount'), 'cont_err')
-            )->where('idservice_states')->in(1, 2, 3, 5, 6, 7, 8)->get();
+        ->select(
+            DB::alias(DB::sum('service_orders_amount'), 'cont'),
+            DB::alias(DB::sum('service_orders_not_defective_amount'), 'cont_success'),
+            DB::alias(DB::sum('service_orders_defective_amount'), 'cont_err')
+        )->where('idservice_states')->in(1, 2, 3, 5, 6, 7, 8)->get();
+    }
+
+    public function readCountServiceRequestWarrantyDB() {
+        return DB::table("service_request")
+            ->select(DB::alias(DB::count('*'), 'cont'), "service_request_warranty")
+            ->groupBy("service_request_warranty")
+            ->getAll();
+    }
+
+    public function readTotalChargesPerMonthDB() {
+        return DB::table('service_request')->select(
+            DB::alias(DB::sum('service_request_value'), 'total_item'),
+            DB::alias(DB::year('service_request_date_close'), 'year_item'),
+            DB::alias(DB::month('service_request_date_close'), 'month_item')
+        )->where(DB::equalTo('service_request_warranty'), 'SI')
+        ->groupBy(DB::year('service_request_date_close'), DB::month('service_request_date_close'))
+        ->orderBy(DB::year('service_request_date_close'))
+        ->desc()
+        ->getAll();
     }
 
 }

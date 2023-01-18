@@ -94,8 +94,17 @@ Route::prefix('api', function() {
         });
 
         Route::prefix('request', function() {
-            Route::get('read', [ServiceRequestController::class, 'readServiceRequest']);
+
             Route::post('update', [ServiceRequestController::class, 'updateServiceRequest']);
+
+            Route::prefix('read', function() {
+                Route::get('/', [ServiceRequestController::class, 'readServiceRequest']);
+
+                Route::prefix('graphics', function() {
+                    Route::get('count-warranty', [GraphicServiceOrdersController::class, 'readCountServiceRequestWarranty']);
+                    Route::get('total-charges-per-month', [GraphicServiceOrdersController::class, 'readTotalChargesPerMonth']);
+                });
+            });
 
             Route::prefix('export', function() {
                 Route::post('excel', [ServiceRequestController::class, 'exportServiceRequestExcel']);

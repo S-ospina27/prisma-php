@@ -9,9 +9,9 @@ class GraphicServiceOrdersController {
 
     private GraphicServiceOrdersModel $graphicServiceOrdersModel;
 
-	public function __construct() {
+    public function __construct() {
         $this->graphicServiceOrdersModel = new GraphicServiceOrdersModel();
-	}
+    }
 
     public function readAmountOrders() {
         $amountOrders = $this->graphicServiceOrdersModel->readAmountOrdersDB();
@@ -27,5 +27,13 @@ class GraphicServiceOrdersController {
         return $this->graphicServiceOrdersModel->readUnitPercentagesDB();
     }
 
+    public function readCountServiceRequestWarranty() {
+        return $this->graphicServiceOrdersModel->readCountServiceRequestWarrantyDB();
+    }
+
+    public function readTotalChargesPerMonth() {
+        $data = $this->graphicServiceOrdersModel->readTotalChargesPerMonthDB();
+        return !isset($data->status) ? Arr::of($data)->tree('year_item') : [];
+    }
 
 }
