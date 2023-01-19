@@ -88,6 +88,8 @@ class GraphicServiceOrdersModel {
             ->table("read_service_request_dates")
             ->select()
             ->where(DB::equalTo('idusers_technical'), $serviceRequestDates->getIdusersTechnical())
+            ->orderBy('idservice_request' . DB::desc(true))
+            ->limit(10)
             ->getAll();
     }
 
