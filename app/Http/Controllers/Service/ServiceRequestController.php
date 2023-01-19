@@ -3,44 +3,109 @@
 namespace App\Http\Controllers\Service;
 
 use App\Models\Service\ServiceRequestModel;
+use App\Models\UsersModel;
 use Carbon\Carbon;
+use Database\Class\ReadUsers;
 use LionSpreadsheet\Spreadsheet;
 use Database\Class\ServiceRequest;
+use Database\Class\Users;
 use LionFiles\Manage;
 use LionHelpers\Str;
+use LionMailer\Mailer;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 
 class ServiceRequestController {
 
-	private ServiceRequestModel $serviceRequest;
+	private ServiceRequestModel $serviceRequestModel;
+    private UsersModel $usersModel;
 
-	public function __construct() {
-		$this->serviceRequest = new ServiceRequestModel();
-	}
+    private ServiceRequest $serviceRequest;
+    private ReadUsers $readUsers;
+
+    public function __construct() {
+        $this->serviceRequestModel = new ServiceRequestModel();
+        $this->usersModel = new UsersModel();
+    }
+
+    private function sendMailServiceRequest() {
+        $responseMailer = response->success();
+
+        if ($this->serviceRequest->getIdserviceStates() === 6) {
+            $content_email = Str::of(file_get_contents(storage_path("Template/html/service-request-pending-email.html")))
+                ->replace("--DEALER_NAME--", $this->readUsers->getFullname())
+                ->replace("--CLIENT_NAME--", $this->serviceRequest->getServiceRequestClientName())
+                ->replace("--CLIENT_EMAIL--", $this->serviceRequest->getServiceRequestEmail())
+                ->replace("--CLIENT_PHONE--", $this->serviceRequest->getServiceRequestPhoneContact())
+                ->replace("--DESCRIPTION_REPORT--", $this->serviceRequest->getServiceRequestTroubleReport())
+                ->get();
+
+            $responseMailer = Mailer::from(env->MAIL_USERNAME)
+                ->multiple(
+                    $this->serviceRequest->getServiceRequestEmail(),
+                    $this->readUsers->getUsersEmail()
+                )
+                ->replyTo(env->MAIL_USERNAME)
+                ->subject('NUEVA NOVEDAD DEL DISTRIBUIDOR')
+                ->body(utf8_decode($content_email))
+                ->altBody(utf8_decode($content_email))
+                ->embeddedImage("assets/img/prisma.png", "--IMG_REPLACE--")
+                ->send();
+        } elseif ($this->serviceRequest->getIdserviceStates() === 5) {
+            $content_email = Str::of(file_get_contents(storage_path("Template/html/service-request-proccess-email.html")))
+                ->replace("--TECHNICAL_NAME--", $this->readUsers->getFullname())
+                ->replace("--TECHNICAL_PHONE--", $this->readUsers->getUsersPhone())
+                ->replace("--DATE_VISIT--", $this->serviceRequest->getServiceRequestDateVisit())
+                ->replace("--GUIDE--", "Guia-{$this->serviceRequest->getIdserviceRequest()}")
+                ->get();
+
+            $responseMailer = Mailer::from(env->MAIL_USERNAME)
+                ->multiple(
+                    $this->serviceRequest->getServiceRequestEmail(),
+                    $this->readUsers->getUsersEmail()
+                )
+                ->replyTo(env->MAIL_USERNAME)
+                ->subject('TECNICO ASIGNADO')
+                ->body(utf8_decode($content_email))
+                ->altBody(utf8_decode($content_email))
+                ->embeddedImage("assets/img/prisma.png", "--IMG_REPLACE--")
+                ->send();
+        }
+
+        if ($responseMailer->status === 'error') {
+            finish(response->error('No se ha enviado el correo al proveedor'));
+        }
+    }
 
     public function createServiceRequest() {
-        $responseCreate = $this->serviceRequest->createServiceRequestDB(
-            ServiceRequest::formFields()
-                ->setServiceRequestCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
-                ->setIdserviceStates(6)
+        $this->serviceRequest = ServiceRequest::formFields()
+            ->setServiceRequestCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
+            ->setIdserviceStates(6);
+
+        $this->readUsers = $this->usersModel->readUsersByIdDB(
+            (new ReadUsers())->setIdusers($this->serviceRequest->getIdusersDealers())
         );
 
+        if ($this->readUsers->getIdroles() != 2) {
+            return response->error("El distribuidor no existe");
+        }
+
+        $responseCreate = $this->serviceRequestModel->createServiceRequestDB($this->serviceRequest);
         if ($responseCreate->status === 'database-error') {
-            return $responseCreate;
             return response->error("A ocurrido un error al generar la solicitud");
         }
 
+        $this->sendMailServiceRequest();
         return response->success("Solicitud generada correctamente");
     }
 
-	public function readServiceRequest() {
-		return $this->serviceRequest->readServiceRequestDB();
-	}
+    public function readServiceRequest() {
+        return $this->serviceRequestModel->readServiceRequestDB();
+    }
 
-	public function updateServiceRequest() {
-        $serviceRequest = ServiceRequest::formFields();
+    public function updateServiceRequest() {
+        $this->serviceRequest = ServiceRequest::formFields();
 
-        if (in_array($serviceRequest->getIdserviceStates(), [8, 9])) {
+        if (in_array($this->serviceRequest->getIdserviceStates(), [8, 9])) {
             $file_name = Manage::rename(request->service_request_evidence['name'], 'IMG');
 
             Manage::upload(
@@ -49,21 +114,29 @@ class ServiceRequestController {
                 "assets/img/service/request/evidence/"
             );
 
-            $serviceRequest
+            $this->serviceRequest
                 ->setServiceRequestDateClose(Carbon::now()->format('Y-m-d H:i:s'))
                 ->setServiceRequestEvidence($file_name);
         }
 
-        $responseUpdate = $this->serviceRequest->updateServiceRequestDB($serviceRequest);
+        $responseUpdate = $this->serviceRequestModel->updateServiceRequestDB($this->serviceRequest);
         if($responseUpdate->status === 'database-error') {
-            return response->error('Ocurrió un error al actualizar la solicitud',$responseUpdate);
+            return response->error('Ocurrió un error al actualizar la solicitud');
+        }
+
+        if (in_array($this->serviceRequest->getIdserviceStates(), [5, 8])) {
+            $this->readUsers = $this->usersModel->readUsersByIdDB(
+                (new ReadUsers())->setIdusers($this->serviceRequest->getIdusersTechnical())
+            );
+
+            $this->sendMailServiceRequest();
         }
 
         return response->success('Solicitud actualizada correctamente');
     }
 
     public function exportServiceRequestExcel() {
-        $export = $this->serviceRequest->exportServiceRequestDB((object) [
+        $export = $this->serviceRequestModel->exportServiceRequestDB((object) [
             'date_start' => request->date_start,
             'date_end' => Carbon::parse(request->date_end)->addDay()->format('Y-m-d')
         ]);
