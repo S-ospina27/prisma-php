@@ -77,6 +77,7 @@ Route::prefix('api', function() {
             Route::post('create', [ServiceOrdersController::class, 'createServiceOrders']);
             Route::post('update', [ServiceOrdersController::class, 'updateServiceOrders']);
 
+
             Route::prefix('export', function() {
                 Route::post('excel', [ServiceOrdersController::class, 'exportServiceOrdersExcel']);
                 Route::get('pdf/{idservice_orders}', [ServiceOrdersController::class, 'exportServiceOrdersPDF']);
@@ -96,6 +97,12 @@ Route::prefix('api', function() {
         Route::prefix('request', function() {
             Route::post('create', [ServiceRequestController::class, 'createServiceRequest']);
             Route::post('update', [ServiceRequestController::class, 'updateServiceRequest']);
+
+
+            Route::prefix('payments', function() {
+             Route::post('convert', [ServiceRequestController::class, 'convertRequestsPendingPayments']);
+             Route::get('read', [ServiceRequestController::class, 'readserviceRequestPendigPayments']);
+         });
 
             Route::prefix('read', function() {
                 Route::get('/', [ServiceRequestController::class, 'readServiceRequest']);

@@ -25,6 +25,9 @@ class ServiceRequest implements \JsonSerializable {
 	private ?int $service_request_value = null;
 	private ?string $service_request_payment_methods = null;
 	private ?string $service_request_technical_novelty = null;
+	private ?string $service_request_payment_states_creation_date = null;
+	private ?int $service_request_payment_states = null;
+	private ?string $service_request_payment_paid_creation_date = null;
 
 	public function __construct() {
 
@@ -38,31 +41,31 @@ class ServiceRequest implements \JsonSerializable {
 		$servicerequest = new ServiceRequest();
 
 		$servicerequest->setIdserviceRequest(
-			isset(request->idservice_request) ? (int) request->idservice_request : null
+			isset(request->idservice_request) ? request->idservice_request : null
 		);
 
 		$servicerequest->setIdusersDealers(
-			isset(request->idusers_dealers) ? (int) request->idusers_dealers : null
+			isset(request->idusers_dealers) ? request->idusers_dealers : null
 		);
 
 		$servicerequest->setIdcities(
-			isset(request->idcities) ? (int) request->idcities : null
+			isset(request->idcities) ? request->idcities : null
 		);
 
 		$servicerequest->setIdproducts(
-			isset(request->idproducts) ? (int) request->idproducts : null
+			isset(request->idproducts) ? request->idproducts : null
 		);
 
 		$servicerequest->setIdproductTypes(
-			isset(request->idproduct_types) ? (int) request->idproduct_types : null
+			isset(request->idproduct_types) ? request->idproduct_types : null
 		);
 
 		$servicerequest->setIdusersTechnical(
-			isset(request->idusers_technical) ? (int) request->idusers_technical : null
+			isset(request->idusers_technical) ? request->idusers_technical : null
 		);
 
 		$servicerequest->setIdserviceStates(
-			isset(request->idservice_states) ? (int) request->idservice_states : null
+			isset(request->idservice_states) ? request->idservice_states : null
 		);
 
 		$servicerequest->setServiceRequestCreationDate(
@@ -82,7 +85,7 @@ class ServiceRequest implements \JsonSerializable {
 		);
 
 		$servicerequest->setServiceRequestPhoneContact(
-			isset(request->service_request_phone_contact) ? (int) request->service_request_phone_contact : null
+			isset(request->service_request_phone_contact) ? request->service_request_phone_contact : null
 		);
 
 		$servicerequest->setServiceRequestEmail(
@@ -93,9 +96,9 @@ class ServiceRequest implements \JsonSerializable {
 			isset(request->service_request_trouble_report) ? request->service_request_trouble_report : null
 		);
 
-		// $servicerequest->setServiceRequestEvidence(
-		// 	isset(request->service_request_evidence) ? request->service_request_evidence : null
-		// );
+		$servicerequest->setServiceRequestEvidence(
+			isset(request->service_request_evidence) ? request->service_request_evidence : null
+		);
 
 		$servicerequest->setServiceRequestWarranty(
 			isset(request->service_request_warranty) ? request->service_request_warranty : null
@@ -110,7 +113,7 @@ class ServiceRequest implements \JsonSerializable {
 		);
 
 		$servicerequest->setServiceRequestValue(
-			isset(request->service_request_value) ? (int) request->service_request_value : null
+			isset(request->service_request_value) ? request->service_request_value : null
 		);
 
 		$servicerequest->setServiceRequestPaymentMethods(
@@ -119,6 +122,18 @@ class ServiceRequest implements \JsonSerializable {
 
 		$servicerequest->setServiceRequestTechnicalNovelty(
 			isset(request->service_request_technical_novelty) ? request->service_request_technical_novelty : null
+		);
+
+		$servicerequest->setServiceRequestPaymentStatesCreationDate(
+			isset(request->service_request_payment_states_creation_date) ? request->service_request_payment_states_creation_date : null
+		);
+
+		$servicerequest->setServiceRequestPaymentStates(
+			isset(request->service_request_payment_states) ? request->service_request_payment_states : null
+		);
+
+		$servicerequest->setServiceRequestPaymentPaidCreationDate(
+			isset(request->service_request_payment_paid_creation_date) ? request->service_request_payment_paid_creation_date : null
 		);
 
 		return $servicerequest;
@@ -310,6 +325,33 @@ class ServiceRequest implements \JsonSerializable {
 
 	public function setServiceRequestTechnicalNovelty(?string $service_request_technical_novelty): ServiceRequest {
 		$this->service_request_technical_novelty = $service_request_technical_novelty;
+		return $this;
+	}
+
+	public function getServiceRequestPaymentStatesCreationDate(): ?string {
+		return $this->service_request_payment_states_creation_date;
+	}
+
+	public function setServiceRequestPaymentStatesCreationDate(?string $service_request_payment_states_creation_date): ServiceRequest {
+		$this->service_request_payment_states_creation_date = $service_request_payment_states_creation_date;
+		return $this;
+	}
+
+	public function getServiceRequestPaymentStates(): ?int {
+		return $this->service_request_payment_states;
+	}
+
+	public function setServiceRequestPaymentStates(?int $service_request_payment_states): ServiceRequest {
+		$this->service_request_payment_states = $service_request_payment_states;
+		return $this;
+	}
+
+	public function getServiceRequestPaymentPaidCreationDate(): ?string {
+		return $this->service_request_payment_paid_creation_date;
+	}
+
+	public function setServiceRequestPaymentPaidCreationDate(?string $service_request_payment_paid_creation_date): ServiceRequest {
+		$this->service_request_payment_paid_creation_date = $service_request_payment_paid_creation_date;
 		return $this;
 	}
 
