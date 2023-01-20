@@ -53,7 +53,7 @@ Route::prefix('api', function() {
 
         Route::prefix('read', function() {
             Route::get('/', [UsersController::class, 'readUsers']);
-            Route::get('by-rol', [UsersController::class, 'readFilterUsers']);
+            Route::get('by-rol', [UsersController::class, 'readUsersByRol']);
         });
     });
 

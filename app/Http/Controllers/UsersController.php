@@ -44,7 +44,7 @@ class UsersController {
 		return $this->usersModel->readUsersDB();
 	}
 
-    public function readFilterUsers() {
+    public function readUsersByRol() {
         return Arr::of($this->usersModel->readUsersDB())->tree('roles_name');
     }
 
