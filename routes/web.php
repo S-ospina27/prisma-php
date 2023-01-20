@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Locations\CitiesController;
 use App\Http\Controllers\Locations\DepartmentsController;
 use App\Http\Controllers\Manage\DocumentTypesController;
+use App\Http\Controllers\Manage\PaymentsController;
 use App\Http\Controllers\Manage\RolesController;
 use App\Http\Controllers\Manage\ServiceStatesController;
 use App\Http\Controllers\Manage\StatusController;
@@ -72,6 +73,11 @@ Route::prefix('api', function() {
         });
     });
 
+    Route::prefix('payments', function() {
+        Route::post("create", [PaymentsController::class, 'createPayments']);
+        Route::get('read', [PaymentsController::class, 'readPayments']);
+    });
+
     Route::prefix('service', function() {
         Route::prefix('orders', function() {
             Route::post('create', [ServiceOrdersController::class, 'createServiceOrders']);
@@ -97,11 +103,6 @@ Route::prefix('api', function() {
         Route::prefix('request', function() {
             Route::post('create', [ServiceRequestController::class, 'createServiceRequest']);
             Route::post('update', [ServiceRequestController::class, 'updateServiceRequest']);
-
-            Route::prefix('payments', function() {
-                Route::get('read', [ServiceRequestController::class, 'readserviceRequestPendigPayments']);
-                Route::post('convert', [ServiceRequestController::class, 'convertRequestsPendingPayments']);
-            });
 
             Route::prefix('read', function() {
                 Route::get('/', [ServiceRequestController::class, 'readServiceRequest']);

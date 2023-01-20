@@ -23,19 +23,19 @@ class Payments implements \JsonSerializable {
 		$payments = new Payments();
 
 		$payments->setIdpayments(
-			isset(request->idpayments) ? request->idpayments : null
+			isset(request->idpayments) ? (int) request->idpayments : null
 		);
 
 		$payments->setIdserviceRequest(
-			isset(request->idservice_request) ? request->idservice_request : null
+			isset(request->idservice_request) ? (int) request->idservice_request : null
 		);
 
 		$payments->setIdserviceStates(
-			isset(request->idservice_states) ? request->idservice_states : null
+			isset(request->idservice_states) ? (int) request->idservice_states : null
 		);
 
 		$payments->setPaymentsValue(
-			isset(request->payments_value) ? request->payments_value : null
+			isset(request->payments_value) ? (int) request->payments_value : null
 		);
 
 		$payments->setPaymentsCreationDate(
