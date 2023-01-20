@@ -85,7 +85,7 @@ class ServiceRequestController {
             (new ReadUsers())->setIdusers($this->serviceRequest->getIdusersDealers())
         );
 
-        if ($this->readUsers->getIdroles() != 2) {
+        if ($this->readUsers->getIdroles() != 3) {
             return response->error("El distribuidor no existe");
         }
 
