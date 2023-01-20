@@ -32,43 +32,43 @@ class ServiceRequestController {
 
         if ($this->serviceRequest->getIdserviceStates() === 6) {
             $content_email = Str::of(file_get_contents(storage_path("Template/html/service-request-pending-email.html")))
-            ->replace("--DEALER_NAME--", $this->readUsers->getFullname())
-            ->replace("--CLIENT_NAME--", $this->serviceRequest->getServiceRequestClientName())
-            ->replace("--CLIENT_EMAIL--", $this->serviceRequest->getServiceRequestEmail())
-            ->replace("--CLIENT_PHONE--", $this->serviceRequest->getServiceRequestPhoneContact())
-            ->replace("--DESCRIPTION_REPORT--", $this->serviceRequest->getServiceRequestTroubleReport())
-            ->get();
+                ->replace("--DEALER_NAME--", $this->readUsers->getFullname())
+                ->replace("--CLIENT_NAME--", $this->serviceRequest->getServiceRequestClientName())
+                ->replace("--CLIENT_EMAIL--", $this->serviceRequest->getServiceRequestEmail())
+                ->replace("--CLIENT_PHONE--", $this->serviceRequest->getServiceRequestPhoneContact())
+                ->replace("--DESCRIPTION_REPORT--", $this->serviceRequest->getServiceRequestTroubleReport())
+                ->get();
 
             $responseMailer = Mailer::from(env->MAIL_USERNAME)
-            ->multiple(
-                $this->serviceRequest->getServiceRequestEmail(),
-                $this->readUsers->getUsersEmail()
-            )
-            ->replyTo(env->MAIL_USERNAME)
-            ->subject('NUEVA NOVEDAD DEL DISTRIBUIDOR')
-            ->body(utf8_decode($content_email))
-            ->altBody(utf8_decode($content_email))
-            ->embeddedImage("assets/img/prisma.png", "--IMG_REPLACE--")
-            ->send();
+                ->multiple(
+                    $this->serviceRequest->getServiceRequestEmail(),
+                    $this->readUsers->getUsersEmail()
+                )
+                ->replyTo(env->MAIL_USERNAME)
+                ->subject('NUEVA NOVEDAD DEL DISTRIBUIDOR')
+                ->body(utf8_decode($content_email))
+                ->altBody(utf8_decode($content_email))
+                ->embeddedImage("assets/img/prisma.png", "--IMG_REPLACE--")
+                ->send();
         } elseif ($this->serviceRequest->getIdserviceStates() === 5) {
             $content_email = Str::of(file_get_contents(storage_path("Template/html/service-request-proccess-email.html")))
-            ->replace("--TECHNICAL_NAME--", $this->readUsers->getFullname())
-            ->replace("--TECHNICAL_PHONE--", $this->readUsers->getUsersPhone())
-            ->replace("--DATE_VISIT--", $this->serviceRequest->getServiceRequestDateVisit())
-            ->replace("--GUIDE--", "Guia-{$this->serviceRequest->getIdserviceRequest()}")
-            ->get();
+                ->replace("--TECHNICAL_NAME--", $this->readUsers->getFullname())
+                ->replace("--TECHNICAL_PHONE--", $this->readUsers->getUsersPhone())
+                ->replace("--DATE_VISIT--", $this->serviceRequest->getServiceRequestDateVisit())
+                ->replace("--GUIDE--", "Guia-{$this->serviceRequest->getIdserviceRequest()}")
+                ->get();
 
             $responseMailer = Mailer::from(env->MAIL_USERNAME)
-            ->multiple(
-                $this->serviceRequest->getServiceRequestEmail(),
-                $this->readUsers->getUsersEmail()
-            )
-            ->replyTo(env->MAIL_USERNAME)
-            ->subject('TECNICO ASIGNADO')
-            ->body(utf8_decode($content_email))
-            ->altBody(utf8_decode($content_email))
-            ->embeddedImage("assets/img/prisma.png", "--IMG_REPLACE--")
-            ->send();
+                ->multiple(
+                    $this->serviceRequest->getServiceRequestEmail(),
+                    $this->readUsers->getUsersEmail()
+                )
+                ->replyTo(env->MAIL_USERNAME)
+                ->subject('TECNICO ASIGNADO')
+                ->body(utf8_decode($content_email))
+                ->altBody(utf8_decode($content_email))
+                ->embeddedImage("assets/img/prisma.png", "--IMG_REPLACE--")
+                ->send();
         }
 
         if ($responseMailer->status === 'error') {
@@ -78,8 +78,8 @@ class ServiceRequestController {
 
     public function createServiceRequest() {
         $this->serviceRequest = ServiceRequest::formFields()
-        ->setServiceRequestCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
-        ->setIdserviceStates(6);
+            ->setServiceRequestCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
+            ->setIdserviceStates(6);
 
         $this->readUsers = $this->usersModel->readUsersByIdDB(
             (new ReadUsers())->setIdusers($this->serviceRequest->getIdusersDealers())
@@ -115,8 +115,8 @@ class ServiceRequestController {
             );
 
             $this->serviceRequest
-            ->setServiceRequestDateClose(Carbon::now()->format('Y-m-d H:i:s'))
-            ->setServiceRequestEvidence($file_name);
+                ->setServiceRequestDateClose(Carbon::now()->format('Y-m-d H:i:s'))
+                ->setServiceRequestEvidence($file_name);
         }
 
         $responseUpdate = $this->serviceRequestModel->updateServiceRequestDB($this->serviceRequest);
@@ -188,20 +188,21 @@ class ServiceRequestController {
 
 
     public function convertRequestsPendingPayments(){
-      $updateresponse =$this->serviceRequestModel->convertRequestsPendingPaymentsDB(
-        ServiceRequest::formFields()
-        ->setServiceRequestPaymentStates(10)
-        ->setServiceRequestPaymentStatesCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
-    );
+        $updateresponse =$this->serviceRequestModel->convertRequestsPendingPaymentsDB(
+            ServiceRequest::formFields()
+                ->setServiceRequestPaymentStates(10)
+                ->setServiceRequestPaymentStatesCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
+        );
 
-      if($updateresponse->status === 'database-error'){
-         return response->error("A ocurrido un error al actualizar el las ordenes de solicitud");
-     }
-     return response->success("se Actualizaron  ordenes de solicitud a pendientes de pago");
- }
+        if($updateresponse->status === 'database-error') {
+            return response->error("A ocurrido un error al actualizar el las ordenes de solicitud");
+        }
 
- public function readserviceRequestPendigPayments(){
-    return  $this->serviceRequestModel->readserviceRequestPendigPaymentsDB();
-}
+        return response->success("se Actualizaron  ordenes de solicitud a pendientes de pago");
+    }
+
+    public function readserviceRequestPendigPayments(){
+        return  $this->serviceRequestModel->readserviceRequestPendigPaymentsDB();
+    }
 
 }
