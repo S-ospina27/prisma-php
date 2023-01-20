@@ -55,7 +55,7 @@ class ServiceRequestController {
                 ->replace("--TECHNICAL_NAME--", $this->readUsers->getFullname())
                 ->replace("--TECHNICAL_PHONE--", $this->readUsers->getUsersPhone())
                 ->replace("--DATE_VISIT--", $this->serviceRequest->getServiceRequestDateVisit())
-                ->replace("--GUIDE--", "Guia-{$this->serviceRequest->getIdserviceRequest()}")
+                ->replace("--GUIDE--", "SL-{$this->serviceRequest->getIdserviceRequest()}")
                 ->get();
 
             $responseMailer = Mailer::from(env->MAIL_USERNAME)
@@ -134,7 +134,7 @@ class ServiceRequestController {
             return response->error('Ocurrió un error al actualizar la solicitud');
         }
 
-        if (in_array($this->serviceRequest->getIdserviceStates(), [5, 8])) {
+        if (in_array($this->serviceRequest->getIdserviceStates(), [5, 6, 8])) {
             $this->readUsers = $this->usersModel->readUsersByIdDB(
                 (new ReadUsers())->setIdusers($this->serviceRequest->getIdusersTechnical())
             );
