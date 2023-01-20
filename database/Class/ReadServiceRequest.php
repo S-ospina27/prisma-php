@@ -8,7 +8,6 @@ class ReadServiceRequest implements \JsonSerializable {
 	private ?string $guide = null;
 	private ?int $idservice_states = null;
 	private ?int $idproducts = null;
-	private ?int $idproduct_types = null;
 	private ?int $service_request_value = null;
 	private ?string $service_request_payment_methods = null;
 	private ?string $fullnamedealers = null;
@@ -19,7 +18,6 @@ class ReadServiceRequest implements \JsonSerializable {
 	private ?int $idusers_technical = null;
 	private ?string $departments_name = null;
 	private ?string $cities_name = null;
-	private ?string $product_types_name = null;
 	private ?string $products_reference = null;
 	private ?string $service_type = null;
 	private ?string $service_request_creation_date = null;
@@ -61,10 +59,6 @@ class ReadServiceRequest implements \JsonSerializable {
 			isset(request->idproducts) ? request->idproducts : null
 		);
 
-		$readservicerequest->setIdproductTypes(
-			isset(request->idproduct_types) ? request->idproduct_types : null
-		);
-
 		$readservicerequest->setServiceRequestValue(
 			isset(request->service_request_value) ? request->service_request_value : null
 		);
@@ -103,10 +97,6 @@ class ReadServiceRequest implements \JsonSerializable {
 
 		$readservicerequest->setCitiesName(
 			isset(request->cities_name) ? request->cities_name : null
-		);
-
-		$readservicerequest->setProductTypesName(
-			isset(request->product_types_name) ? request->product_types_name : null
 		);
 
 		$readservicerequest->setProductsReference(
@@ -200,15 +190,6 @@ class ReadServiceRequest implements \JsonSerializable {
 		return $this;
 	}
 
-	public function getIdproductTypes(): ?int {
-		return $this->idproduct_types;
-	}
-
-	public function setIdproductTypes(?int $idproduct_types): ReadServiceRequest {
-		$this->idproduct_types = $idproduct_types;
-		return $this;
-	}
-
 	public function getServiceRequestValue(): ?int {
 		return $this->service_request_value;
 	}
@@ -296,15 +277,6 @@ class ReadServiceRequest implements \JsonSerializable {
 
 	public function setCitiesName(?string $cities_name): ReadServiceRequest {
 		$this->cities_name = $cities_name;
-		return $this;
-	}
-
-	public function getProductTypesName(): ?string {
-		return $this->product_types_name;
-	}
-
-	public function setProductTypesName(?string $product_types_name): ReadServiceRequest {
-		$this->product_types_name = $product_types_name;
 		return $this;
 	}
 
