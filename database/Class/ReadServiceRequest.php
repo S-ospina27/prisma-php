@@ -7,6 +7,7 @@ class ReadServiceRequest implements \JsonSerializable {
 	private ?int $idservice_request = null;
 	private ?int $idservice_states = null;
 	private ?int $idproducts = null;
+	private ?int $idproduct_types = null;
 	private ?int $service_request_value = null;
 	private ?string $service_request_payment_methods = null;
 	private ?string $fullnamedealers = null;
@@ -53,6 +54,10 @@ class ReadServiceRequest implements \JsonSerializable {
 
 		$readservicerequest->setIdproducts(
 			isset(request->idproducts) ? request->idproducts : null
+		);
+
+		$readservicerequest->setIdproductTypes(
+			isset(request->idproduct_types) ? request->idproduct_types : null
 		);
 
 		$readservicerequest->setServiceRequestValue(
@@ -178,6 +183,15 @@ class ReadServiceRequest implements \JsonSerializable {
 
 	public function setIdproducts(?int $idproducts): ReadServiceRequest {
 		$this->idproducts = $idproducts;
+		return $this;
+	}
+
+	public function getIdproductTypes(): ?int {
+		return $this->idproduct_types;
+	}
+
+	public function setIdproductTypes(?int $idproduct_types): ReadServiceRequest {
+		$this->idproduct_types = $idproduct_types;
 		return $this;
 	}
 

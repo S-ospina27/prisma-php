@@ -19,7 +19,7 @@ class Departments implements \JsonSerializable {
 		$departments = new Departments();
 
 		$departments->setIddepartments(
-			isset(request->iddepartments) ? request->iddepartments : null
+			isset(request->iddepartments) ? (int) request->iddepartments : null
 		);
 
 		$departments->setDepartmentsName(

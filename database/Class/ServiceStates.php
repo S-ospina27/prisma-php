@@ -19,7 +19,7 @@ class ServiceStates implements \JsonSerializable {
 		$servicestates = new ServiceStates();
 
 		$servicestates->setIdserviceStates(
-			isset(request->idservice_states) ? request->idservice_states : null
+			isset(request->idservice_states) ? (int) request->idservice_states : null
 		);
 
 		$servicestates->setServiceType(

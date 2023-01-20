@@ -19,7 +19,7 @@ class ProductTypes implements \JsonSerializable {
 		$producttypes = new ProductTypes();
 
 		$producttypes->setIdproductTypes(
-			isset(request->idproduct_types) ? request->idproduct_types : null
+			isset(request->idproduct_types) ? (int) request->idproduct_types : null
 		);
 
 		$producttypes->setProductTypesName(

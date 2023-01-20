@@ -19,7 +19,7 @@ class DocumentTypes implements \JsonSerializable {
 		$documenttypes = new DocumentTypes();
 
 		$documenttypes->setIddocumentTypes(
-			isset(request->iddocument_types) ? request->iddocument_types : null
+			isset(request->iddocument_types) ? (int) request->iddocument_types : null
 		);
 
 		$documenttypes->setDocumentTypesName(

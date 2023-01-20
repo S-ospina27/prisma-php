@@ -20,7 +20,7 @@ class Cities implements \JsonSerializable {
 		$cities = new Cities();
 
 		$cities->setIdcities(
-			isset(request->idcities) ? request->idcities : null
+			isset(request->idcities) ? (int) request->idcities : null
 		);
 
 		$cities->setCitiesName(
@@ -28,7 +28,7 @@ class Cities implements \JsonSerializable {
 		);
 
 		$cities->setIddepartments(
-			isset(request->iddepartments) ? request->iddepartments : null
+			isset(request->iddepartments) ? (int) request->iddepartments : null
 		);
 
 		return $cities;

@@ -25,7 +25,7 @@ class Products implements \JsonSerializable {
 		$products = new Products();
 
 		$products->setIdproducts(
-			isset(request->idproducts) ? request->idproducts : null
+			isset(request->idproducts) ? (int) request->idproducts : null
 		);
 
 		$products->setProductsReference(
@@ -33,7 +33,7 @@ class Products implements \JsonSerializable {
 		);
 
 		$products->setIdproductTypes(
-			isset(request->idproduct_types) ? request->idproduct_types : null
+			isset(request->idproduct_types) ? (int) request->idproduct_types : null
 		);
 
         if (isset(request->products_image)) {
@@ -51,11 +51,11 @@ class Products implements \JsonSerializable {
 		);
 
 		$products->setIdusers(
-			isset(request->idusers) ? request->idusers : null
+			isset(request->idusers) ? (int) request->idusers : null
 		);
 
 		$products->setIdstatus(
-			isset(request->idstatus) ? request->idstatus : null
+			isset(request->idstatus) ? (int) request->idstatus : null
 		);
 
 		return $products;

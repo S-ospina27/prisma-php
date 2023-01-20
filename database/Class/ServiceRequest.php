@@ -8,7 +8,6 @@ class ServiceRequest implements \JsonSerializable {
 	private ?int $idusers_dealers = null;
 	private ?int $idcities = null;
 	private ?int $idproducts = null;
-	private ?int $idproduct_types = null;
 	private ?int $idusers_technical = null;
 	private ?int $idservice_states = null;
 	private ?string $service_request_creation_date = null;
@@ -41,31 +40,27 @@ class ServiceRequest implements \JsonSerializable {
 		$servicerequest = new ServiceRequest();
 
 		$servicerequest->setIdserviceRequest(
-			isset(request->idservice_request) ? request->idservice_request : null
+			isset(request->idservice_request) ? (int) request->idservice_request : null
 		);
 
 		$servicerequest->setIdusersDealers(
-			isset(request->idusers_dealers) ? request->idusers_dealers : null
+			isset(request->idusers_dealers) ? (int) request->idusers_dealers : null
 		);
 
 		$servicerequest->setIdcities(
-			isset(request->idcities) ? request->idcities : null
+			isset(request->idcities) ? (int) request->idcities : null
 		);
 
 		$servicerequest->setIdproducts(
-			isset(request->idproducts) ? request->idproducts : null
-		);
-
-		$servicerequest->setIdproductTypes(
-			isset(request->idproduct_types) ? request->idproduct_types : null
+			isset(request->idproducts) ? (int) request->idproducts : null
 		);
 
 		$servicerequest->setIdusersTechnical(
-			isset(request->idusers_technical) ? request->idusers_technical : null
+			isset(request->idusers_technical) ? (int) request->idusers_technical : null
 		);
 
 		$servicerequest->setIdserviceStates(
-			isset(request->idservice_states) ? request->idservice_states : null
+			isset(request->idservice_states) ? (int) request->idservice_states : null
 		);
 
 		$servicerequest->setServiceRequestCreationDate(
@@ -85,7 +80,7 @@ class ServiceRequest implements \JsonSerializable {
 		);
 
 		$servicerequest->setServiceRequestPhoneContact(
-			isset(request->service_request_phone_contact) ? request->service_request_phone_contact : null
+			isset(request->service_request_phone_contact) ? (int) request->service_request_phone_contact : null
 		);
 
 		$servicerequest->setServiceRequestEmail(
@@ -113,7 +108,7 @@ class ServiceRequest implements \JsonSerializable {
 		);
 
 		$servicerequest->setServiceRequestValue(
-			isset(request->service_request_value) ? request->service_request_value : null
+			isset(request->service_request_value) ? (int) request->service_request_value : null
 		);
 
 		$servicerequest->setServiceRequestPaymentMethods(
@@ -172,15 +167,6 @@ class ServiceRequest implements \JsonSerializable {
 
 	public function setIdproducts(?int $idproducts): ServiceRequest {
 		$this->idproducts = $idproducts;
-		return $this;
-	}
-
-	public function getIdproductTypes(): ?int {
-		return $this->idproduct_types;
-	}
-
-	public function setIdproductTypes(?int $idproduct_types): ServiceRequest {
-		$this->idproduct_types = $idproduct_types;
 		return $this;
 	}
 

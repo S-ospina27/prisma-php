@@ -19,7 +19,7 @@ class Status implements \JsonSerializable {
 		$status = new Status();
 
 		$status->setIdstatus(
-			isset(request->idstatus) ? request->idstatus : null
+			isset(request->idstatus) ? (int) request->idstatus : null
 		);
 
 		$status->setStatusType(

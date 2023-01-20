@@ -43,7 +43,7 @@ class Users implements \JsonSerializable {
 		);
 
 		$users->setUsersIdentification(
-			isset(request->users_identification) ? (int) request->users_identification : null
+			isset(request->users_identification) ? request->users_identification : null
 		);
 
 		$users->setUsersName(
