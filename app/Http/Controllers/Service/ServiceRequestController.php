@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use Database\Class\ReadUsers;
 use LionSpreadsheet\Spreadsheet;
 use Database\Class\ServiceRequest;
-use Database\Class\Users;
 use LionFiles\Manage;
 use LionHelpers\Str;
 use LionMailer\Mailer;
@@ -184,25 +183,6 @@ class ServiceRequestController {
         return response->success("Excel generado correctamente", [
             "url" => Str::of(env->SERVER_URL)->concat("/")->concat($fullpath)->concat($name)->get(),
         ]);
-    }
-
-
-    public function convertRequestsPendingPayments(){
-        $updateresponse =$this->serviceRequestModel->convertRequestsPendingPaymentsDB(
-            ServiceRequest::formFields()
-                ->setServiceRequestPaymentStates(10)
-                ->setServiceRequestPaymentStatesCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
-        );
-
-        if($updateresponse->status === 'database-error') {
-            return response->error("A ocurrido un error al actualizar el las ordenes de solicitud");
-        }
-
-        return response->success("se Actualizaron  ordenes de solicitud a pendientes de pago");
-    }
-
-    public function readserviceRequestPendigPayments(){
-        return  $this->serviceRequestModel->readserviceRequestPendigPaymentsDB();
     }
 
 }
