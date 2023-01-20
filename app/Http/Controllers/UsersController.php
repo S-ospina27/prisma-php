@@ -45,7 +45,7 @@ class UsersController {
 	}
 
     public function readFilterUsers() {
-        return Arr::of($this->readUsers())->tree('roles_name');
+        return Arr::of($this->usersModel->readUsersDB())->tree('roles_name');
     }
 
 	public function updateUsers() {

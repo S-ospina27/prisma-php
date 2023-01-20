@@ -5,6 +5,7 @@ namespace Database\Class;
 class ReadServiceRequest implements \JsonSerializable {
 
 	private ?int $idservice_request = null;
+	private ?string $guide = null;
 	private ?int $idservice_states = null;
 	private ?int $idproducts = null;
 	private ?int $idproduct_types = null;
@@ -46,6 +47,10 @@ class ReadServiceRequest implements \JsonSerializable {
 
 		$readservicerequest->setIdserviceRequest(
 			isset(request->idservice_request) ? request->idservice_request : null
+		);
+
+		$readservicerequest->setGuide(
+			isset(request->guide) ? request->guide : null
 		);
 
 		$readservicerequest->setIdserviceStates(
@@ -165,6 +170,15 @@ class ReadServiceRequest implements \JsonSerializable {
 
 	public function setIdserviceRequest(?int $idservice_request): ReadServiceRequest {
 		$this->idservice_request = $idservice_request;
+		return $this;
+	}
+
+	public function getGuide(): ?string {
+		return $this->guide;
+	}
+
+	public function setGuide(?string $guide): ReadServiceRequest {
+		$this->guide = $guide;
 		return $this;
 	}
 

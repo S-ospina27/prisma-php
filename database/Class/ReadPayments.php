@@ -5,8 +5,11 @@ namespace Database\Class;
 class ReadPayments implements \JsonSerializable {
 
 	private ?int $idpayments = null;
+	private ?string $guide_payments = null;
 	private ?int $idservice_request = null;
-	private ?string $guide = null;
+	private ?string $guide_request = null;
+	private ?int $idservice_states_request = null;
+	private ?string $service_type_request = null;
 	private ?int $idservice_states = null;
 	private ?string $service_type = null;
 	private ?int $payments_value = null;
@@ -28,12 +31,24 @@ class ReadPayments implements \JsonSerializable {
 			isset(request->idpayments) ? request->idpayments : null
 		);
 
+		$readpayments->setGuidePayments(
+			isset(request->guide_payments) ? request->guide_payments : null
+		);
+
 		$readpayments->setIdserviceRequest(
 			isset(request->idservice_request) ? request->idservice_request : null
 		);
 
-		$readpayments->setGuide(
-			isset(request->guide) ? request->guide : null
+		$readpayments->setGuideRequest(
+			isset(request->guide_request) ? request->guide_request : null
+		);
+
+		$readpayments->setIdserviceStatesRequest(
+			isset(request->idservice_states_request) ? request->idservice_states_request : null
+		);
+
+		$readpayments->setServiceTypeRequest(
+			isset(request->service_type_request) ? request->service_type_request : null
 		);
 
 		$readpayments->setIdserviceStates(
@@ -68,6 +83,15 @@ class ReadPayments implements \JsonSerializable {
 		return $this;
 	}
 
+	public function getGuidePayments(): ?string {
+		return $this->guide_payments;
+	}
+
+	public function setGuidePayments(?string $guide_payments): ReadPayments {
+		$this->guide_payments = $guide_payments;
+		return $this;
+	}
+
 	public function getIdserviceRequest(): ?int {
 		return $this->idservice_request;
 	}
@@ -77,12 +101,30 @@ class ReadPayments implements \JsonSerializable {
 		return $this;
 	}
 
-	public function getGuide(): ?string {
-		return $this->guide;
+	public function getGuideRequest(): ?string {
+		return $this->guide_request;
 	}
 
-	public function setGuide(?string $guide): ReadPayments {
-		$this->guide = $guide;
+	public function setGuideRequest(?string $guide_request): ReadPayments {
+		$this->guide_request = $guide_request;
+		return $this;
+	}
+
+	public function getIdserviceStatesRequest(): ?int {
+		return $this->idservice_states_request;
+	}
+
+	public function setIdserviceStatesRequest(?int $idservice_states_request): ReadPayments {
+		$this->idservice_states_request = $idservice_states_request;
+		return $this;
+	}
+
+	public function getServiceTypeRequest(): ?string {
+		return $this->service_type_request;
+	}
+
+	public function setServiceTypeRequest(?string $service_type_request): ReadPayments {
+		$this->service_type_request = $service_type_request;
 		return $this;
 	}
 

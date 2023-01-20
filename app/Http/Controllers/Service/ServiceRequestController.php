@@ -9,6 +9,7 @@ use Database\Class\ReadUsers;
 use LionSpreadsheet\Spreadsheet;
 use Database\Class\ServiceRequest;
 use LionFiles\Manage;
+use LionHelpers\Arr;
 use LionHelpers\Str;
 use LionMailer\Mailer;
 use PhpOffice\PhpSpreadsheet\Style\Border;
@@ -99,6 +100,16 @@ class ServiceRequestController {
 
     public function readServiceRequest() {
         return $this->serviceRequestModel->readServiceRequestDB();
+    }
+
+    public function readServiceRequestByState() {
+        $readServiceRquest = $this->serviceRequestModel->readServiceRequestDB();
+
+        if (!isset($readServiceRquest->status)) {
+            return Arr::of($readServiceRquest)->tree("service_type");
+        }
+
+        return $readServiceRquest;
     }
 
     public function updateServiceRequest() {

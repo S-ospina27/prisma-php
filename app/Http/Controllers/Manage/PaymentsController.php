@@ -22,6 +22,7 @@ class PaymentsController {
         );
 
         if ($responseCreate->status === 'database-error') {
+            return $responseCreate;
             return response->error("Ocurrió un error al crear el pago");
         }
 

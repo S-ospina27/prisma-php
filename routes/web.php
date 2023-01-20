@@ -106,6 +106,7 @@ Route::prefix('api', function() {
 
             Route::prefix('read', function() {
                 Route::get('/', [ServiceRequestController::class, 'readServiceRequest']);
+                Route::get("by-state", [ServiceRequestController::class, 'readServiceRequestByState']);
 
                 Route::prefix('graphics', function() {
                     Route::get('count-warranty', [GraphicServiceOrdersController::class, 'readCountServiceRequestWarranty']);
