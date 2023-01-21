@@ -41,4 +41,14 @@ class PaymentsController {
         return $this->paymentsModel->readPaymentsDB();
     }
 
+    public function updatePaymentsMassive() {
+        $responseUpdate = $this->paymentsModel->updatePaymentsMassiveDB(request->items);
+
+        if ($responseUpdate->status === 'database-error') {
+            return response->error("Ocurrió un error al actualizar los pagos");
+        }
+
+        return response->success("Pagos actualizados correctamente");
+    }
+
 }

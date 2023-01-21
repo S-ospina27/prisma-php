@@ -77,6 +77,10 @@ Route::prefix('api', function() {
         Route::prefix('payments', function() {
             Route::post("create", [PaymentsController::class, 'createPayments']);
             Route::get('read', [PaymentsController::class, 'readPayments']);
+
+            Route::prefix('update', function() {
+                Route::post('massive', [PaymentsController::class, 'updatePaymentsMassive']);
+            });
         });
 
         Route::prefix('service', function() {

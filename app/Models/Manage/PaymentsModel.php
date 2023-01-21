@@ -26,4 +26,12 @@ class PaymentsModel {
             ->getAll();
     }
 
+    public function updatePaymentsMassiveDB(array $items) {
+        return DB::table('payments')
+            ->update(['idservice_states' => 10])
+            ->where('idpayments')
+            ->in(...$items)
+            ->execute();
+    }
+
 }
