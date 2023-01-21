@@ -14,7 +14,6 @@ LionRoute\Route::addMiddleware([
         ['name' => "jwt-not-authorize", 'method' => "notAuthorize"]
     ],
     App\Http\Middleware\Session\SessionMiddleware::class => [
-        ['name' => "referer", 'method' => "referer"],
         ['name' => "close-session", 'method' => "closeSession"]
     ],
     App\Http\Middleware\Session\RolesMiddleware::class => [

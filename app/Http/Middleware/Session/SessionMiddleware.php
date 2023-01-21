@@ -10,12 +10,6 @@ class SessionMiddleware {
         $this->headers = apache_request_headers();
 	}
 
-    public function referer() {
-        if (!isset($this->headers['Referer'])) {
-            finish(response->error("No tiene autorización para realizar esta petición"));
-        }
-    }
-
     public function closeSession() {
         if (isset($this->headers['Authorization'])) {
             response->finish(
