@@ -64,23 +64,27 @@ return [
 
 ],
 'api/products/types/create' => [
-   App\Rules\ProductTypes\ProductTypesNameRule::class
+    App\Rules\ProductTypes\ProductTypesNameRule::class
 ],
 'api/products/types/update' => [
     App\Rules\ProductTypes\IdproductTypesRule::class,
-   App\Rules\ProductTypes\ProductTypesNameRule::class
+    App\Rules\ProductTypes\ProductTypesNameRule::class
 ],
 'api/payments/create' => [
- App\Rules\Payments\PaymentsValueRule::class,
+    App\Rules\Payments\PaymentsValueRule::class,
 ],
 'api/payments/update/massive' => [
- App\Rules\Payments\IdpaymentsRule::class,
- App\Rules\Payments\PaymentsValueRule::class,
+    App\Rules\Payments\IdpaymentsRule::class,
+    App\Rules\Payments\PaymentsValueRule::class,
 ],
 'api/service/orders/export/excel' => [
- App\Rules\ServiceOrders\ServiceOrdersCreationDateRule::class
+    App\Rules\ServiceOrders\ServiceOrdersCreationDateRule::class
 ],
 'api/service/request/export/excel' => [
-\App\Rules\ServiceRequest\ServiceRequestCreationDateRule::class
+    App\Rules\ServiceRequest\ServiceRequestCreationDateRule::class
 ],
+'api/Service/spare-parts/create' => [
+    App\Rules\SpareParts\SparePartsNameRule::class,
+    App\Rules\SpareParts\SparePartsAmountRule::class
+]
 ];
