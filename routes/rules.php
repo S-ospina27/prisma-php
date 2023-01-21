@@ -70,5 +70,8 @@ return [
     App\Rules\ProductTypes\IdproductTypesRule::class,
    App\Rules\ProductTypes\ProductTypesNameRule::class
 ],
+'api/payments/create' => [
+ App\Rules\Payments\PaymentsValueRule::class,
+],
 
 ];
