@@ -73,5 +73,9 @@ return [
 'api/payments/create' => [
  App\Rules\Payments\PaymentsValueRule::class,
 ],
+'api/payments/update' => [
+ App\Rules\Payments\IdpaymentsRule::class,
+ App\Rules\Payments\PaymentsValueRule::class,
+],
 
 ];
