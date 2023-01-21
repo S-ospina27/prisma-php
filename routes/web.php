@@ -31,6 +31,8 @@ Route::middleware(['referer'], function() {
     Route::any('/', [HomeController::class, 'index']);
 
     Route::prefix('api', function() {
+        Route::post('application-order-form', [ServiceRequestController::class, 'createServiceRequest']);
+
         Route::prefix('auth', function() {
             Route::post('login', [LoginController::class, 'auth'], ['close-session']);
         });
@@ -103,7 +105,6 @@ Route::middleware(['referer'], function() {
                 });
 
                 Route::prefix('request', function() {
-                    Route::post('create', [ServiceRequestController::class, 'createServiceRequest']);
                     Route::post('update', [ServiceRequestController::class, 'updateServiceRequest']);
 
                     Route::prefix('read', function() {
@@ -136,5 +137,5 @@ Route::middleware(['referer'], function() {
                 });
             });
         });
-});
+    });
 });

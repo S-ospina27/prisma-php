@@ -16,5 +16,11 @@ LionRoute\Route::addMiddleware([
     App\Http\Middleware\Session\SessionMiddleware::class => [
         ['name' => "referer", 'method' => "referer"],
         ['name' => "close-session", 'method' => "closeSession"]
+    ],
+    App\Http\Middleware\Session\RolesMiddleware::class => [
+        ['name' => "administrator-access", 'method' => "administratorAccess"],
+        ['name' => "technical-access", 'method' => "technicalAccess"],
+        ['name' => "dealer-access", 'method' => "dealerAccess"],
+        ['name' => "provider-access", 'method' => "providerAccess"]
     ]
 ]);
