@@ -12,7 +12,7 @@ class ServiceRequestNeighborhoodRule {
 		self::validate(function(\Valitron\Validator $validator) {
             $validator
                 ->addRule('neighborhood', function($field, $value, array $params, array $fields) {
-                    return preg_match("/^([a-zA-Z0-9,- ]+)(\s[a-zA-Z0-9,- ]+)*$/", $value);
+                    return preg_match("/^([a-zA-Z0-9 ,-]+)(\s[a-zA-Z0-9 ,-]+)*$/", $value);
                 });
 
 			$validator

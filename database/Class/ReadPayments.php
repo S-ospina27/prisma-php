@@ -15,6 +15,7 @@ class ReadPayments implements \JsonSerializable {
 	private ?int $payments_value = null;
 	private ?string $payments_creation_date = null;
 	private ?string $payments_update_date = null;
+	private ?string $service_request_warranty = null;
 
 	public function __construct() {
 
@@ -69,6 +70,10 @@ class ReadPayments implements \JsonSerializable {
 
 		$readpayments->setPaymentsUpdateDate(
 			isset(request->payments_update_date) ? request->payments_update_date : null
+		);
+
+		$readpayments->setServiceRequestWarranty(
+			isset(request->service_request_warranty) ? request->service_request_warranty : null
 		);
 
 		return $readpayments;
@@ -170,6 +175,15 @@ class ReadPayments implements \JsonSerializable {
 
 	public function setPaymentsUpdateDate(?string $payments_update_date): ReadPayments {
 		$this->payments_update_date = $payments_update_date;
+		return $this;
+	}
+
+	public function getServiceRequestWarranty(): ?string {
+		return $this->service_request_warranty;
+	}
+
+	public function setServiceRequestWarranty(?string $service_request_warranty): ReadPayments {
+		$this->service_request_warranty = $service_request_warranty;
 		return $this;
 	}
 

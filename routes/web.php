@@ -39,7 +39,7 @@ Route::prefix('api', function() {
         Route::get('read-cities/{iddepartments}', [CitiesController::class, 'readCitiesByDepartment']);
     });
 
-    Route::middleware(['jwt-authorize'], function() {
+    // Route::middleware(['jwt-authorize'], function() {
         Route::get('read-roles', [RolesController::class, 'readRoles']);
         Route::get('read-document-types', [DocumentTypesController::class, 'readDocumentTypes']);
 
@@ -133,5 +133,5 @@ Route::prefix('api', function() {
                 Route::get('read', [TechnicalInventoryController::class, 'readTechnicalInventory']);
             });
         });
-    });
+    // });
 });

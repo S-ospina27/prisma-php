@@ -2,6 +2,7 @@
 
 namespace App\Models\Service;
 
+use Database\Class\ReadServiceRequest;
 use LionSQL\Drivers\MySQL as DB;
 use Database\Class\ServiceRequest;
 
@@ -32,6 +33,15 @@ class ServiceRequestModel {
     		->select()
     		->getAll();
 	}
+
+    public function readServiceRequestByIdDB(ServiceRequest $serviceRequest): ReadServiceRequest {
+        return DB::fetchClass(ReadServiceRequest::class)
+            ->table('read_service_request')
+            ->select()
+            ->where(DB::equalTo("idservice_request"), $serviceRequest->getIdserviceRequest())
+            ->get();
+    }
+
 
 	public function updateServiceRequestDB(ServiceRequest $serviceRequest) {
 		return DB::call('update_service_request', [
