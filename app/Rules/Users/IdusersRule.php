@@ -10,7 +10,17 @@ class IdusersRule {
 
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
-			$validator->rule("", "")->message("");
+			$validator
+			->rule("required", "idusers")
+			->message("El usuario es  requerido");
+
+			$validator
+			->rule("integer", "idusers")
+			->message("El  usuario no es valido");
+
+			$validator
+			->rule("min", "idusers", 1)
+			->message("El usuario no es valido");
 		});
 	}
 
