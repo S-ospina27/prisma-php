@@ -15,11 +15,11 @@ class UsersPasswordRule {
                 ->message("La contraseña es requerida");
 
             $validator
-                ->rule("lengthMin", "users_password", 256)
+                ->rule("lengthMin", "users_password", 64)
                 ->message("La contraseña no es válida");
 
             $validator
-                ->rule("lengthMax", "users_password", 256)
+                ->rule("lengthMax", "users_password", 64)
                 ->message("La contraseña no es válida");
 		});
 	}
