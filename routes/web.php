@@ -28,8 +28,6 @@ use LionRoute\Route;
  **/
 
 Route::middleware(['referer'], function() {
-    Route::any('/', [HomeController::class, 'index']);
-
     Route::prefix('api', function() {
         Route::post('application-order-form', [ServiceRequestController::class, 'createServiceRequest']);
 

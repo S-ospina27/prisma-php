@@ -10,7 +10,17 @@ class UsersPasswordRule {
 
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
-			$validator->rule("", "")->message("");
+			$validator
+                ->rule("required", "users_password")
+                ->message("La contraseña es requerida");
+
+            $validator
+                ->rule("lengthMin", "users_password", 256)
+                ->message("La contraseña no es válida");
+
+            $validator
+                ->rule("lengthMin", "users_password", 256)
+                ->message("La contraseña no es válida");
 		});
 	}
 

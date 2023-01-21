@@ -10,7 +10,10 @@
 
 return [
     '/api/auth/login' => [
-        \App\Rules\EmailRule::class,
-        \App\Rules\PasswordRule::class
+        App\Rules\Users\UsersEmailRule::class,
+        App\Rules\Users\UsersPasswordRule::class
+    ],
+    '/api/application-order-form' => [
+        App\Rules\ServiceRequest\IdusersDealersRule::class
     ]
 ];
