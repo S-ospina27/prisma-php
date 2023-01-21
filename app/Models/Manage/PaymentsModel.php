@@ -26,9 +26,9 @@ class PaymentsModel {
             ->getAll();
     }
 
-    public function updatePaymentsMassiveDB(array $items) {
+    public function updatePaymentsMassiveDB(array $items, string $date) {
         return DB::table('payments')
-            ->update(['idservice_states' => 10])
+            ->update(['idservice_states' => 10, 'payments_update_date' => $date])
             ->where('idpayments')
             ->in(...$items)
             ->execute();

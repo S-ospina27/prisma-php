@@ -42,7 +42,10 @@ class PaymentsController {
     }
 
     public function updatePaymentsMassive() {
-        $responseUpdate = $this->paymentsModel->updatePaymentsMassiveDB(request->items);
+        $responseUpdate = $this->paymentsModel->updatePaymentsMassiveDB(
+            request->items,
+            Carbon::now()->format('Y-m-d H:i:s')
+        );
 
         if ($responseUpdate->status === 'database-error') {
             return response->error("Ocurrió un error al actualizar los pagos");
