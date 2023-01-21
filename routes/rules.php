@@ -87,4 +87,10 @@ return [
     App\Rules\SpareParts\SparePartsNameRule::class,
     App\Rules\SpareParts\SparePartsAmountRule::class
 ]
+,
+'api/Service/spare-parts/update' => [
+    \App\Rules\SpareParts\IdsparePartsRule::class,
+    App\Rules\SpareParts\SparePartsNameRule::class,
+    App\Rules\SpareParts\SparePartsAmountRule::class
+]
 ];
