@@ -10,7 +10,17 @@ class TechnicalInventoryAmountRule {
 
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
-			$validator->rule("", "")->message("");
+			$validator
+			->rule("required", "technical_inventory_amount")
+			->message("La cantidad  es  requerida");
+
+			$validator
+			->rule("integer", "technical_inventory_amount")
+			->message("La cantidad no es valida");
+
+			$validator
+			->rule("min", "technical_inventory_amount", 1)
+			->message("La cantidad no es valido");
 		});
 	}
 

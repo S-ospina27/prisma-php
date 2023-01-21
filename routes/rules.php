@@ -83,14 +83,21 @@ return [
 'api/service/request/export/excel' => [
     App\Rules\ServiceRequest\ServiceRequestCreationDateRule::class
 ],
-'api/Service/spare-parts/create' => [
+'api/service/spare-parts/create' => [
     App\Rules\SpareParts\SparePartsNameRule::class,
     App\Rules\SpareParts\SparePartsAmountRule::class
 ]
 ,
-'api/Service/spare-parts/update' => [
-    \App\Rules\SpareParts\IdsparePartsRule::class,
+'api/service/spare-parts/update' => [
+    App\Rules\SpareParts\IdsparePartsRule::class,
     App\Rules\SpareParts\SparePartsNameRule::class,
     App\Rules\SpareParts\SparePartsAmountRule::class
+]
+,
+'api/service/technical-inventory' => [
+    App\Rules\TechnicalInventory\IdtechnicalInventoryRule::class,
+    App\Rules\SpareParts\IdsparePartsRule::class,
+    App\Rules\TechnicalInventory\TechnicalInventoryAmountRule::class,
+    App\Rules\TechnicalInventory\TechnicalInventoryQuantityAvailableRule::class
 ]
 ];
