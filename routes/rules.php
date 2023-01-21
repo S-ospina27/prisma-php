@@ -73,9 +73,13 @@ return [
 'api/payments/create' => [
  App\Rules\Payments\PaymentsValueRule::class,
 ],
-'api/payments/update' => [
+'api/payments/update/massive' => [
  App\Rules\Payments\IdpaymentsRule::class,
  App\Rules\Payments\PaymentsValueRule::class,
+],
+'api/service/export/excel' => [
+ App\Rules\ServiceOrders\ServiceOrdersCreationDateRule::class
+
 ],
 
 ];
