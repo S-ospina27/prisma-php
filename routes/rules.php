@@ -77,9 +77,10 @@ return [
  App\Rules\Payments\IdpaymentsRule::class,
  App\Rules\Payments\PaymentsValueRule::class,
 ],
-'api/service/export/excel' => [
+'api/service/orders/export/excel' => [
  App\Rules\ServiceOrders\ServiceOrdersCreationDateRule::class
-
 ],
-
+'api/service/request/export/excel' => [
+\App\Rules\ServiceRequest\ServiceRequestCreationDateRule::class
+],
 ];
