@@ -28,7 +28,7 @@ class DateStartRule {
                 ->message("La fecha inicio debe ser igual o anterior a la fecha actual");
 
             $validator
-                ->rule("dateAfter", "date_start", '2023-01-01')
+                ->rule("dateAfter", "date_start", '2022-12-31')
                 ->message("La fecha inicio debe partir desde el '2023-01-01'");
 		});
 	}
