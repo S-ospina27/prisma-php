@@ -16,7 +16,8 @@ class PaymentsModel {
             $payments->getIdserviceRequest(),
             $payments->getIdserviceStates(),
             $payments->getPaymentsValue(),
-            $payments->getPaymentsCreationDate()
+            $payments->getPaymentsCreationDate(),
+            $payments->getPaymentsUpdateDate()
         ])->execute();
     }
 

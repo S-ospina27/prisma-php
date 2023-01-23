@@ -27,6 +27,7 @@ class PaymentsController {
             Payments::formFields()
                 ->setIdserviceStates(6)
                 ->setPaymentsCreationDate(Carbon::now()->format("Y-m-d H:i:s"))
+                ->setPaymentsUpdateDate(Carbon::now()->format("Y-m-d H:i:s"))
                 ->setPaymentsValue($readServiceRequest->getServiceRequestValue())
         );
 

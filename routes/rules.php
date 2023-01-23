@@ -67,14 +67,15 @@ return [
         App\Rules\ProductTypes\ProductTypesNameRule::class
     ],
     '/api/payments/create' => [
-        App\Rules\Payments\PaymentsValueRule::class,
+        App\Rules\ServiceRequest\IdserviceRequestRule::class
     ],
     '/api/payments/update/massive' => [
         App\Rules\Payments\IdpaymentsRule::class,
         App\Rules\Payments\PaymentsValueRule::class,
     ],
     '/api/service/orders/export/excel' => [
-        App\Rules\ServiceOrders\ServiceOrdersCreationDateRule::class
+        App\Rules\DateStartRule::class,
+        App\Rules\DateEndRule::class
     ],
     '/api/service/request/export/excel' => [
         App\Rules\ServiceRequest\ServiceRequestCreationDateRule::class
