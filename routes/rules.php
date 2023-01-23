@@ -49,7 +49,6 @@ return [
         App\Rules\Users\UsersAddressRule::class,
         App\Rules\Cities\IdcitiesRule::class,
         App\Rules\Users\UsersEmailRule::class,
-        App\Rules\Users\UsersPasswordRule::class,
         App\Rules\Users\UsersContactNameRule::class,
         App\Rules\Users\UsersContactPhoneRule::class,
     ],
