@@ -57,8 +57,7 @@ return [
         App\Rules\ProductTypes\IdproductTypesRule::class,
         App\Rules\Products\ProductsImageRule::class,
         App\Rules\Products\ProductsDescriptionRule::class,
-        App\Rules\Products\ProductsColorRule::class,
-        App\Rules\Users\IdusersRule::class,
+        App\Rules\Products\ProductsColorRule::class
     ],
     '/api/products/types/create' => [
         App\Rules\ProductTypes\ProductTypesNameRule::class

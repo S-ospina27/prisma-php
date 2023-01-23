@@ -10,7 +10,13 @@ class ProductsImageRule {
 
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
-			$validator->rule("", "")->message("");
+			$validator
+                ->rule("required", "products_image")
+                ->message("La imagen del producto es requerida");
+
+            $validator
+                ->rule("array", "products_image")
+                ->message("La imagen del producto no es válida");
 		});
 	}
 

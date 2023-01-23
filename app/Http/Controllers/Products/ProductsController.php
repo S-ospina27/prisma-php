@@ -7,6 +7,7 @@ use Database\Class\Products;
 use LionFiles\Manage;
 use LionHelpers\Arr;
 use LionHelpers\Str;
+use LionSecurity\JWT;
 
 class ProductsController {
 
@@ -29,10 +30,12 @@ class ProductsController {
     }
 
     public function createProducts() {
+        $jwt = JWT::decode(JWT::get());
+
         $this->products = Products::formFields()
             ->setProductsImage(Manage::rename(request->products_image['name'], "IMG"))
             ->setIdstatus(1)
-            ->setIdusers(1);
+            ->setIdusers((int) $jwt->data->idusers);
         $this->uploadImage();
 
         $responseCreate = $this->productsModel->createProductsDB($this->products);
