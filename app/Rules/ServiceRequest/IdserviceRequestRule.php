@@ -12,15 +12,15 @@ class IdserviceRequestRule {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
                 ->rule("required", "idservice_request")
-                ->message("la solicitud es requerida");
+                ->message("La solicitud es requerida");
 
             $validator
                 ->rule("integer", "idservice_request")
-                ->message("la solicitud no es válida");
+                ->message("La solicitud no es válida");
 
             $validator
                 ->rule("min", "idservice_request", 1)
-                ->message("la solicitud no es válida");
+                ->message("La solicitud no es válida");
 		});
 	}
 

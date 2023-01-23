@@ -70,8 +70,7 @@ return [
         \App\Rules\ServiceRequest\IdserviceRequestRule::class
     ],
     '/api/payments/update/massive' => [
-        \App\Rules\Payments\IdpaymentsRule::class,
-        \App\Rules\Payments\PaymentsValueRule::class,
+        \App\Rules\ItemsRule::class
     ],
     '/api/service/orders/export/excel' => [
         \App\Rules\DateStartRule::class,
