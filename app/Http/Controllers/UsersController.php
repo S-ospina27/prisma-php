@@ -25,7 +25,6 @@ class UsersController {
 
 		$responseCreate = $this->usersModel->createUsersDB(
 			Users::formFields()
-                // ->setIdroles(4)
                 ->setIdstatus(1)
                 ->setUsersPassword($rsa_encode->users_password)
                 ->setUsersContactName(Str::of(request->users_contact_name)->toNull())
@@ -33,7 +32,6 @@ class UsersController {
         );
 
 		if ($responseCreate->status === 'database-error') {
-            return $responseCreate;
 			return response->error('Ha ocurrido un error al crear el usuario');
 		}
 

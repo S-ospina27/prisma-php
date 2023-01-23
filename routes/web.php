@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Locations\CitiesController;
 use App\Http\Controllers\Locations\DepartmentsController;
 use App\Http\Controllers\Manage\DocumentTypesController;

@@ -24,80 +24,76 @@ return [
         App\Rules\ServiceRequest\ServiceRequestEmailRule::class,
         App\Rules\ServiceRequest\ServiceRequestTroubleReportRule::class
     ],
-    'api/users/create' => [
-       App\Rules\Roles\IdrolesRule::class,
-       App\Rules\DocumentTypes\IddocumentTypesRule::class,
-       App\Rules\Users\UsersIdentificationRule::class,
-       App\Rules\Users\UsersNameRule::class,
-       App\Rules\Users\UsersLastnameRule::class,
-       App\Rules\Users\UsersPhoneRule::class,
-       App\Rules\Users\UsersAddressRule::class,
-       App\Rules\Cities\IdcitiesRule::class,
-       App\Rules\Users\UsersEmailRule::class,
-       App\Rules\Users\UsersPasswordRule::class,
-       App\Rules\Users\UsersContactNameRule::class,
-       App\Rules\Users\UsersContactPhoneRule::class,
-   ],
-   'api/users/update' => [
-    App\Rules\Users\IdusersRule::class,
-    App\Rules\Roles\IdrolesRule::class,
-    App\Rules\DocumentTypes\IddocumentTypesRule::class,
-    App\Rules\Users\UsersIdentificationRule::class,
-    App\Rules\Users\UsersNameRule::class,
-    App\Rules\Users\UsersLastnameRule::class,
-    App\Rules\Users\UsersPhoneRule::class,
-    App\Rules\Users\UsersAddressRule::class,
-    App\Rules\Cities\IdcitiesRule::class,
-    App\Rules\Users\UsersEmailRule::class,
-    App\Rules\Users\UsersPasswordRule::class,
-    App\Rules\Users\UsersContactNameRule::class,
-    App\Rules\Users\UsersContactPhoneRule::class,
-],
-'api/products/create' => [
-    App\Rules\Products\ProductsReferenceRule::class,
-    App\Rules\ProductTypes\IdproductTypesRule::class,
-    App\Rules\Products\ProductsImageRule::class,
-    App\Rules\Products\ProductsDescriptionRule::class,
-    App\Rules\Products\ProductsColorRule::class,
-    App\Rules\Users\IdusersRule::class,
-
-
-],
-'api/products/types/create' => [
-    App\Rules\ProductTypes\ProductTypesNameRule::class
-],
-'api/products/types/update' => [
-    App\Rules\ProductTypes\IdproductTypesRule::class,
-    App\Rules\ProductTypes\ProductTypesNameRule::class
-],
-'api/payments/create' => [
-    App\Rules\Payments\PaymentsValueRule::class,
-],
-'api/payments/update/massive' => [
-    App\Rules\Payments\IdpaymentsRule::class,
-    App\Rules\Payments\PaymentsValueRule::class,
-],
-'api/service/orders/export/excel' => [
-    App\Rules\ServiceOrders\ServiceOrdersCreationDateRule::class
-],
-'api/service/request/export/excel' => [
-    App\Rules\ServiceRequest\ServiceRequestCreationDateRule::class
-],
-'api/service/spare-parts/create' => [
-    App\Rules\SpareParts\SparePartsNameRule::class,
-    App\Rules\SpareParts\SparePartsAmountRule::class
-]
-,
-'api/service/spare-parts/update' => [
-    App\Rules\SpareParts\IdsparePartsRule::class,
-    App\Rules\SpareParts\SparePartsNameRule::class,
-    App\Rules\SpareParts\SparePartsAmountRule::class
-]
-,
-'api/service/technical-inventory' => [
-    App\Rules\TechnicalInventory\IdtechnicalInventoryRule::class,
-    App\Rules\SpareParts\IdsparePartsRule::class,
-    App\Rules\TechnicalInventory\TechnicalInventoryAmountRule::class,
-    App\Rules\TechnicalInventory\TechnicalInventoryQuantityAvailableRule::class
-]
+    '/api/users/create' => [
+        App\Rules\Roles\IdrolesRule::class,
+        App\Rules\DocumentTypes\IddocumentTypesRule::class,
+        App\Rules\Users\UsersIdentificationRule::class,
+        App\Rules\Users\UsersNameRule::class,
+        App\Rules\Users\UsersLastnameRule::class,
+        App\Rules\Users\UsersPhoneRule::class,
+        App\Rules\Users\UsersAddressRule::class,
+        App\Rules\Cities\IdcitiesRule::class,
+        App\Rules\Users\UsersEmailRule::class,
+        App\Rules\Users\UsersPasswordRule::class,
+        App\Rules\Users\UsersContactNameRule::class,
+        App\Rules\Users\UsersContactPhoneRule::class,
+    ],
+    '/api/users/update' => [
+        App\Rules\Users\IdusersRule::class,
+        App\Rules\Roles\IdrolesRule::class,
+        App\Rules\DocumentTypes\IddocumentTypesRule::class,
+        App\Rules\Users\UsersIdentificationRule::class,
+        App\Rules\Users\UsersNameRule::class,
+        App\Rules\Users\UsersLastnameRule::class,
+        App\Rules\Users\UsersPhoneRule::class,
+        App\Rules\Users\UsersAddressRule::class,
+        App\Rules\Cities\IdcitiesRule::class,
+        App\Rules\Users\UsersEmailRule::class,
+        App\Rules\Users\UsersPasswordRule::class,
+        App\Rules\Users\UsersContactNameRule::class,
+        App\Rules\Users\UsersContactPhoneRule::class,
+    ],
+    '/api/products/create' => [
+        App\Rules\Products\ProductsReferenceRule::class,
+        App\Rules\ProductTypes\IdproductTypesRule::class,
+        App\Rules\Products\ProductsImageRule::class,
+        App\Rules\Products\ProductsDescriptionRule::class,
+        App\Rules\Products\ProductsColorRule::class,
+        App\Rules\Users\IdusersRule::class,
+    ],
+    '/api/products/types/create' => [
+        App\Rules\ProductTypes\ProductTypesNameRule::class
+    ],
+    '/api/products/types/update' => [
+        App\Rules\ProductTypes\IdproductTypesRule::class,
+        App\Rules\ProductTypes\ProductTypesNameRule::class
+    ],
+    '/api/payments/create' => [
+        App\Rules\Payments\PaymentsValueRule::class,
+    ],
+    '/api/payments/update/massive' => [
+        App\Rules\Payments\IdpaymentsRule::class,
+        App\Rules\Payments\PaymentsValueRule::class,
+    ],
+    '/api/service/orders/export/excel' => [
+        App\Rules\ServiceOrders\ServiceOrdersCreationDateRule::class
+    ],
+    '/api/service/request/export/excel' => [
+        App\Rules\ServiceRequest\ServiceRequestCreationDateRule::class
+    ],
+    '/api/service/spare-parts/create' => [
+        App\Rules\SpareParts\SparePartsNameRule::class,
+        App\Rules\SpareParts\SparePartsAmountRule::class
+    ],
+    '/api/service/spare-parts/update' => [
+        App\Rules\SpareParts\IdsparePartsRule::class,
+        App\Rules\SpareParts\SparePartsNameRule::class,
+        App\Rules\SpareParts\SparePartsAmountRule::class
+    ],
+    '/api/service/technical-inventory' => [
+        App\Rules\TechnicalInventory\IdtechnicalInventoryRule::class,
+        App\Rules\SpareParts\IdsparePartsRule::class,
+        App\Rules\TechnicalInventory\TechnicalInventoryAmountRule::class,
+        App\Rules\TechnicalInventory\TechnicalInventoryQuantityAvailableRule::class
+    ]
 ];
