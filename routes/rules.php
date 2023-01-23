@@ -77,6 +77,19 @@ return [
         \App\Rules\DateStartRule::class,
         \App\Rules\DateEndRule::class
     ],
+    '/api/service/request/update' => [
+        \App\Rules\ServiceRequest\IdusersTechnicalRule::class,
+        \App\Rules\ServiceStates\IdserviceStatesRule::class,
+        \App\Rules\ServiceRequest\ServiceRequestDateVisitRule::class,
+        \App\Rules\ServiceRequest\ServiceRequestDateCloseRule::class,
+        \App\Rules\ServiceRequest\ServiceRequestValueRule::class,
+        \App\Rules\ServiceRequest\ServiceRequestPaymentMethodsRule::class,
+        \App\Rules\ServiceRequest\ServiceRequestTechnicalNoveltyRule::class,
+        \App\Rules\ServiceRequest\ServiceRequestEvidenceRule::class,
+        \App\Rules\ServiceRequest\ServiceRequestWarrantlyRule::class,
+        \App\Rules\ServiceRequest\ServiceRequestEmailRule::class,
+        \App\Rules\ServiceRequest\IdserviceRequestRule::class
+    ],
     '/api/service/request/export/excel' => [
         \App\Rules\DateStartRule::class,
         \App\Rules\DateEndRule::class
