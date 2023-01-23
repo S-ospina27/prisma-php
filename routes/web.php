@@ -38,7 +38,7 @@ Route::prefix('api', function() {
         Route::get('read-cities/{iddepartments}', [CitiesController::class, 'readCitiesByDepartment']);
     });
 
-    // Route::middleware(['jwt-authorize'], function() {
+    Route::middleware(['jwt-authorize'], function() {
         Route::get('read-roles', [RolesController::class, 'readRoles']);
         Route::get('read-document-types', [DocumentTypesController::class, 'readDocumentTypes']);
 
@@ -57,22 +57,6 @@ Route::prefix('api', function() {
             });
         });
 
-        Route::prefix('products', function() {
-            Route::post('create', [ProductsController::class, 'createProducts']);
-            Route::post('update', [ProductsController::class, 'updateProducts']);
-
-            Route::prefix('read', function() {
-                Route::get('/', [ProductsController::class, 'readProducts']);
-                Route::get('by-status', [ProductsController::class, 'readFilterProducts']);
-            });
-
-            Route::prefix('types', function() {
-                Route::post('create', [ProductTypesController::class, 'createProductType']);
-                Route::post('update', [ProductTypesController::class, 'updateProductType']);
-                Route::get('read', [ProductTypesController::class, 'readProductType']);
-            });
-        });
-
         Route::prefix('payments', function() {
             Route::post("create", [PaymentsController::class, 'createPayments']);
             Route::get('read', [PaymentsController::class, 'readPayments']);
@@ -81,7 +65,25 @@ Route::prefix('api', function() {
                 Route::post('massive', [PaymentsController::class, 'updatePaymentsMassive']);
             });
         });
+    });
 
+    Route::prefix('products', function() {
+        Route::get('read/by-status', [ProductsController::class, 'readFilterProducts']);
+
+        Route::middleware(['jwt-authorize'], function() {
+            Route::post('create', [ProductsController::class, 'createProducts']);
+            Route::post('update', [ProductsController::class, 'updateProducts']);
+            Route::get('read', [ProductsController::class, 'readProducts']);
+
+            Route::prefix('types', function() {
+                Route::post('create', [ProductTypesController::class, 'createProductType']);
+                Route::post('update', [ProductTypesController::class, 'updateProductType']);
+                Route::get('read', [ProductTypesController::class, 'readProductType']);
+            });
+        });
+    });
+
+    Route::middleware(['jwt-authorize'], function() {
         Route::prefix('service', function() {
             Route::prefix('orders', function() {
                 Route::post('create', [ServiceOrdersController::class, 'createServiceOrders']);
@@ -135,5 +137,5 @@ Route::prefix('api', function() {
                 Route::get('read', [TechnicalInventoryController::class, 'readTechnicalInventory']);
             });
         });
-    // });
+    });
 });
