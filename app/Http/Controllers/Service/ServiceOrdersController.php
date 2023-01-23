@@ -50,6 +50,19 @@ class ServiceOrdersController {
         if($serviceOrders->getIdserviceStates() === 7) {
             $serviceOrders->setServiceOrdersDateDelivery(Carbon::now()->format('Y-m-d H:i:s'));
         } elseif ($serviceOrders->getIdserviceStates() === 6) {
+            if ($serviceOrders->getServiceOrdersDefectiveAmount() > $serviceOrders->getServiceOrdersAmount()) {
+                return response->warning("La cantidad de unidades malas supera la cantidad original");
+            }
+
+            if ($serviceOrders->getServiceOrdersPendingAmount() > $serviceOrders->getServiceOrdersAmount()) {
+                return response->warning("La cantidad de unidades pendientes supera la cantidad original");
+            }
+
+            $total_eror = $serviceOrders->getServiceOrdersDefectiveAmount() + $serviceOrders->getServiceOrdersPendingAmount();
+            if ($total_eror > $serviceOrders->getServiceOrdersAmount()) {
+                return response->warning("La cantidad de unidades malas y pendientes supera la cantidad original");
+            }
+
             $cont_sucs = $serviceOrders->getServiceOrdersAmount();
 
             if ($serviceOrders->getServiceOrdersDefectiveAmount() > 0) {
