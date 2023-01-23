@@ -78,7 +78,8 @@ return [
         App\Rules\DateEndRule::class
     ],
     '/api/service/request/export/excel' => [
-        App\Rules\ServiceRequest\ServiceRequestCreationDateRule::class
+        App\Rules\DateStartRule::class,
+        App\Rules\DateEndRule::class
     ],
     '/api/service/spare-parts/create' => [
         App\Rules\SpareParts\SparePartsNameRule::class,
