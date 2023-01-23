@@ -72,6 +72,14 @@ return [
     '/api/payments/update/massive' => [
         \App\Rules\ItemsRule::class
     ],
+     '/api/service/orders/create' => [
+      \App\Rules\Products\IdproductsRule::class,
+      \App\Rules\Users\IdusersRule::class,
+      \App\Rules\ServiceOrders\ServiceOrdersAmountRule::class,
+      \App\Rules\ServiceOrders\ServiceOrdersTotalPriceRule::class,
+      \App\Rules\ServiceOrders\ServiceOrdersFinishedProductRule::class
+    ],
+
     '/api/service/orders/export/excel' => [
         \App\Rules\DateStartRule::class,
         \App\Rules\DateEndRule::class
