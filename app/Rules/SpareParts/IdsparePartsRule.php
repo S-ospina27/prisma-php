@@ -11,16 +11,16 @@ class IdsparePartsRule {
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
-			->rule("required", "idspare_parts")
-			->message("El repuesto es  requerida");
+    			->rule("required", "idspare_parts")
+    			->message("El repuesto es requerido");
 
 			$validator
-			->rule("integer", "idspare_parts")
-			->message("El repuesto  no es valida");
+    			->rule("integer", "idspare_parts")
+    			->message("El repuesto no es válido");
 
 			$validator
-			->rule("min", "idspare_parts", 1)
-			->message("El repuesto no es valido");
+    			->rule("min", "idspare_parts", 1)
+    			->message("El repuesto no es válido");
 		});
 	}
 

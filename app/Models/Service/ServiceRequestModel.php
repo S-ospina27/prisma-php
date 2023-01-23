@@ -53,6 +53,7 @@ class ServiceRequestModel {
 			$serviceRequest->getServiceRequestPaymentMethods(),
 			$serviceRequest->getServiceRequestTechnicalNovelty(),
 			$serviceRequest->getServiceRequestEvidence(),
+            $serviceRequest->getServiceRequestWarranty(),
 			$serviceRequest->getIdserviceRequest(),
 		])->execute();
 	}
