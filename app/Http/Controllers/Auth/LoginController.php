@@ -28,6 +28,10 @@ class LoginController {
             return response->warning("Esta cuenta está inactiva, contacte a soporte para mas información");
         }
 
+        if ($data->getIdroles() === 2) {
+            return response->warning("No tiene autorización para acceder");
+        }
+
         if ((int) request->count_errors >= 3) {
             $responseUpdate = $this->loginModel->updateStatusDB(
                 $users->setIdstatus(2)->setIdusers($data->getIdusers())
