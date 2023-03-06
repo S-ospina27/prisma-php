@@ -3,7 +3,7 @@
 namespace App\Models\Manage;
 
 use Database\Class\Roles;
-use LionSql\Drivers\MySQL as DB;
+use LionSQL\Drivers\MySQL as DB;
 
 class RolesModel {
 

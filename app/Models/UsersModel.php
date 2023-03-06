@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Database\Class\ReadUsers;
 use Database\Class\Users;
-use LionSql\Drivers\MySQL as DB;
+use LionSQL\Drivers\MySQL as DB;
 
 class UsersModel {
 
@@ -31,14 +31,14 @@ class UsersModel {
 	}
 
 	public function readUsersDB() {
-		return DB::table('read_users')
+		return DB::view('read_users')
             ->select()
             ->getAll();
 	}
 
     public function readUsersByIdDB(ReadUsers $readUsers): ReadUsers {
         return DB::fetchClass(ReadUsers::class)
-            ->table('read_users')
+            ->view('read_users')
             ->select()
             ->where(DB::equalTo('idusers'), $readUsers->getIdusers())
             ->get();

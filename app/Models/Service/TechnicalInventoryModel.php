@@ -31,7 +31,7 @@ class TechnicalInventoryModel {
 
     public function readTechnicalInventoryExistDB(TechnicalInventory $technicalInventory) {
         return DB::table('technical_inventory')
-            ->select(DB::alias(DB::count('*'), 'cont'))
+            ->select(DB::as(DB::count('*'), 'cont'))
             ->where(DB::equalTo('idusers'), $technicalInventory->getIdusers())
             ->and(DB::equalTo('idspare_parts'), $technicalInventory->getIdspareParts())
             ->get();

@@ -51,7 +51,7 @@ if (env->RSA_URL_PATH != '') {
  * ------------------------------------------------------------------------------
  **/
 
-LionSQL\Drivers\MySQL::init([
+$responseDatabase = LionSQL\Drivers\Driver::run([
     'type' => env->DB_TYPE,
     'host' => env->DB_HOST,
     'port' => env->DB_PORT,
@@ -60,50 +60,19 @@ LionSQL\Drivers\MySQL::init([
     'password' => env->DB_PASSWORD
 ]);
 
+if ($responseDatabase->status === 'database-error') {
+    logger($responseDatabase->message, 'error', [], false);
+    finish($responseDatabase->message);
+}
+
 /**
  * ------------------------------------------------------------------------------
- * Console Routes
+ * Run The lion Application
  * ------------------------------------------------------------------------------
- * This is where you can record your commands for your application
+ * This is where the commands for your application are executed
  * ------------------------------------------------------------------------------
  **/
 
-$web_commands = include_once("routes/console.php");
-
-$commands = [
-    // -- list -- //
-    \App\Console\Framework\ServerCommand::class,
-    \App\Console\Framework\RunTestCommand::class,
-    // -- db -- //
-    \App\Console\Framework\DB\CapsuleCommand::class,
-    \App\Console\Framework\DB\SeedCommand::class,
-    \App\Console\Framework\DB\FactoryCommand::class,
-    \App\Console\Framework\DB\AllCapsulesCommand::class,
-    // -- key -- //
-    \App\Console\Framework\Key\RSACommand::class,
-    // -- New -- //
-    \App\Console\Framework\New\CapsuleCommand::class,
-    \App\Console\Framework\New\CommandsCommand::class,
-    \App\Console\Framework\New\ControllerCommand::class,
-    \App\Console\Framework\New\MiddlewareCommand::class,
-    \App\Console\Framework\New\ModelCommand::class,
-    \App\Console\Framework\New\RulesCommand::class,
-    \App\Console\Framework\New\TestCommand::class,
-    \App\Console\Framework\New\TraitCommand::class,
-    // -- Route -- //
-    \App\Console\Framework\Route\RouteListCommand::class,
-    // -- Token -- //
-    \App\Console\Framework\Token\GenerateJWTCommand::class,
-    // -- web console commands -- //
-    ...$web_commands
-];
-
-$application = new Symfony\Component\Console\Application(
-    env->APP_NAME . ' ' . env->APP_VERSION
-);
-
-foreach ($commands as $key => $command) {
-    $application->add(new $command());
-}
-
-$application->run();
+$kernel = new App\Console\Kernel();
+$kernel->add();
+$kernel->run();

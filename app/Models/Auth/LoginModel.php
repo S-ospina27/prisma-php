@@ -3,7 +3,7 @@
 namespace App\Models\Auth;
 
 use Database\Class\Users;
-use LionSql\Drivers\MySQL as DB;
+use LionSQL\Drivers\MySQL as DB;
 
 class LoginModel {
 
@@ -13,7 +13,7 @@ class LoginModel {
 
     public function accountExistenceDB(Users $users): object {
         return DB::table('users')
-            ->select(DB::alias(DB::count('*'), "cont"))
+            ->select(DB::as(DB::count('*'), "cont"))
             ->where(DB::equalTo("users_email"), $users->getUsersEmail())
             ->get();
     }

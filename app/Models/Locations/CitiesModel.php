@@ -4,7 +4,7 @@ namespace App\Models\Locations;
 
 use Database\Class\Cities;
 use Database\Class\Departments;
-use LionSql\Drivers\MySQL as DB;
+use LionSQL\Drivers\MySQL as DB;
 
 class CitiesModel {
 

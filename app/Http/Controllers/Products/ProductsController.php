@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Products;
 
 use App\Models\Products\ProductsModel;
 use Database\Class\Products;
-use LionFiles\Manage;
+use LionFiles\Store;
 use LionHelpers\Arr;
 use LionHelpers\Str;
 use LionSecurity\JWT;
@@ -20,9 +20,9 @@ class ProductsController {
 
     private function uploadImage() {
         $folder = "assets/img/products/";
-        Manage::folder($folder);
+        Store::folder($folder);
 
-        Manage::upload(
+        Store::upload(
             request->products_image['tmp_name'],
             $this->products->getProductsImage(),
             $folder
@@ -33,7 +33,7 @@ class ProductsController {
         $jwt = JWT::decode(JWT::get());
 
         $this->products = Products::formFields()
-            ->setProductsImage(Manage::rename(request->products_image['name'], "IMG"))
+            ->setProductsImage(Store::rename(request->products_image['name'], "IMG"))
             ->setIdstatus(1)
             ->setIdusers((int) $jwt->data->idusers);
         $this->uploadImage();
@@ -50,7 +50,7 @@ class ProductsController {
         $this->products = Products::formFields();
 
         if (is_array(request->products_image)) {
-            $this->products->setProductsImage(Manage::rename(request->products_image['name'], "IMG"));
+            $this->products->setProductsImage(Store::rename(request->products_image['name'], "IMG"));
             $this->uploadImage();
         } else {
             $this->products->setProductsImage(Str::of(request->products_image)->toNull());

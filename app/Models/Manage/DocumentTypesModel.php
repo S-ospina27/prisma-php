@@ -3,7 +3,7 @@
 namespace App\Models\Manage;
 
 use Database\Class\DocumentTypes;
-use LionSql\Drivers\MySQL as DB;
+use LionSQL\Drivers\MySQL as DB;
 
 class DocumentTypesModel {
 

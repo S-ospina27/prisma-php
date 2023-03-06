@@ -5,7 +5,7 @@ namespace App\Console\Framework\DB;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\{ InputInterface, InputArgument, InputOption };
 use Symfony\Component\Console\Output\OutputInterface;
-use LionFiles\Manage;
+use LionFiles\Store;
 use App\Traits\Framework\ClassPath;
 use LionHelpers\Str;
 
@@ -50,12 +50,12 @@ class SeedCommand extends Command {
 
             $list = ClassPath::export("database/Seeders/", ClassPath::normalize($seed));
             $url_folder = lcfirst(Str::of($list['namespace'])->replace("\\", "/")->get());
-            Manage::folder($url_folder);
+            Store::folder($url_folder);
 
             ClassPath::create($url_folder, $list['class']);
             ClassPath::add(Str::of("<?php\r")->ln()->ln()->get());
             ClassPath::add(Str::of("namespace ")->concat($list['namespace'])->concat(";\r")->ln()->ln()->get());
-            ClassPath::add(Str::of("use LionSQL\Drivers\MySQLDriver as DB;")->ln()->ln()->get());
+            ClassPath::add(Str::of("use LionSQL\Drivers\MySQL as DB;")->ln()->ln()->get());
             ClassPath::add(Str::of("class ")->concat($list['class'])->concat(" {\r")->ln()->ln()->get());
             ClassPath::add("\t/**\n");
             ClassPath::add("\t * ------------------------------------------------------------------------------\n");

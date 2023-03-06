@@ -4,7 +4,7 @@ namespace App\Models\Service;
 
 use Database\Class\ReadServiceOrders;
 use Database\Class\ServiceOrders;
-use LionSql\Drivers\MySQL as DB;
+use LionSQL\Drivers\MySQL as DB;
 
 class ServiceOrdersModel {
 
@@ -32,27 +32,8 @@ class ServiceOrdersModel {
 		])->execute();
 	}
 
-	public function updateServiceOrdersDB(ServiceOrders $serviceOrders) {
-		return DB::call('update_services_orders', [
-			$serviceOrders->getIdproducts(),
-			$serviceOrders->getIdserviceStates(),
-            $serviceOrders->getIdusers(),
-			$serviceOrders->getServiceOrdersDateDelivery(),
-			$serviceOrders->getServiceOrdersFinishedProduct(),
-			$serviceOrders->getServiceOrdersType(),
-			$serviceOrders->getServiceOrdersConsecutive(),
-			$serviceOrders->getServiceOrdersAmount(),
-			$serviceOrders->getServiceOrdersDefectiveAmount(),
-			$serviceOrders->getServiceOrdersNotDefectiveAmount(),
-			$serviceOrders->getServiceOrdersObservation(),
-			$serviceOrders->getServiceOrdersTotalPrice(),
-			$serviceOrders->getServiceOrdersPendingAmount(),
-			$serviceOrders->getIdserviceOrders()
-		])->execute();
-	}
-
 	public function readOrdersDB() {
-		return DB::table('read_service_orders')
+		return DB::view('read_service_orders')
             ->select()
             ->getAll();
 	}
@@ -74,15 +55,34 @@ class ServiceOrdersModel {
     }
 
 	public function readOrdersByProviderDB($idprovider_users) {
-        return DB::table('read_service_orders')
+        return DB::view('read_service_orders')
             ->select()
             ->where(DB::equalTo('idusers'), $idprovider_users)
             ->getAll();
     }
 
+    public function updateServiceOrdersDB(ServiceOrders $serviceOrders) {
+        return DB::call('update_services_orders', [
+            $serviceOrders->getIdproducts(),
+            $serviceOrders->getIdserviceStates(),
+            $serviceOrders->getIdusers(),
+            $serviceOrders->getServiceOrdersDateDelivery(),
+            $serviceOrders->getServiceOrdersFinishedProduct(),
+            $serviceOrders->getServiceOrdersType(),
+            $serviceOrders->getServiceOrdersConsecutive(),
+            $serviceOrders->getServiceOrdersAmount(),
+            $serviceOrders->getServiceOrdersDefectiveAmount(),
+            $serviceOrders->getServiceOrdersNotDefectiveAmount(),
+            $serviceOrders->getServiceOrdersObservation(),
+            $serviceOrders->getServiceOrdersTotalPrice(),
+            $serviceOrders->getServiceOrdersPendingAmount(),
+            $serviceOrders->getIdserviceOrders()
+        ])->execute();
+    }
+
     public function exportServiceOrdersDB(object $dates) {
         return DB::fetchClass(ReadServiceOrders::class)
-            ->table('read_service_orders')
+            ->view('read_service_orders')
             ->select()
             ->where('service_orders_creation_date')
             ->between($dates->date_start, $dates->date_end)

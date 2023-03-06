@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Database\Class\ReadUsers;
 use LionSpreadsheet\Spreadsheet;
 use Database\Class\ServiceRequest;
-use LionFiles\Manage;
+use LionFiles\Store;
 use LionHelpers\Arr;
 use LionHelpers\Str;
 use LionMailer\Mailer;
@@ -136,9 +136,9 @@ class ServiceRequestController {
         $this->serviceRequest = ServiceRequest::formFields();
 
         if (in_array($this->serviceRequest->getIdserviceStates(), [8, 9])) {
-            $file_name = Manage::rename(request->service_request_evidence['name'], 'IMG');
+            $file_name = Store::rename(request->service_request_evidence['name'], 'IMG');
 
-            Manage::upload(
+            Store::upload(
                 request->service_request_evidence['tmp_name'],
                 $file_name,
                 "assets/img/service/request/evidence/"
@@ -207,8 +207,8 @@ class ServiceRequestController {
         }
 
         $fullpath = 'assets/excel/service_request/';
-        $name = Manage::rename('service_request.xlsx', 'EXCEL');
-        Manage::folder($fullpath);
+        $name = Store::rename('service_request.xlsx', 'EXCEL');
+        Store::folder($fullpath);
         Spreadsheet::saveExcel(Str::of($fullpath)->concat($name)->get());
 
         return response->success("Excel generado correctamente", [

@@ -61,7 +61,7 @@ include_once("../routes/header.php");
  * ------------------------------------------------------------------------------
  **/
 
-LionSQL\Drivers\MySQL::init([
+$responseDatabase = LionSQL\Drivers\Driver::run([
     'type' => env->DB_TYPE,
     'host' => env->DB_HOST,
     'port' => env->DB_PORT,
@@ -69,6 +69,11 @@ LionSQL\Drivers\MySQL::init([
     'user' => env->DB_USER,
     'password' => env->DB_PASSWORD
 ]);
+
+if ($responseDatabase->status === 'database-error') {
+    logger($responseDatabase->message, 'error');
+    finish($responseDatabase);
+}
 
 /**
  * ------------------------------------------------------------------------------
@@ -86,17 +91,6 @@ LionMailer\Mailer::init([
     'encryption' => env->MAIL_ENCRYPTION,
     'port' => (int) env->MAIL_PORT,
 ]);
-
-/**
- * ------------------------------------------------------------------------------
- * Initialize validator class language
- * ------------------------------------------------------------------------------
- * valitron provides a set of languages for responses
- * https://github.com/vlucas/valitron/tree/master/lang
- * ------------------------------------------------------------------------------
- **/
-
-Valitron\Validator::lang(env->APP_LANG);
 
 /**
  * ------------------------------------------------------------------------------

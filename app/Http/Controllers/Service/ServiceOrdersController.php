@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Database\Class\ServiceOrders;
 use Dompdf\Dompdf;
 use Dompdf\Exception as DomException;
-use LionFiles\Manage;
+use LionFiles\Store;
 use LionSpreadsheet\Spreadsheet;
 use LionHelpers\Str;
 use LionMailer\Mailer;
@@ -129,8 +129,8 @@ class ServiceOrdersController {
         }
 
         $fullpath = 'assets/excel/service_orders/';
-        $name = Manage::rename('service_orders.xlsx', 'EXCEL');
-        Manage::folder($fullpath);
+        $name = Store::rename('service_orders.xlsx', 'EXCEL');
+        Store::folder($fullpath);
         Spreadsheet::saveExcel(Str::of($fullpath)->concat($name)->get());
 
         return response->success("Excel generado correctamente", [
@@ -144,7 +144,7 @@ class ServiceOrdersController {
         );
 
         $pdf_name = "{$order->getFullConsecutive()}.pdf";
-        $ext = Manage::getExtension("valsan.jpg");
+        $ext = Store::getExtension("valsan.jpg");
         $base64 = "data:image/{$ext};base64," . base64_encode(file_get_contents("assets/img/valsan.jpg"));
         $total = number_format(($order->getServiceOrdersAmount() * $order->getServiceOrdersTotalPrice()));
 
@@ -198,7 +198,7 @@ class ServiceOrdersController {
             return response->error('No se ha enviado el correo al proveedor');
         }
 
-        Manage::remove("assets/{$pdf_name}");
+        Store::remove("assets/{$pdf_name}");
 
         return response->success('PDF generado correctamente', [
             'url' => env->SERVER_URL . "/assets/example.pdf",

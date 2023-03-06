@@ -3,8 +3,8 @@
 namespace App\Models\Service;
 
 use Database\Class\ReadServiceRequest;
-use LionSQL\Drivers\MySQL as DB;
 use Database\Class\ServiceRequest;
+use LionSQL\Drivers\MySQL as DB;
 
 class ServiceRequestModel {
 
@@ -29,14 +29,14 @@ class ServiceRequestModel {
 	}
 
 	public function readServiceRequestDB() {
-		return DB::table('read_service_request')
+		return DB::view('read_service_request')
     		->select()
     		->getAll();
 	}
 
     public function readServiceRequestByIdDB(ServiceRequest $serviceRequest): ReadServiceRequest {
         return DB::fetchClass(ReadServiceRequest::class)
-            ->table('read_service_request')
+            ->view('read_service_request')
             ->select()
             ->where(DB::equalTo("idservice_request"), $serviceRequest->getIdserviceRequest())
             ->get();
@@ -59,7 +59,7 @@ class ServiceRequestModel {
 	}
 
 	public function exportServiceRequestDB(object $dates) {
-		return DB::table('read_service_request')
+		return DB::view('read_service_request')
     		->select()
     		->where('service_request_creation_date')
     		->between($dates->date_start, $dates->date_end)

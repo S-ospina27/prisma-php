@@ -3,7 +3,7 @@
 namespace App\Models\Products;
 
 use Database\Class\Products;
-use LionSql\Drivers\MySQL as DB;
+use LionSQL\Drivers\MySQL as DB;
 
 class ProductsModel {
 
