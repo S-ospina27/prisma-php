@@ -31,6 +31,7 @@ class ReadServiceRequest implements \JsonSerializable {
 	private ?string $service_request_evidence = null;
 	private ?string $service_request_warranty = null;
 	private ?string $service_request_date_visit = null;
+	private ?string $service_request_technical_novelty = null;
 	private ?string $product_types_name = null;
 
 	public function __construct() {
@@ -150,6 +151,10 @@ class ReadServiceRequest implements \JsonSerializable {
 
 		$readservicerequest->setServiceRequestDateVisit(
 			isset(request->service_request_date_visit) ? request->service_request_date_visit : null
+		);
+
+		$readservicerequest->setServiceRequestTechnicalNovelty(
+			isset(request->service_request_technical_novelty) ? request->service_request_technical_novelty : null
 		);
 
 		$readservicerequest->setProductTypesName(
@@ -399,6 +404,15 @@ class ReadServiceRequest implements \JsonSerializable {
 
 	public function setServiceRequestDateVisit(?string $service_request_date_visit): ReadServiceRequest {
 		$this->service_request_date_visit = $service_request_date_visit;
+		return $this;
+	}
+
+	public function getServiceRequestTechnicalNovelty(): ?string {
+		return $this->service_request_technical_novelty;
+	}
+
+	public function setServiceRequestTechnicalNovelty(?string $service_request_technical_novelty): ReadServiceRequest {
+		$this->service_request_technical_novelty = $service_request_technical_novelty;
 		return $this;
 	}
 
