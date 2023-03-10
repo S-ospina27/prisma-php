@@ -24,8 +24,8 @@ class ProductTypesNameRule {
     			->message("El tipo de producto debe tener mínimo 2 caracteres");
 
 			$validator
-    			->rule("lengthMax", "product_types_name", 25)
-    			->message("El tipo de producto debe tener máximo 25 caracteres");
+    			->rule("lengthMax", "product_types_name", 45)
+    			->message("El tipo de producto debe tener máximo 45 caracteres");
 
 			$validator
     			->rule("types_name", "product_types_name")
