@@ -97,9 +97,18 @@ class ServiceRequestController {
     }
 
     public function createServiceRequest() {
+        $file_name = Store::rename(request->service_request_evidence['name'], 'IMG');
+
+        Store::upload(
+            request->service_request_evidence['tmp_name'],
+            $file_name,
+            "assets/img/service/request/evidence/"
+        );
+
         $this->serviceRequest = ServiceRequest::formFields()
             ->setServiceRequestCreationDate(Carbon::now()->format('Y-m-d H:i:s'))
-            ->setIdserviceStates(6);
+            ->setIdserviceStates(6)
+            ->setServiceRequestEvidence($file_name);
 
         $this->readUsers = $this->usersModel->readUsersByIdDB(
             (new ReadUsers())->setIdusers($this->serviceRequest->getIdusersDealers())

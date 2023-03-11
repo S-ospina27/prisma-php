@@ -24,7 +24,8 @@ class ServiceRequestModel {
 			$serviceRequest->getServiceRequestNeighborhood(),
 			$serviceRequest->getServiceRequestPhoneContact(),
 			$serviceRequest->getServiceRequestEmail(),
-			$serviceRequest->getServiceRequestTroubleReport()
+			$serviceRequest->getServiceRequestTroubleReport(),
+            $serviceRequest->getServiceRequestEvidence()
 		])->execute();
 	}
 
