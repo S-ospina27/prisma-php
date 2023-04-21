@@ -8,6 +8,8 @@ class ProductsDescriptionRule {
 
 	use ShowErrors;
 
+    public static string $field = "products_description";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
@@ -16,15 +18,15 @@ class ProductsDescriptionRule {
     			});
 
 			$validator
-    			->rule("lengthMin", "products_description", 2)
+    			->rule("lengthMin", self::$field, 2)
     			->message("La description del  producto debe tener mínimo 2 caracteres");
 
 			$validator
-    			->rule("lengthMax", "products_description", 255)
+    			->rule("lengthMax", self::$field, 255)
     			->message("La referencia del  producto debe tener máximo 255 caracteres");
 
 			$validator
-    			->rule("Reference", "products_description")
+    			->rule("Reference", self::$field)
     			->message("La referencia del producto solo debe tener caracteres alfabeticos y numericos");
 		});
 	}

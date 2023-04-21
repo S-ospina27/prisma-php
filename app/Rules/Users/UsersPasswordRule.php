@@ -8,18 +8,20 @@ class UsersPasswordRule {
 
 	use ShowErrors;
 
+    public static string $field = "users_password";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
-                ->rule("required", "users_password")
+                ->rule("required", self::$field)
                 ->message("La contraseña es requerida");
 
             $validator
-                ->rule("lengthMin", "users_password", 64)
+                ->rule("lengthMin", self::$field, 64)
                 ->message("La contraseña no es válida");
 
             $validator
-                ->rule("lengthMax", "users_password", 64)
+                ->rule("lengthMax", self::$field, 64)
                 ->message("La contraseña no es válida");
 		});
 	}

@@ -8,19 +8,21 @@ class IdusersRule {
 
 	use ShowErrors;
 
+    public static string $field = "idusers";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
-			->rule("required", "idusers")
-			->message("El usuario es  requerido");
+    			->rule("required", self::$field)
+    			->message("El usuario es  requerido");
 
 			$validator
-			->rule("integer", "idusers")
-			->message("El  usuario no es valido");
+                ->rule("integer", self::$field)
+                ->message("El  usuario no es valido");
 
 			$validator
-			->rule("min", "idusers", 1)
-			->message("El usuario no es valido");
+                ->rule("min", self::$field, 1)
+                ->message("El usuario no es valido");
 		});
 	}
 

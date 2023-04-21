@@ -104,6 +104,6 @@ return [
     ],
     '/api/service/technical-inventory/update' => [
         \App\Rules\TechnicalInventory\IdtechnicalInventoryRule::class,
-        // \App\Rules\ServiceStates\IdserviceStatesRule::class
+        \App\Rules\ServiceStates\IdserviceStatesRule::class
     ]
 ];

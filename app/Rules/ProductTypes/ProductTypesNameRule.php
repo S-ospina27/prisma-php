@@ -8,6 +8,8 @@ class ProductTypesNameRule {
 
 	use ShowErrors;
 
+    public static string $field = "product_types_name";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
@@ -16,19 +18,19 @@ class ProductTypesNameRule {
     			});
 
 			$validator
-    			->rule("required", "product_types_name")
+    			->rule("required", self::$field)
     			->message("El tipo de producto es requerido");
 
 			$validator
-    			->rule("lengthMin", "product_types_name", 2)
+    			->rule("lengthMin", self::$field, 2)
     			->message("El tipo de producto debe tener mínimo 2 caracteres");
 
 			$validator
-    			->rule("lengthMax", "product_types_name", 45)
+    			->rule("lengthMax", self::$field, 45)
     			->message("El tipo de producto debe tener máximo 45 caracteres");
 
 			$validator
-    			->rule("types_name", "product_types_name")
+    			->rule("types_name", self::$field)
     			->message("El tipo de producto solo debe tener caracteres alfa-numéricos ('A-Z', '0-9', ',-')");
 		});
 	}

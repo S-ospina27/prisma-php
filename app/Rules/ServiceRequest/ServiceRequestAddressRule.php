@@ -8,6 +8,8 @@ class ServiceRequestAddressRule {
 
 	use ShowErrors;
 
+    public static string $field = "service_request_address";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
             $validator
@@ -16,19 +18,19 @@ class ServiceRequestAddressRule {
                 });
 
             $validator
-                ->rule("required", "service_request_address")
+                ->rule("required", self::$field)
                 ->message("La dirección del cliente es requerida");
 
             $validator
-                ->rule("lengthMin", "service_request_address", 10)
+                ->rule("lengthMin", self::$field, 10)
                 ->message("La dirección del cliente debe tener mínimo 10 caracteres");
 
             $validator
-                ->rule("lengthMax", "service_request_address", 200)
+                ->rule("lengthMax", self::$field, 200)
                 ->message("La dirección del cliente debe tener máximo 200 caracteres");
 
             $validator
-                ->rule("address", "service_request_address")
+                ->rule("address", self::$field)
                 ->message("La dirección del cliente solo debe tener caracteres alfabeticos y numericos");
         });
 	}

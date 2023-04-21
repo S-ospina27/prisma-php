@@ -9,26 +9,28 @@ class DateStartRule {
 
 	use ShowErrors;
 
+    public static string $field = "date_start";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
-                ->rule("required", "date_start")
+                ->rule("required", self::$field)
                 ->message("La fecha inicio es requerida");
 
             $validator
-                ->rule("date", "date_start")
+                ->rule("date", self::$field)
                 ->message("La fecha inicio no es una fecha valida");
 
             $validator
-                ->rule("dateFormat", "date_start", "Y-m-d")
+                ->rule("dateFormat", self::$field, "Y-m-d")
                 ->message("La fecha inicio no tiene el formato correcto (año-mes-día)");
 
             $validator
-                ->rule("dateBefore", "date_start", Carbon::now()->addDay()->format("Y-m-d"))
+                ->rule("dateBefore", self::$field, Carbon::now()->addDay()->format("Y-m-d"))
                 ->message("La fecha inicio debe ser igual o anterior a la fecha actual");
 
             $validator
-                ->rule("dateAfter", "date_start", '2022-12-31')
+                ->rule("dateAfter", self::$field, '2022-12-31')
                 ->message("La fecha inicio debe partir desde el '2023-01-01'");
 		});
 	}

@@ -8,14 +8,16 @@ class SparePartsAmountRule {
 
 	use ShowErrors;
 
+    public static string $field = "spare_parts_amount";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
-    			->rule("required", "spare_parts_amount")
+    			->rule("required", self::$field)
     			->message("La cantidad  es  requerida");
 
 			$validator
-    			->rule("integer", "spare_parts_amount")
+    			->rule("integer", self::$field)
     			->message("La cantidad no es valida");
 		});
 	}

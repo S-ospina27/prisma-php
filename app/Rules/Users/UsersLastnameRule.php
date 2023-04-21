@@ -8,6 +8,8 @@ class UsersLastnameRule {
 
 	use ShowErrors;
 
+    public static string $field = "users_lastname";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
@@ -16,19 +18,19 @@ class UsersLastnameRule {
     			});
 
 			$validator
-    			->rule("required", "users_lastname")
+    			->rule("required", self::$field)
     			->message("El apellido  es requerido");
 
 			$validator
-    			->rule("lengthMin", "users_lastname", 2)
+    			->rule("lengthMin", self::$field, 2)
     			->message("El apellido debe tener mínimo 2 caracteres");
 
 			$validator
-    			->rule("lengthMax", "users_lastname", 25)
+    			->rule("lengthMax", self::$field, 25)
     			->message("El apellido debe tener máximo 25 caracteres");
 
 			$validator
-    			->rule("lastName", "users_lastname")
+    			->rule("lastName", self::$field)
     			->message("El apellido solo debe tener caracteres alfabeticos");
 		});
 	}

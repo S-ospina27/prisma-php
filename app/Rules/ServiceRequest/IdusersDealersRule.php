@@ -8,18 +8,20 @@ class IdusersDealersRule {
 
 	use ShowErrors;
 
+    public static string $field = "idusers_dealers";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
-                ->rule("required", "idusers_dealers")
+                ->rule("required", self::$field)
                 ->message("El distribuidor es requerido");
 
             $validator
-                ->rule("integer", "idusers_dealers")
+                ->rule("integer", self::$field)
                 ->message("El distribuidor no es valido");
 
             $validator
-                ->rule("min", "idusers_dealers", 1)
+                ->rule("min", self::$field, 1)
                 ->message("El distribuidor no es valido");
 		});
 	}

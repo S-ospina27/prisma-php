@@ -3,13 +3,11 @@
     "description": "A simple and easy way to use lion-framework",
     "type": "project",
     "homepage": "https://github.com/Sleon4/Lion-Framework",
-    "time": "2022-03-04",
     "keywords": ["lion", "framework", "lion-framework"],
     "license": "MIT",
     "authors": [
         {
-            "name": "Sergio León",
-            "email": "sergioleon4004@hotmail.com"
+            "name": "Sergio León"
         }
     ],
     "autoload": {
@@ -28,14 +26,12 @@
     "require": {
         "php": ">=8.1",
         "cboden/ratchet": "^0.4.4",
-        "dompdf/dompdf": "^2.0",
         "lion/files": "^4.7",
         "lion/helpers": "^2.0",
         "lion/mailer": "^4.0",
-        "lion/route": "^8.1",
+        "lion/route": "^8.2",
         "lion/security": "^6.11",
-        "lion/spreadsheet": "^1.5",
-        "lion/sql": "^7.0",
+        "lion/sql": "^7.1",
         "monolog/monolog": "^3.3",
         "nesbot/carbon": "^2.66",
         "symfony/console": "^6.2"

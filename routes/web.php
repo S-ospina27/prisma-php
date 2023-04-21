@@ -43,7 +43,7 @@ Route::prefix('api', function() {
         Route::get('read-document-types', [DocumentTypesController::class, 'readDocumentTypes']);
 
         Route::prefix('status', function() {
-            Route::get('/', [StatusController::class, 'readStatus']);
+            Route::get('index', [StatusController::class, 'readStatus']);
             Route::get('service', [ServiceStatesController::class, 'readServiceStates']);
         });
 
@@ -52,7 +52,7 @@ Route::prefix('api', function() {
             Route::post('update', [UsersController::class, 'updateUsers']);
 
             Route::prefix('read', function() {
-                Route::get('/', [UsersController::class, 'readUsers']);
+                Route::get('index', [UsersController::class, 'readUsers']);
                 Route::get('by-rol', [UsersController::class, 'readUsersByRol']);
             });
         });
@@ -95,7 +95,7 @@ Route::prefix('api', function() {
                 });
 
                 Route::prefix('read', function() {
-                    Route::get('/', [ServiceOrdersController::class, 'readOrders']);
+                    Route::get('index', [ServiceOrdersController::class, 'readOrders']);
                     Route::get('by-provider/{idprovider_users}', [ServiceOrdersController::class, 'readOrdersByProvider']);
 
                     Route::prefix('graphics', function() {
@@ -109,7 +109,7 @@ Route::prefix('api', function() {
                 Route::post('update', [ServiceRequestController::class, 'updateServiceRequest']);
 
                 Route::prefix('read', function() {
-                    Route::get('/', [ServiceRequestController::class, 'readServiceRequest']);
+                    Route::get('index', [ServiceRequestController::class, 'readServiceRequest']);
                     Route::get("by-state", [ServiceRequestController::class, 'readServiceRequestByState']);
 
                     Route::prefix('graphics', function() {

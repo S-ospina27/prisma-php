@@ -8,18 +8,20 @@ class IdproductsRule {
 
 	use ShowErrors;
 
+    public static string $field = "idproducts";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
-                ->rule("required", "idproducts")
+                ->rule("required", self::$field)
                 ->message("El producto es requerido");
 
             $validator
-                ->rule("integer", "idproducts")
+                ->rule("integer", self::$field)
                 ->message("El producto no es valido");
 
             $validator
-                ->rule("min", "idproducts", 1)
+                ->rule("min", self::$field, 1)
                 ->message("El producto no es valido");
 		});
 	}

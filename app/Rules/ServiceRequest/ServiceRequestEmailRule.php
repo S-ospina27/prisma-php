@@ -8,14 +8,16 @@ class ServiceRequestEmailRule {
 
 	use ShowErrors;
 
+    public static string $field = "service_request_email";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
-                ->rule("required", "service_request_email")
+                ->rule("required", self::$field)
                 ->message("El correo es requerido");
 
             $validator
-                ->rule("email", "service_request_email")
+                ->rule("email", self::$field)
                 ->message("El correo no es valido");
 		});
 	}

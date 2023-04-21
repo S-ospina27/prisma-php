@@ -8,6 +8,8 @@ class ServiceRequestTroubleReportRule {
 
 	use ShowErrors;
 
+    public static string $field = "service_request_trouble_report";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
@@ -16,19 +18,19 @@ class ServiceRequestTroubleReportRule {
                 });
 
             $validator
-                ->rule("required", "service_request_trouble_report")
+                ->rule("required", self::$field)
                 ->message("El reporte del cliente es requerido");
 
             $validator
-                ->rule("lengthMin", "service_request_trouble_report", 8)
+                ->rule("lengthMin", self::$field, 8)
                 ->message("El reporte del cliente debe tener mínimo 8 caracteres");
 
             $validator
-                ->rule("lengthMax", "service_request_trouble_report", 256)
+                ->rule("lengthMax", self::$field, 256)
                 ->message("El reporte del cliente debe tener máximo 256 caracteres");
 
             $validator
-                ->rule("trouble_report", "service_request_trouble_report")
+                ->rule("trouble_report", self::$field)
                 ->message("El reporte del cliente solo debe tener caracteres alfabeticos y numericos");
 		});
 	}

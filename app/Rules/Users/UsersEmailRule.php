@@ -8,14 +8,16 @@ class UsersEmailRule {
 
 	use ShowErrors;
 
+    public static string $field = "users_email";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
-                ->rule("required", "users_email")
+                ->rule("required", self::$field)
                 ->message("El correo es requerido");
 
             $validator
-                ->rule("email", "users_email")
+                ->rule("email", self::$field)
                 ->message("El correo no es valido");
 		});
 	}

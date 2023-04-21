@@ -8,15 +8,17 @@ class ServiceRequestPaymentMethodsRule {
 
 	use ShowErrors;
 
+    public static string $field = "service_request_payment_methods";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			if((int) request->idservice_states === 8) {
 				$validator
-				    ->rule("required", "service_request_payment_methods")
+				    ->rule("required", self::$field)
 				    ->message("El  metodo de pago es requerido");
 
 				$validator
-				    ->rule("in", "service_request_payment_methods", ["EFECTIVO", "TRANSFERENCIA"])
+				    ->rule("in", self::$field, ["EFECTIVO", "TRANSFERENCIA"])
 				    ->message("El metodo de pago no existe");
 			}
 		});

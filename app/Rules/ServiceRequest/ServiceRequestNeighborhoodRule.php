@@ -8,6 +8,8 @@ class ServiceRequestNeighborhoodRule {
 
 	use ShowErrors;
 
+    public static string $field = "service_request_neighborhood";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
             $validator
@@ -16,14 +18,14 @@ class ServiceRequestNeighborhoodRule {
                 });
 
 			$validator
-                ->rule("required", "service_request_neighborhood")
+                ->rule("required", self::$field)
                 ->message("El barrio es requerido");
 
             $validator
-                ->rule("neighborhood", "service_request_neighborhood")
+                ->rule("neighborhood", self::$field)
                 ->message("El barrio no es válido");
 
-                $validator
+            $validator
                 ->rule("lengthMin", "service_request_client_name", 5)
                 ->message("El barrio debe tener mínimo 5 caracteres");
 

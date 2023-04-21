@@ -8,6 +8,8 @@ class ServiceRequestClientNameRule {
 
 	use ShowErrors;
 
+    public static string $field = "service_request_client_name";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
@@ -16,19 +18,19 @@ class ServiceRequestClientNameRule {
                 });
 
             $validator
-                ->rule("required", "service_request_client_name")
+                ->rule("required", self::$field)
                 ->message("El nombre del cliente es requerido");
 
             $validator
-                ->rule("lengthMin", "service_request_client_name", 2)
+                ->rule("lengthMin", self::$field, 2)
                 ->message("El nombre del cliente debe tener mínimo 2 caracteres");
 
             $validator
-                ->rule("lengthMax", "service_request_client_name", 25)
+                ->rule("lengthMax", self::$field, 25)
                 ->message("El nombre del cliente debe tener máximo 25 caracteres");
 
             $validator
-                ->rule("name", "service_request_client_name")
+                ->rule("name", self::$field)
                 ->message("El nombre del cliente solo debe tener caracteres alfabeticos");
 		});
 	}

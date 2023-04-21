@@ -8,18 +8,20 @@ class IdrolesRule {
 
 	use ShowErrors;
 
+    public static string $field = "idroles";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
-    			->rule("required", "idroles")
+    			->rule("required", self::$field)
     			->message("El rol es  requerido");
 
 			$validator
-    			->rule("integer", "idroles")
+    			->rule("integer", self::$field)
     			->message("El rol no es valido");
 
 			$validator
-    			->rule("min", "idroles", 1)
+    			->rule("min", self::$field, 1)
     			->message("El rol no es valido");
 		});
 	}

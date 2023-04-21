@@ -8,6 +8,8 @@ class SparePartsNameRule {
 
 	use ShowErrors;
 
+    public static string $field = "spare_parts_name";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
@@ -16,19 +18,19 @@ class SparePartsNameRule {
     			});
 
 			$validator
-    			->rule("required", "spare_parts_name")
+    			->rule("required", self::$field)
     			->message("El nombre del repuesto  es requerido");
 
 			$validator
-    			->rule("lengthMin", "spare_parts_name", 2)
+    			->rule("lengthMin", self::$field, 2)
     			->message("El nombre del repuesto debe tener mínimo 2 caracteres");
 
 			$validator
-    			->rule("lengthMax", "spare_parts_name", 25)
+    			->rule("lengthMax", self::$field, 25)
     			->message("El nombre del repuesto debe tener máximo 25 caracteres");
 
 			$validator
-    			->rule("spare_name", "spare_parts_name")
+    			->rule("spare_name", self::$field)
     			->message("El nombre del repuesto solo debe tener caracteres ala-numéricos");
 		});
 	}

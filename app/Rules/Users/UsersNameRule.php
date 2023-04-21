@@ -8,6 +8,8 @@ class UsersNameRule {
 
 	use ShowErrors;
 
+    public static string $field = "users_name";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
@@ -16,19 +18,19 @@ class UsersNameRule {
     			});
 
 			$validator
-                ->rule("required", "users_name")
+                ->rule("required", self::$field)
                 ->message("El nombre  es requerido");
 
 			$validator
-                ->rule("lengthMin", "users_name", 2)
+                ->rule("lengthMin", self::$field, 2)
                 ->message("El nombre debe tener mínimo 2 caracteres");
 
 			$validator
-                ->rule("lengthMax", "users_name", 25)
+                ->rule("lengthMax", self::$field, 25)
                 ->message("El nombre debe tener máximo 25 caracteres");
 
 			$validator
-                ->rule("name", "users_name")
+                ->rule("name", self::$field)
                 ->message("El nombre solo debe tener caracteres alfabeticos");
 		});
 	}

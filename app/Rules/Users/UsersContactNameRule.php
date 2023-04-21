@@ -8,6 +8,8 @@ class UsersContactNameRule {
 
 	use ShowErrors;
 
+    public static string $field = "users_contact_name";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
@@ -16,19 +18,19 @@ class UsersContactNameRule {
     			});
 
             $validator
-                ->rule("optional", "users_contact_name")
+                ->rule("optional", self::$field)
                 ->message("El nombre del contacto es opcional");
 
 			$validator
-    			->rule("lengthMin", "users_contact_name", 2)
+    			->rule("lengthMin", self::$field, 2)
     			->message("El nombre del contacto debe tener mínimo 2 caracteres");
 
 			$validator
-    			->rule("lengthMax", "users_contact_name", 25)
+    			->rule("lengthMax", self::$field, 25)
     			->message("El nombre del contacto debe tener máximo 25 caracteres");
 
 			$validator
-    			->rule("name", "users_contact_name")
+    			->rule("name", self::$field)
     			->message("El nombre del contacto solo debe tener caracteres alfabeticos");
 		});
 	}

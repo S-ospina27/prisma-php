@@ -8,18 +8,20 @@ class IdsparePartsRule {
 
 	use ShowErrors;
 
+    public static string $field = "idspare_parts";
+
 	public static function passes(): void {
 		self::validate(function(\Valitron\Validator $validator) {
 			$validator
-    			->rule("required", "idspare_parts")
+    			->rule("required", self::$field)
     			->message("El repuesto es requerido");
 
 			$validator
-    			->rule("integer", "idspare_parts")
+    			->rule("integer", self::$field)
     			->message("El repuesto no es válido");
 
 			$validator
-    			->rule("min", "idspare_parts", 1)
+    			->rule("min", self::$field, 1)
     			->message("El repuesto no es válido");
 		});
 	}

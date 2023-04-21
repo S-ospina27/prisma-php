@@ -40,7 +40,7 @@ include_once(__DIR__ . "/../storage/framework/helpers.php");
  **/
 
 if (env->RSA_URL_PATH != '') {
-    LionSecurity\RSA::$url_path = "../" . env->RSA_URL_PATH;
+    LionSecurity\RSA::$url_path = storage_path(env->RSA_URL_PATH);
 }
 
 /**
@@ -61,17 +61,13 @@ include_once("../routes/header.php");
  * ------------------------------------------------------------------------------
  **/
 
-$responseDatabase = LionSQL\Drivers\Driver::run([
-    'type' => env->DB_TYPE,
-    'host' => env->DB_HOST,
-    'port' => env->DB_PORT,
-    'dbname' => env->DB_NAME,
-    'user' => env->DB_USER,
-    'password' => env->DB_PASSWORD
-]);
+LionSQL\Drivers\Driver::addLog();
+
+$responseDatabase = LionSQL\Drivers\Driver::run(
+    include_once("../config/database.php")
+);
 
 if ($responseDatabase->status === 'database-error') {
-    logger($responseDatabase->message, 'error');
     finish($responseDatabase);
 }
 
@@ -117,6 +113,7 @@ if (isset($rules[$_SERVER['REQUEST_URI']])) {
  * ------------------------------------------------------------------------------
  **/
 
+LionRoute\Route::addLog();
 LionRoute\Route::init();
 LionRoute\Request::init(client);
 include_once("../routes/middleware.php");
