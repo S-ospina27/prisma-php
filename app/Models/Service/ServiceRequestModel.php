@@ -9,7 +9,7 @@ use LionSQL\Drivers\MySQL as DB;
 class ServiceRequestModel {
 
 	public function __construct() {
-		
+
 	}
 
 	public function createServiceRequestDB(ServiceRequest $serviceRequest) {
@@ -40,6 +40,14 @@ class ServiceRequestModel {
             ->view('read_service_request')
             ->select()
             ->where(DB::equalTo("idservice_request"), $serviceRequest->getIdserviceRequest())
+            ->get();
+    }
+
+	public function readServiceRequestByTechnical(ServiceRequest $serviceRequest) {
+        return DB::fetchClass(ReadServiceRequest::class)
+            ->view('read_service_request')
+            ->select()
+            ->where(DB::equalTo("idusers_technical"), $serviceRequest->getIdusersTechnical())
             ->get();
     }
 

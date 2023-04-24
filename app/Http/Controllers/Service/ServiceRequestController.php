@@ -12,6 +12,7 @@ use LionFiles\Store;
 use LionHelpers\Arr;
 use LionHelpers\Str;
 use LionMailer\Mailer;
+use LionSecurity\JWT;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 
 class ServiceRequestController {
@@ -129,6 +130,14 @@ class ServiceRequestController {
 
     public function readServiceRequest() {
         return $this->serviceRequestModel->readServiceRequestDB();
+    }
+
+    public function readServiceRequestByTechnical() {
+        $jwt = JWT::decode(JWT::get());
+
+        return $this->serviceRequestModel->readServiceRequestByTechnical(
+            (new ServiceRequest())->setIdusersTechnical($jwt->data->idusers)
+        );
     }
 
     public function readServiceRequestByState() {
